@@ -1,8 +1,8 @@
--
+---
 title: "About"
 image: profile.jpg
 about:
-  template: jolla
+  template: solana
   links:
     - icon: twitter
       text: Twitter
@@ -16,7 +16,7 @@ about:
 
 ---
 
-# **Me in 10 seconds**
+## **Me in 10 seconds**
 
 I’m an ML Developer Advocate at Hugging Face focusing on extracting better insights from Text + Audio.
 
@@ -28,7 +28,7 @@ Delhi native, I now live in Germany!
 
 [Now](https://www.notion.so/Now-05e2b09edba647cfaa0d80866ca3082a?pvs=21)
 
-# **Me in 10 Minutes**
+## **Me in 10 Minutes**
 
 I’m an engineer at heart who likes to fix more things than he breaks. I’m researching and democratising niche Audio Understanding, Enhancement and Generation systems at the University of Stuttgart & Hugging Face. I’ve consulted across the board, from *Startups* to *Fortune Technology 10* firms, to help them build ML into their day-to-day workflows and make better sense of unstructured data silos.
 I’ve spent the past five years exploring the world of *Data*, *Linguistics* and *Math*.
@@ -37,7 +37,7 @@ In addition to my research, I’ve been cultivating [Machine Learning for Audio 
 
 I’m always game for research collaborations and freelance consulting work. Head to Talks and Consulting to learn how I can create value for you and your organisation. Drop me a line on Twitter ([@reach_vb](http://twitter.com/reach_vb)), and we’ll figure out the rest! ;)
 
-## **Timeline for context**
+### **Timeline for context**
 
 2014: Marketing + Sales funnel analytics for Microsoft Lumia campaigns in India.
 
