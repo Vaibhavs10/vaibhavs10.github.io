@@ -1,4 +1,4 @@
----
+-
 title: "About"
 image: profile.jpg
 about:
@@ -6,14 +6,49 @@ about:
   links:
     - icon: twitter
       text: Twitter
-      href: https://twitter.com
+      href: https://twitter.com/reach_vb
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/vaibhavs10/
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/Vaibhavs10
 
 ---
 
-About this blog
+# **Me in 10 seconds**
+
+I’m an ML Developer Advocate at Hugging Face focusing on extracting better insights from Text + Audio.
+
+I’ve been a freelancer, tax analyst, consultant, tech speaker and advisor for five years. In the past three years, I’ve invested significant time volunteering for open source and science organisations like Hugging Face, EuroPython, PyCons across APAC, Google Cloud Delhi, and Facebook Developer Circles.
+
+Delhi native, I now live in Germany! 
+
+**What am I doing now?**
+
+[Now](https://www.notion.so/Now-05e2b09edba647cfaa0d80866ca3082a?pvs=21)
+
+# **Me in 10 Minutes**
+
+I’m an engineer at heart who likes to fix more things than he breaks. I’m researching and democratising niche Audio Understanding, Enhancement and Generation systems at the University of Stuttgart & Hugging Face. I’ve consulted across the board, from *Startups* to *Fortune Technology 10* firms, to help them build ML into their day-to-day workflows and make better sense of unstructured data silos.
+I’ve spent the past five years exploring the world of *Data*, *Linguistics* and *Math*.
+
+In addition to my research, I’ve been cultivating [Machine Learning for Audio study group](https://github.com/Vaibhavs10/ml-with-audio) with the Hugging Face community. I was also recently made a [Hugging Face Fellow](https://www.notion.so/Hugging-Fellows-One-Pager-fa1c8878a7a14945b7e0dda2d1e34f36?pvs=21) for my advocacy work.
+
+I’m always game for research collaborations and freelance consulting work. Head to Talks and Consulting to learn how I can create value for you and your organisation. Drop me a line on Twitter ([@reach_vb](http://twitter.com/reach_vb)), and we’ll figure out the rest! ;)
+
+## **Timeline for context**
+
+2014: Marketing + Sales funnel analytics for Microsoft Lumia campaigns in India.
+
+2016: Freelance Data Analytics + Visualisation for Print + Social Media agencies.
+
+- Medium-scale businesses with a focus on creating more re-usable IP
+- Scaled to mid-5-figure revenue
+- Shut down in mid-2017 owing to health complications and burnout
+
+2017: Data Science consultant @ Deloitte US-India
+
+- 12 countries, 3M$+ impact
+
+2020: Moved to Germany - to research NLP & Speech
