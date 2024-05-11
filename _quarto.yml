@@ -3,17 +3,17 @@ project:
   output-dir: docs
 
 website:
-  title: "My-blog"
+  title: "VB's Notes and Ramblings"
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/vaibhavs10
       - icon: twitter
-        href: https://twitter.com
+        href: https://twitter.com/reach-vb
 format:
   html:
-    theme: darkly
+    theme: simplex
     css: styles.css
 
 
