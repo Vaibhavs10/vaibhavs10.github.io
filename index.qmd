@@ -1,5 +1,5 @@
 ---
-title: "My-blog"
+title: "VB's thoughts, comments and musings"
 listing:
   contents: posts
   sort: "date desc"
