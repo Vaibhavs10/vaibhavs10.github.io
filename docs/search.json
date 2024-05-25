@@ -1,5 +1,33 @@
 [
   {
+    "objectID": "now.html",
+    "href": "now.html",
+    "title": "Now",
+    "section": "",
+    "text": "Test now page!"
+  },
+  {
+    "objectID": "now.html#what-am-i-up-to-now",
+    "href": "now.html#what-am-i-up-to-now",
+    "title": "Now",
+    "section": "",
+    "text": "Test now page!"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "VB’s thoughts, comments and musings",
+    "section": "",
+    "text": "Test Post\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMay 15, 2024\n\n\nThe Internet\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Test Post",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
@@ -19,19 +47,5 @@
     "title": "About",
     "section": "Me in 10 Minutes",
     "text": "Me in 10 Minutes\nI’m an engineer at heart who likes to fix more things than he breaks. I’m researching and democratising niche Audio Understanding, Enhancement and Generation systems at the University of Stuttgart & Hugging Face. I’ve consulted across the board, from Startups to Fortune Technology 10 firms, to help them build ML into their day-to-day workflows and make better sense of unstructured data silos. I’ve spent the past five years exploring the world of Data, Linguistics and Math.\nIn addition to my research, I’ve been cultivating Machine Learning for Audio study group with the Hugging Face community. I was also recently made a Hugging Face Fellow for my advocacy work.\nI’m always game for research collaborations and freelance consulting work. Head to Talks and Consulting to learn how I can create value for you and your organisation. Drop me a line on Twitter (@reach_vb), and we’ll figure out the rest! ;)\n\nTimeline for context\n2014: Marketing + Sales funnel analytics for Microsoft Lumia campaigns in India.\n2016: Freelance Data Analytics + Visualisation for Print + Social Media agencies.\n\nMedium-scale businesses with a focus on creating more re-usable IP\nScaled to mid-5-figure revenue\nShut down in mid-2017 owing to health complications and burnout\n\n2017: Data Science consultant @ Deloitte US-India\n\n12 countries, 3M$+ impact\n\n2020: Moved to Germany - to research NLP & Speech"
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Test Post",
-    "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "VB’s thoughts, comments and musings",
-    "section": "",
-    "text": "Test Post\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMay 15, 2024\n\n\nThe Internet\n\n\n\n\n\n\nNo matching items"
   }
 ]

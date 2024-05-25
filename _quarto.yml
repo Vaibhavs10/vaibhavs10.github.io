@@ -7,10 +7,9 @@ website:
   navbar:
     right:
       - about.qmd
-      - icon: github
-        href: https://github.com/vaibhavs10
+      - now.qmd
       - icon: twitter
-        href: https://twitter.com/reach-vb
+        href: https://twitter.com/reach_vb
 format:
   html:
     theme: simplex
