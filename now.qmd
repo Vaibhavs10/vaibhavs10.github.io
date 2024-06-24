@@ -1,8 +1,6 @@
 ---
-title: "Now"
+title: "What am I up to now?"
 ---
-
-## **What am I up to now?**
 
 What am I focused on at this point in life?
 
@@ -13,6 +11,7 @@ Updated 24th June 2024, from Paris, FR.
 
 Work has been hectic but enjoyable. I have been forunate to collaborate with some of the brightest minds in the field at the moment.
 I have been spending more time understanding the intrecacies and implications of running ML on the edge.
+
 I haven't been able to find a single continuous block of time to put my head down and do good old research or even read papers in a long while. Still not sure what's the best way, but I'll figure it out.
 
 # 🙌 Volunteering
@@ -20,6 +19,7 @@ I haven't been able to find a single continuous block of time to put my head dow
 
 I stepped back from EuroPython organisation and am looking forward to complete my tenure this year. Truth be told, there was a lot of friction (mostly because of me) this year. I'm happy to see the chapter close with my best friends in the coming weeks.
 The past 1.5 years have been quite chaotic, moving countries, building a home, settling in has all been incredibly taxing. I'm looking forward to having less things on my plate and focus on getting better.
+
 On the bright side, I have been dabbling in the education side of things, keep your eyes peeled for some fun projects soon. :)
 
 # 🧠 Mental health
@@ -43,5 +43,6 @@ A friend from Stuttgart visited recently, it was good relive some old memories a
 ---
 
 When this year started both Sof and I decided to reduce travel to bare minimum. I don't know where this got out of hand, but June was the only month where we did not travel anywhere, looking forward it looks like this would be the case for the whole year.
+
 Up next, I'll be at EuroPython in Prague. If you're around say hi!
 
