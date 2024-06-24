@@ -1,6 +1,5 @@
 ---
 title: "Now"
-image: profile.jpg
 about:
   template: broadside
   links:
