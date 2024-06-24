@@ -1,18 +1,5 @@
 ---
 title: "Now"
-about:
-  template: broadside
-  links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com/reach_vb
-    - icon: linkedin
-      text: LinkedIn
-      href: https://www.linkedin.com/in/vaibhavs10/
-    - icon: github
-      text: Github
-      href: https://github.com/Vaibhavs10
-
 ---
 
 ## **What am I up to now?**
