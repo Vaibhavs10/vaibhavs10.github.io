@@ -1,8 +1,17 @@
 ---
-title: "Test Post"
-author: "The Internet"
-date: "2024-05-15"
-categories: [news]
+title: "List of random things I keep forgetting"
+author: "reach-vb"
+date: "2024-07-29"
+categories: [things]
 ---
 
-This is the first post in a Quarto blog. Welcome!
+I often end up looking for certain commands/ code snippets so here is a list.
+
+1. Change the server language to English: `export LC_ALL=C`
+2. Look at the username for of who is running a process on a multi-user server: `ps -u -p <PROCESS_ID>`
+3. Re-authenticate with github after your PAT has expired: `gh auth login -h [github.com](http://github.com/)`
+4. Pip install without clogging the cache dir, add a `--no-cache-dir` flag to your `pip install` commands.
+5. Create a virtual environment with `python -m venv <path_to_the_environment>` command.
+6. Run a python script with nohup and pipe the output to a file. `nohup python my_script_is_the_best.py &> my_scripts_output.out 2>&1 &`
+7. Batch convert `wav` files to `mp3` files with `ffmpeg` - `for f in *.{wav,WAV}; do ffmpeg -i "$f" -c:a libmp3lame -q:a 2 "${f%.*}.mp3"; done`
+8. Append a prefix to specific files in a directory - `for f in {0,1,2,3,4,5}.mp3; do mv "$f" "GAN_$f"; done`
