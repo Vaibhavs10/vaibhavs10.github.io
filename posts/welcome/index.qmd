@@ -1,6 +1,6 @@
 ---
 title: "List of random things I keep forgetting"
-author: "reach-vb"
+author: "VB"
 date: "2024-07-29"
 categories: [things]
 ---

@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="The Internet">
-<meta name="dcterms.date" content="2024-05-15">
+<meta name="author" content="VB">
+<meta name="dcterms.date" content="2024-07-29">
 
-<title>VB’s Notes and Ramblings - Test Post</title>
+<title>VB’s Notes and Ramblings - List of random things I keep forgetting</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,9 +114,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Test Post</h1>
+      <h1 class="title">List of random things I keep forgetting</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">things</div>
               </div>
                   </div>
   </div>
@@ -127,14 +127,14 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>The Internet </p>
+               <p>VB </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 15, 2024</p>
+        <p class="date">July 29, 2024</p>
       </div>
     </div>
     
@@ -153,7 +153,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This is the first post in a Quarto blog. Welcome!</p>
+<p>I often end up looking for certain commands/ code snippets so here is a list.</p>
+<ol type="1">
+<li>Change the server language to English: <code>export LC_ALL=C</code></li>
+<li>Look at the username for of who is running a process on a multi-user server: <code>ps -u -p &lt;PROCESS_ID&gt;</code></li>
+<li>Re-authenticate with github after your PAT has expired: <code>gh auth login -h [github.com](http://github.com/)</code></li>
+<li>Pip install without clogging the cache dir, add a <code>--no-cache-dir</code> flag to your <code>pip install</code> commands.</li>
+<li>Create a virtual environment with <code>python -m venv &lt;path_to_the_environment&gt;</code> command.</li>
+<li>Run a python script with nohup and pipe the output to a file. <code>nohup python my_script_is_the_best.py &amp;&gt; my_scripts_output.out 2&gt;&amp;1 &amp;</code></li>
+<li>Batch convert <code>wav</code> files to <code>mp3</code> files with <code>ffmpeg</code> - <code>for f in *.{wav,WAV}; do ffmpeg -i "$f" -c:a libmp3lame -q:a 2 "${f%.*}.mp3"; done</code></li>
+<li>Append a prefix to specific files in a directory - <code>for f in {0,1,2,3,4,5}.mp3; do mv "$f" "GAN_$f"; done</code></li>
+</ol>
 
 
 
