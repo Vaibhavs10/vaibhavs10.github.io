@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="VB">
+<meta name="dcterms.date" content="2023-12-26">
 
-<title>VB’s Notes and Ramblings - VB’s thoughts, comments and musings</title>
+<title>VB’s Notes and Ramblings - What is home?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,77 +68,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">VB’s Notes and Ramblings</span>
     </a>
   </div>
@@ -149,11 +91,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./now.html"> 
+    <a class="nav-link" href="../../now.html"> 
 <span class="menu-text">Now</span></a>
   </li>  
   <li class="nav-item compact">
@@ -171,143 +113,84 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">VB’s thoughts, comments and musings</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">What is home?</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">home</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>VB </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 26, 2023</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="async">async <span class="quarto-category-count">(1)</span></div><div class="category" data-category="home">home <span class="quarto-category-count">(1)</span></div><div class="category" data-category="things">things <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<p><em>Written on 26th December 2023, from Gurgaon, India.</em></p>
+<p>I’m currently in India, and as someone who doesn’t actively live in the country anymore, it is always a bittersweet experience whenever I travel between countries.</p>
+<p><strong>Travelling to India</strong> 🛬 - Is a joyride; it evokes the feeling of belongingness paired with the anticipation of meeting my loved ones, eating some good food (not butter chicken), and most of all, being in a place of comfort. It’s a place where I’ve messed up umpteen numbers of times and gotten back up.</p>
+<p><strong>Travelling out of India 🛫</strong>&nbsp;- Is an emotional rollercoaster; not knowing when I will see my loved ones again evokes a feeling of emptiness, and <a href="https://paulgraham.com/vb.html">the short life</a> doesn’t make the departure easy. At the same time, the knowledge that I’ll return to another country that I call home, living the life I chose, makes me feel elated.</p>
+<p>All of this begs to answer the question: <strong>what is home? ☺️</strong></p>
+<p>I went to the mountains recently, which involved a lot of sitting in the car and a lot of time to ponder this topic.</p>
+<p>Here are some unkempt thoughts:</p>
+<ol type="1">
+<li>It is a place where you can be yourself. A place where you can express yourself without the fear of being judged.</li>
+<li>A place where you can be vulnerable.</li>
+<li>It is a person who tells you you’ve messed up and helps you while you fix it.</li>
+<li>Where you feel motivated to get better (financially/ physically/ mentally) for your home.</li>
+<li>It is a safe place where you can exist.</li>
+</ol>
+<p>In the recent past (half a decade), I’ve been quite lucky and privileged to build a few:</p>
+<ol type="1">
+<li><em>My best friend turned partner, Sofdog</em> - My life wouldn’t be as worthwhile and fruitful as it is now if it weren’t for her watching out for me. Having tough conversations where we can be vulnerable and express ourselves without feeling judged, all whilst sharing the passion of exploring the world one city at a time.</li>
+<li><em>Mum, Dad &amp; my sister</em> - Even though we’re often a couple of thousand kilometres apart, I’ve never felt lonely all because these three have ensured I’ve always been at ease. They’ve always been there through thick and thin. I am lucky to have grown with such inclusive and progressive thoughts.</li>
+<li><em>Friends</em> - Raquel, Patrick, Emils, Sven, and Zeina - Have played an important role in my life. They’ve helped me max out life whilst being around me when I was hurting or guiding me when I was clueless.</li>
+<li><em>Stuttgart</em> - I spent my best life so far in Stuttgart. I got the time and space to dive deep into my research, all whilst making connections I’ll cherish until the end. However, I’ve moved away from Stuttgart recently. It will continue to be a place that I’ll think fondly of.</li>
+</ol>
+<p>So, in the end, <strong>what is home</strong>? 😊</p>
+<p>As this year (2023) dawns to an end, I’m quite bullish on the next few. I can’t wait to build new homes.</p>
+<p>I’d love to know what makes you feel at home. Send me a DM on Twitter or drop me a ping at reachvaibhavs10[at]gmail[dot]com</p>
+<p>Cheers! 🍻 VB</p>
+<p><strong>Appendix - FAQ</strong></p>
+<ol type="1">
+<li><em>You’ve changed in recent times.</em> That’s correct; I am a bit snobbier now (always a delhite); I take things way more lightly now. I’m more direct (don’t mince my words). I’m sorry if my words hurt you.</li>
+<li><em>Do I still have a tolerance for Spice?</em> No.&nbsp;It causes me intense pain in the belly. And no, I do not want to build it back up.</li>
+<li><em>Do I intend to come back to India to live long-term?</em> Not in the immediate future (&lt; 2 years), and I do not plan life more than two years in advance. I’ll continue to visit, albeit a bit more frequently now.</li>
+<li><em>What do you not like about India?</em> First, I love Delhi, and it’ll forever be my home. That said, I don’t like the political climate in India. I despise the pollution. The traffic is nightmare fuel. And no, this is not up for discussion. I find conversations like those to be not worth your or my time.</li>
+<li><em>People in tech get paid much more in India than in Europe.</em> That’s great, and I’m quite happy for the tech scene in India.</li>
+<li><em>Do I make good money?</em> I make enough to have food on the table and some occasional trips here and there. That’s more than sufficient for me. But, deffo something I will improve in ’24.</li>
+</ol>
 
 
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="things" data-listing-date-sort="1722204000000" data-listing-file-modified-sort="1722287519534" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="144">
-<div class="thumbnail">
-<p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a></p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">List of random things I keep forgetting</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('things'); return false;">
-things
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">I often end up looking for certain commands/ code snippets so here is a list.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">
-<div class="listing-date">
-Jul 29, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="async" data-listing-date-sort="1722204000000" data-listing-file-modified-sort="1722287851843" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="244">
-<div class="thumbnail">
-<p><a href="./posts/live-async/index.html" class="no-external"></a></p><a href="./posts/live-async/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/live-async/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/live-async/index.html" class="no-external">Live async, live happy</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/live-async/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('async'); return false;">
-async
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/live-async/index.html" class="no-external">Why I don’t take calls and take ages to respond?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/live-async/index.html" class="no-external">
-<div class="listing-date">
-Jul 29, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="home" data-listing-date-sort="1703545200000" data-listing-file-modified-sort="1722288026847" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="737">
-<div class="thumbnail">
-<p><a href="./posts/what-is-home/index.html" class="no-external"></a></p><a href="./posts/what-is-home/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/what-is-home/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/what-is-home/index.html" class="no-external">What is home?</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/what-is-home/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('home'); return false;">
-home
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/what-is-home/index.html" class="no-external"><em>Written on 26th December 2023, from Gurgaon, India.</em></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/what-is-home/index.html" class="no-external">
-<div class="listing-date">
-Dec 26, 2023
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
