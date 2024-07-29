@@ -11,14 +11,21 @@
     "href": "index.html",
     "title": "VB’s thoughts, comments and musings",
     "section": "",
-    "text": "List of random things I keep forgetting\n\n\n\n\n\n\nthings\n\n\n\n\n\n\n\n\n\nJul 29, 2024\n\n\nVB\n\n\n\n\n\n\nNo matching items"
+    "text": "List of random things I keep forgetting\n\n\n\n\n\n\nthings\n\n\n\n\n\n\n\n\n\nJul 29, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nLive async, live happy\n\n\n\n\n\n\nasync\n\n\n\n\n\n\n\n\n\nJul 29, 2024\n\n\nVB\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
+    "objectID": "posts/things-i-keep-forgetting/index.html",
+    "href": "posts/things-i-keep-forgetting/index.html",
     "title": "List of random things I keep forgetting",
     "section": "",
     "text": "I often end up looking for certain commands/ code snippets so here is a list.\n\nChange the server language to English: export LC_ALL=C\nLook at the username for of who is running a process on a multi-user server: ps -u -p &lt;PROCESS_ID&gt;\nRe-authenticate with github after your PAT has expired: gh auth login -h [github.com](http://github.com/)\nPip install without clogging the cache dir, add a --no-cache-dir flag to your pip install commands.\nCreate a virtual environment with python -m venv &lt;path_to_the_environment&gt; command.\nRun a python script with nohup and pipe the output to a file. nohup python my_script_is_the_best.py &&gt; my_scripts_output.out 2&gt;&1 &\nBatch convert wav files to mp3 files with ffmpeg - for f in *.{wav,WAV}; do ffmpeg -i \"$f\" -c:a libmp3lame -q:a 2 \"${f%.*}.mp3\"; done\nAppend a prefix to specific files in a directory - for f in {0,1,2,3,4,5}.mp3; do mv \"$f\" \"GAN_$f\"; done"
+  },
+  {
+    "objectID": "posts/live-async/index.html",
+    "href": "posts/live-async/index.html",
+    "title": "Live async, live happy",
+    "section": "",
+    "text": "Why I don’t take calls and take ages to respond?\nI often get my butt kicked for not responding to acquaintances and colleagues on time. I also get the stink eye for refusing to do meetings, phone/ zoom calls, and everything that comes with them.\nTo be honest, a one-hour physical meeting can be a 30-minute virtual meeting, a 30-minute virtual meeting can be a 10-minute phone call, and a 10-minute phone call can be a 2-minute email.\nI prefer written communication. It’s documented, clear, and doesn’t require me to break my focus.\nBut why avoid meetings in the first place? Isn’t face-to-face interaction better?\nI have the attention span of a peanut. It often takes me ages to find inspiration. Once I find that inspiration, I like capitalising on it as much as possible. Given how fickle my mind is I tend to aggressively preserve my “inspired time”.\nWhile face-to-face interactions “may” be better. They do result in an absurd amount of cognitive load.\nSo why make life difficult for both you and me? Async rules!\nWhat about virtual meetings? They are a good proxy for in-person meetings and don’t often require as much time.\nTrue-ish, but if I know I have a meeting on a particular day, I’d constantly be stressing out about it. Irrespective of the contents of the meeting, I’d be consumed by it and have a sub-optimal experience.\nHow do I reach you?\nEmail me at Vaibhavs10[at]gmail[dot]com or drop a line on twitter @reach_vb 🤗\nLive async, live happy!"
   },
   {
     "objectID": "about.html",
