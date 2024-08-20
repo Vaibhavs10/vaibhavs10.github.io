@@ -18,15 +18,15 @@ about:
 
 ## **Me in 10 seconds**
 
-I’m an ML Developer Advocate at Hugging Face focusing on extracting better insights from Text + Audio.
+I’m an ML Developer Advocate at Hugging Face focusing on extracting better insights from Text + Audio & on-device ML.
 
 I’ve been a freelancer, tax analyst, consultant, tech speaker and advisor for five years. In the past three years, I’ve invested significant time volunteering for open source and science organisations like Hugging Face, EuroPython, PyCons across APAC, Google Cloud Delhi, and Facebook Developer Circles.
 
-Delhi native, I now live in Germany! 
+Delhi native, I now live in ~Germany~ France! 
 
 **What am I doing now?**
 
-[Now](https://www.notion.so/Now-05e2b09edba647cfaa0d80866ca3082a?pvs=21)
+[Now](/now)
 
 ## **Me in 10 Minutes**
 
@@ -52,3 +52,5 @@ I’m always game for research collaborations and freelance consulting work. Hea
 - 12 countries, 3M$+ impact
 
 2020: Moved to Germany - to research NLP & Speech
+
+2023: Moved to France - to democratise NLP & Speech
