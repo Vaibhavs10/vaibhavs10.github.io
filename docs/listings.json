@@ -3,7 +3,6 @@
     "listing": "/index.html",
     "items": [
       "/posts/run-phi-on-device-llama-cpp/index.html",
-      "/posts/inference-on-edge/index.html",
       "/posts/things-i-keep-forgetting/index.html",
       "/posts/live-async/index.html",
       "/posts/what-is-home/index.html"
