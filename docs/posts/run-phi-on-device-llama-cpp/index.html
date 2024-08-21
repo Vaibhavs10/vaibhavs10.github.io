@@ -196,9 +196,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Microsoft released Phi 3.5 mini, MoE and vision with 128K context, multilingual &amp; MIT license! 🔥</p>
 <p>The MoE beats Gemini flash and the Vision model is competitive with GPT4o.</p>
 <p>Some quick notes on the models and they atleast look good on benchmarks:</p>
-<p><a href="https://huggingface.co/microsoft/Phi-3.5-mini-instruct">Mini with 3.8B parameters</a> 1. Beats Llama3.1 8B and Mistral 7B and competitive with Mistral NeMo 12B 2. Multilingual model and Tokenizer with 32K vocab 3. Trained on 3.4T tokens 4. Used 512 H100s to train (10 days)</p>
-<p><a href="https://huggingface.co/microsoft/Phi-3.5-moe-instruct">MoE with 16x3.8B (6.6B active - 2 experts)</a> 1. Beats Gemini flash 2. 128K context, Multilingual and same tokenizer (32K vocab) 3. Trained on 4.9T tokens 4. Used 512H100s to train (23 days)</p>
-<p><a href="https://huggingface.co/microsoft/Phi-3.5-vision-instruct">Ph3.5 Vision with 4.2B params</a> 1. Beats GPT4o on averaged benchmarks 2. Trained on 500B tokens 3. Used 256 A100 to train (6 days) 4. Specialised in TextVQA + ScienceVQA</p>
+<p><a href="https://huggingface.co/microsoft/Phi-3.5-mini-instruct">Mini with 3.8B parameters</a></p>
+<ul>
+<li>Beats Llama3.1 8B and Mistral 7B and competitive with Mistral NeMo 12B</li>
+<li>Multilingual model and Tokenizer with 32K vocab</li>
+<li>Trained on 3.4T tokens</li>
+<li>Used 512 H100s to train (10 days)</li>
+</ul>
+<p><a href="https://huggingface.co/microsoft/Phi-3.5-moe-instruct">MoE with 16x3.8B (6.6B active - 2 experts)</a></p>
+<ul>
+<li>Beats Gemini flash</li>
+<li>128K context, Multilingual and same tokenizer (32K vocab)</li>
+<li>Trained on 4.9T tokens -Used 512H100s to train (23 days)</li>
+</ul>
+<p><a href="https://huggingface.co/microsoft/Phi-3.5-vision-instruct">Ph3.5 Vision with 4.2B params</a></p>
+<ul>
+<li>Beats GPT4o on averaged benchmarks</li>
+<li>Trained on 500B tokens</li>
+<li>Used 256 A100 to train (6 days) -Specialised in TextVQA + ScienceVQA</li>
+</ul>
 <p>The star of the show for me atleast is the Phi-3.5 Mini, it looks like decently sized model which would make it easy to fine-tune for specific tasks.</p>
 <p>Alright, enough of about the models, let’s try to see if we can run this model on your Mac/Windows/Linux device.</p>
 <p>There are multiple ways to run a model on-device - you can use, transformers, llama.cpp, MLC, ONNXRuntime and bunch others. One of the easiest ways however is to use llama.cpp, once setup - it just works across pretty much all well-known model architectures.</p>

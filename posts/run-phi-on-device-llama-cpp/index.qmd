@@ -12,22 +12,25 @@ The MoE beats Gemini flash and the Vision model is competitive with GPT4o.
 Some quick notes on the models and they atleast look good on benchmarks:
 
 [Mini with 3.8B parameters](https://huggingface.co/microsoft/Phi-3.5-mini-instruct)
-1. Beats Llama3.1 8B and Mistral 7B and competitive with Mistral NeMo 12B
-2. Multilingual model and Tokenizer with 32K vocab
-3. Trained on 3.4T tokens
-4. Used 512 H100s to train (10 days)
+
+- Beats Llama3.1 8B and Mistral 7B and competitive with Mistral NeMo 12B
+- Multilingual model and Tokenizer with 32K vocab
+- Trained on 3.4T tokens
+- Used 512 H100s to train (10 days)
 
 [MoE with 16x3.8B (6.6B active - 2 experts)](https://huggingface.co/microsoft/Phi-3.5-moe-instruct)
-1. Beats Gemini flash
-2. 128K context, Multilingual and same tokenizer (32K vocab)
-3. Trained on 4.9T tokens
-4. Used 512H100s to train (23 days)
+
+- Beats Gemini flash
+- 128K context, Multilingual and same tokenizer (32K vocab)
+- Trained on 4.9T tokens
+-Used 512H100s to train (23 days)
 
 [Ph3.5 Vision with 4.2B params](https://huggingface.co/microsoft/Phi-3.5-vision-instruct)
-1. Beats GPT4o on averaged benchmarks
-2. Trained on 500B tokens
-3. Used 256 A100 to train (6 days)
-4. Specialised in TextVQA + ScienceVQA
+
+- Beats GPT4o on averaged benchmarks
+- Trained on 500B tokens
+- Used 256 A100 to train (6 days)
+-Specialised in TextVQA + ScienceVQA
 
 The star of the show for me atleast is the Phi-3.5 Mini, it looks like decently sized model which would make it easy to fine-tune for specific tasks.
 
