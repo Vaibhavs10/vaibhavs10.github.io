@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "VB’s thoughts, comments and musings",
     "section": "",
-    "text": "List of random things I keep forgetting\n\n\n\n\n\n\nthings\n\n\n\n\n\n\n\n\n\nJul 29, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nLive async, live happy\n\n\n\n\n\n\nasync\n\n\n\n\n\n\n\n\n\nJul 29, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nWhat is home?\n\n\n\n\n\n\nhome\n\n\n\n\n\n\n\n\n\nDec 26, 2023\n\n\nVB\n\n\n\n\n\n\nNo matching items"
+    "text": "Run Phi-3.5 with llama.cpp\n\n\n\n\n\n\nllm\n\n\nllama.cpp\n\n\nmac\n\n\nmetal\n\n\ncuda\n\n\nphi3.5\n\n\nphi\n\n\n\n\n\n\n\n\n\nAug 21, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nInference on Edge\n\n\n\n\n\n\nllm\n\n\nwhisper\n\n\nllama.cpp\n\n\nonnxruntime\n\n\n\n\n\n\n\n\n\nAug 20, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nList of random things I keep forgetting\n\n\n\n\n\n\nthings\n\n\n\n\n\n\n\n\n\nJul 29, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nLive async, live happy\n\n\n\n\n\n\nasync\n\n\n\n\n\n\n\n\n\nJul 29, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nWhat is home?\n\n\n\n\n\n\nhome\n\n\n\n\n\n\n\n\n\nDec 26, 2023\n\n\nVB\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/things-i-keep-forgetting/index.html",
@@ -19,6 +19,27 @@
     "title": "List of random things I keep forgetting",
     "section": "",
     "text": "I often end up looking for certain commands/ code snippets so here is a list.\n\nChange the server language to English: export LC_ALL=C\nLook at the username for of who is running a process on a multi-user server: ps -u -p &lt;PROCESS_ID&gt;\nRe-authenticate with github after your PAT has expired: gh auth login -h [github.com](http://github.com/)\nPip install without clogging the cache dir, add a --no-cache-dir flag to your pip install commands.\nCreate a virtual environment with python -m venv &lt;path_to_the_environment&gt; command.\nRun a python script with nohup and pipe the output to a file. nohup python my_script_is_the_best.py &&gt; my_scripts_output.out 2&gt;&1 &\nBatch convert wav files to mp3 files with ffmpeg - for f in *.{wav,WAV}; do ffmpeg -i \"$f\" -c:a libmp3lame -q:a 2 \"${f%.*}.mp3\"; done\nAppend a prefix to specific files in a directory - for f in {0,1,2,3,4,5}.mp3; do mv \"$f\" \"GAN_$f\"; done"
+  },
+  {
+    "objectID": "posts/run-phi-on-device-llama-cpp/index.html",
+    "href": "posts/run-phi-on-device-llama-cpp/index.html",
+    "title": "Run Phi-3.5 with llama.cpp",
+    "section": "",
+    "text": "Microsoft released Phi 3.5 mini, MoE and vision with 128K context, multilingual & MIT license! 🔥\nThe MoE beats Gemini flash and the Vision model is competitive with GPT4o.\nSome quick notes on the models and they atleast look good on benchmarks:\nMini with 3.8B parameters 1. Beats Llama3.1 8B and Mistral 7B and competitive with Mistral NeMo 12B 2. Multilingual model and Tokenizer with 32K vocab 3. Trained on 3.4T tokens 4. Used 512 H100s to train (10 days)\nMoE with 16x3.8B (6.6B active - 2 experts) 1. Beats Gemini flash 2. 128K context, Multilingual and same tokenizer (32K vocab) 3. Trained on 4.9T tokens 4. Used 512H100s to train (23 days)\nPh3.5 Vision with 4.2B params 1. Beats GPT4o on averaged benchmarks 2. Trained on 500B tokens 3. Used 256 A100 to train (6 days) 4. Specialised in TextVQA + ScienceVQA\nThe star of the show for me atleast is the Phi-3.5 Mini, it looks like decently sized model which would make it easy to fine-tune for specific tasks.\nAlright, enough of about the models, let’s try to see if we can run this model on your Mac/Windows/Linux device.\nThere are multiple ways to run a model on-device - you can use, transformers, llama.cpp, MLC, ONNXRuntime and bunch others. One of the easiest ways however is to use llama.cpp, once setup - it just works across pretty much all well-known model architectures."
+  },
+  {
+    "objectID": "posts/run-phi-on-device-llama-cpp/index.html#step-1-setup-llama.cpp",
+    "href": "posts/run-phi-on-device-llama-cpp/index.html#step-1-setup-llama.cpp",
+    "title": "Run Phi-3.5 with llama.cpp",
+    "section": "Step 1: Setup llama.cpp",
+    "text": "Step 1: Setup llama.cpp\nOn a mac, you can install llama.cpp using homebrew:\nbrew install llama-cpp\nOn a Windows/ Linux device, you can follow the instructions on the llama.cpp Docs)\nFor example, a typical build command for CUDA enabled device looks like this:\ngit clone https://github.com/ggerganov/llama.cpp && \\\ncd llama.cpp && \\\nmake GGML_CUDA=1 LLAMA_CURL=1\nThere are plenty other permutations and combinations so feel free to look at those on the linked docs above."
+  },
+  {
+    "objectID": "posts/run-phi-on-device-llama-cpp/index.html#step-2-run-inference-with-phi3.5",
+    "href": "posts/run-phi-on-device-llama-cpp/index.html#step-2-run-inference-with-phi3.5",
+    "title": "Run Phi-3.5 with llama.cpp",
+    "section": "Step 2: Run inference with Phi3.5",
+    "text": "Step 2: Run inference with Phi3.5\nTo be able to run a LLM on-device all you need is to find the model on the hub and simply point the llama.cpp’s built binaries to it. There are over 30,000 quantized llama.cpp models on the Hub. For our use-case we’ll use the lmstudio-community/Phi-3.5-mini-instruct-GGUF repo by the good folks at lm-studio.\nllama-cli --hf-repo lmstudio-community/Phi-3.5-mini-instruct-GGUF \\\n--hf-file Phi-3.5-mini-instruct-Q6_K.gguf \\\n-p \"The meaning to life and the universe is\"\nand.. that’s it!"
   },
   {
     "objectID": "posts/what-is-home/index.html",
@@ -39,14 +60,14 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "I’m an ML Developer Advocate at Hugging Face focusing on extracting better insights from Text + Audio & on-device ML.\nI’ve been a freelancer, tax analyst, consultant, tech speaker and advisor for five years. In the past three years, I’ve invested significant time volunteering for open source and science organisations like Hugging Face, EuroPython, PyCons across APAC, Google Cloud Delhi, and Facebook Developer Circles.\nDelhi native, I now live in Germany France!\nWhat am I doing now?\nNow"
+    "text": "I’m an ML Developer Advocate at Hugging Face focusing on extracting better insights from Text + Audio & on-device ML.\nI’ve been a freelancer, tax analyst, consultant, tech speaker and advisor for five years. In the past three years, I’ve invested significant time volunteering for open source and science organisations like Hugging Face, EuroPython, PyCons across APAC, Google Cloud Delhi, and Facebook Developer Circles.\nDelhi native, I now live in France!\nWhat am I doing now?\nNow"
   },
   {
     "objectID": "about.html#me-in-10-seconds",
     "href": "about.html#me-in-10-seconds",
     "title": "About",
     "section": "",
-    "text": "I’m an ML Developer Advocate at Hugging Face focusing on extracting better insights from Text + Audio & on-device ML.\nI’ve been a freelancer, tax analyst, consultant, tech speaker and advisor for five years. In the past three years, I’ve invested significant time volunteering for open source and science organisations like Hugging Face, EuroPython, PyCons across APAC, Google Cloud Delhi, and Facebook Developer Circles.\nDelhi native, I now live in Germany France!\nWhat am I doing now?\nNow"
+    "text": "I’m an ML Developer Advocate at Hugging Face focusing on extracting better insights from Text + Audio & on-device ML.\nI’ve been a freelancer, tax analyst, consultant, tech speaker and advisor for five years. In the past three years, I’ve invested significant time volunteering for open source and science organisations like Hugging Face, EuroPython, PyCons across APAC, Google Cloud Delhi, and Facebook Developer Circles.\nDelhi native, I now live in France!\nWhat am I doing now?\nNow"
   },
   {
     "objectID": "about.html#me-in-10-minutes",

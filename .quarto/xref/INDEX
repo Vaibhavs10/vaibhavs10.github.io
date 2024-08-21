@@ -22,5 +22,11 @@
   },
   "posts/what-is-home/index.qmd": {
     "index.html": "662e7dd4"
+  },
+  "posts/inference-on-edge/index.qmd": {
+    "index.html": "6a2049ea"
+  },
+  "posts/run-phi-on-device-llama-cpp/index.qmd": {
+    "index.html": "bb406ddf"
   }
 }

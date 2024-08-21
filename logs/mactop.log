@@ -17,12 +17,6 @@ Output: Graphics/Displays:
           Online: Yes
           Automatically Adjust Brightness: Yes
           Connection Type: Internal
-        DELL U3421WE:
-          Resolution: 3440 x 1440 (UWQHD - Ultra-Wide Quad HD)
-          UI Looks like: 3440 x 1440 @ 60.00Hz
-          Mirror: Off
-          Online: Yes
-          Rotation: Supported
 
 
 Model: Apple M2
@@ -48,11 +42,5 @@ Output: Graphics/Displays:
           Online: Yes
           Automatically Adjust Brightness: Yes
           Connection Type: Internal
-        DELL U3421WE:
-          Resolution: 3440 x 1440 (UWQHD - Ultra-Wide Quad HD)
-          UI Looks like: 3440 x 1440 @ 60.00Hz
-          Mirror: Off
-          Online: Yes
-          Rotation: Supported
 
 

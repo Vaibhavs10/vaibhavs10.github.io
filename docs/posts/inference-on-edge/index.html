@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="VB">
+<meta name="dcterms.date" content="2024-08-20">
 
-<title>VB’s Notes and Ramblings - VB’s thoughts, comments and musings</title>
+<title>VB’s Notes and Ramblings - Inference on Edge</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,77 +68,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">VB’s Notes and Ramblings</span>
     </a>
   </div>
@@ -149,11 +91,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./now.html"> 
+    <a class="nav-link" href="../../now.html"> 
 <span class="menu-text">Now</span></a>
   </li>  
   <li class="nav-item compact">
@@ -171,28 +113,44 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">VB’s thoughts, comments and musings</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Inference on Edge</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">llm</div>
+                <div class="quarto-category">whisper</div>
+                <div class="quarto-category">llama.cpp</div>
+                <div class="quarto-category">onnxruntime</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>VB </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 20, 2024</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div><div class="category" data-category="async">async <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cuda">cuda <span class="quarto-category-count">(1)</span></div><div class="category" data-category="home">home <span class="quarto-category-count">(1)</span></div><div class="category" data-category="llama.cpp">llama.cpp <span class="quarto-category-count">(2)</span></div><div class="category" data-category="llm">llm <span class="quarto-category-count">(2)</span></div><div class="category" data-category="mac">mac <span class="quarto-category-count">(1)</span></div><div class="category" data-category="metal">metal <span class="quarto-category-count">(1)</span></div><div class="category" data-category="onnxruntime">onnxruntime <span class="quarto-category-count">(1)</span></div><div class="category" data-category="phi">phi <span class="quarto-category-count">(1)</span></div><div class="category" data-category="phi3.5">phi3.5 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="things">things <span class="quarto-category-count">(1)</span></div><div class="category" data-category="whisper">whisper <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
@@ -201,206 +159,7 @@ window.Quarto = {
 
 
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="llm,llama.cpp,mac,metal,cuda,phi3.5,phi" data-listing-date-sort="1724191200000" data-listing-file-modified-sort="1724261961379" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="347">
-<div class="thumbnail">
-<p><a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external"></a></p><a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">Run Phi-3.5 with llama.cpp</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('llm'); return false;">
-llm
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('llama.cpp'); return false;">
-llama.cpp
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('mac'); return false;">
-mac
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('metal'); return false;">
-metal
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cuda'); return false;">
-cuda
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('phi3.5'); return false;">
-phi3.5
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('phi'); return false;">
-phi
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">Microsoft released Phi 3.5 mini, MoE and vision with 128K context, multilingual &amp; MIT license! 🔥</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">
-<div class="listing-date">
-Aug 21, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="llm,whisper,llama.cpp,onnxruntime" data-listing-date-sort="1724104800000" data-listing-file-modified-sort="1724178538063" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="thumbnail">
-<p><a href="./posts/inference-on-edge/index.html" class="no-external"></a></p><a href="./posts/inference-on-edge/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/inference-on-edge/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/inference-on-edge/index.html" class="no-external">Inference on Edge</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/inference-on-edge/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('llm'); return false;">
-llm
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('whisper'); return false;">
-whisper
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('llama.cpp'); return false;">
-llama.cpp
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('onnxruntime'); return false;">
-onnxruntime
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/inference-on-edge/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/inference-on-edge/index.html" class="no-external">
-<div class="listing-date">
-Aug 20, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="things" data-listing-date-sort="1722204000000" data-listing-file-modified-sort="1722287519534" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="144">
-<div class="thumbnail">
-<p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a></p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">List of random things I keep forgetting</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('things'); return false;">
-things
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">I often end up looking for certain commands/ code snippets so here is a list.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">
-<div class="listing-date">
-Jul 29, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="async" data-listing-date-sort="1722204000000" data-listing-file-modified-sort="1722287851843" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="244">
-<div class="thumbnail">
-<p><a href="./posts/live-async/index.html" class="no-external"></a></p><a href="./posts/live-async/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/live-async/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/live-async/index.html" class="no-external">Live async, live happy</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/live-async/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('async'); return false;">
-async
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/live-async/index.html" class="no-external">Why I don’t take calls and take ages to respond?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/live-async/index.html" class="no-external">
-<div class="listing-date">
-Jul 29, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="home" data-listing-date-sort="1703545200000" data-listing-file-modified-sort="1722288026847" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="737">
-<div class="thumbnail">
-<p><a href="./posts/what-is-home/index.html" class="no-external"></a></p><a href="./posts/what-is-home/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/what-is-home/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/what-is-home/index.html" class="no-external">What is home?</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/what-is-home/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('home'); return false;">
-home
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/what-is-home/index.html" class="no-external"><em>Written on 26th December 2023, from Gurgaon, India.</em></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/what-is-home/index.html" class="no-external">
-<div class="listing-date">
-Dec 26, 2023
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
