@@ -25,7 +25,7 @@
     "href": "posts/run-phi-on-device-llama-cpp/index.html",
     "title": "Run Phi-3.5 with llama.cpp",
     "section": "",
-    "text": "Microsoft released Phi 3.5 mini, MoE and vision with 128K context, multilingual & MIT license! 🔥\nThe MoE beats Gemini flash and the Vision model is competitive with GPT4o.\nSome quick notes on the models and they atleast look good on benchmarks:\nMini with 3.8B parameters\nMoE with 16x3.8B (6.6B active - 2 experts)\nPh3.5 Vision with 4.2B params\nThe star of the show for me atleast is the Phi-3.5 Mini, it looks like decently sized model which would make it easy to fine-tune for specific tasks.\nAlright, enough of about the models, let’s try to see if we can run this model on your Mac/Windows/Linux device.\nThere are multiple ways to run a model on-device - you can use, transformers, llama.cpp, MLC, ONNXRuntime and bunch others. One of the easiest ways however is to use llama.cpp, once setup - it just works across pretty much all well-known model architectures."
+    "text": "I’m a strong believer that as we continue to traverse the AI/ ASI/ AGI landscape, the net compute required for accessing it would decrease i.e. we’ll get smaller but stronger models. As these models continue to become smaller, it’s more likely that you can run inference directly on your device. Hence, I continue to keep an eye out for smaller models.\nThe big question here, is what use-cases do you actually use these on-device models for? I use them for a few select task, like, rewriting, summarizing, quick syntax lookups, or just quick vibe checks on a topic (asking the model to critique what I’ve written).\nThis brings us to Phi 3.5. The other day, Microsoft released an update to their Phi series of small scale LLMs: Phi 3.5.\nThe highlight: Phi 3.5 mini, MoE and vision with 128K context, multilingual & MIT license! 🔥\nThe MoE beats Gemini flash and the Vision model is competitive with GPT4o.\nSome quick notes on the models and they atleast look good on benchmarks:\nMini with 3.8B parameters\nMoE with 16x3.8B (6.6B active - 2 experts)\nPh3.5 Vision with 4.2B params\nThe star of the show for me atleast is the Phi-3.5 Mini, it looks like decently sized model which would make it easy to fine-tune for specific tasks.\nAlright, enough of about the models, let’s try to see if we can run this model on your Mac/Windows/Linux device.\nThere are multiple ways to run a model on-device - you can use, transformers, llama.cpp, MLC, ONNXRuntime and bunch others. One of the easiest ways however is to use llama.cpp, once setup - it just works across pretty much all well-known model architectures."
   },
   {
     "objectID": "posts/run-phi-on-device-llama-cpp/index.html#step-1-setup-llama.cpp",
@@ -39,7 +39,14 @@
     "href": "posts/run-phi-on-device-llama-cpp/index.html#step-2-run-inference-with-phi3.5",
     "title": "Run Phi-3.5 with llama.cpp",
     "section": "Step 2: Run inference with Phi3.5",
-    "text": "Step 2: Run inference with Phi3.5\nTo be able to run a LLM on-device all you need is to find the model on the hub and simply point the llama.cpp’s built binaries to it. There are over 30,000 quantized llama.cpp models on the Hub. For our use-case we’ll use the lmstudio-community/Phi-3.5-mini-instruct-GGUF repo by the good folks at lm-studio.\nllama-cli --hf-repo lmstudio-community/Phi-3.5-mini-instruct-GGUF \\\n--hf-file Phi-3.5-mini-instruct-Q6_K.gguf \\\n-p \"The meaning to life and the universe is\"\nand.. that’s it!"
+    "text": "Step 2: Run inference with Phi3.5\nTo be able to run a LLM on-device all you need is to find the model on the hub and simply point the llama.cpp’s built binaries to it. There are over 30,000 quantized llama.cpp models on the Hub. For our use-case we’ll use the lmstudio-community/Phi-3.5-mini-instruct-GGUF repo by the good folks at lm-studio.\nllama-cli --hf-repo lmstudio-community/Phi-3.5-mini-instruct-GGUF \\\n--hf-file Phi-3.5-mini-instruct-Q6_K.gguf \\\n-p \"The meaning to life and the universe is\""
+  },
+  {
+    "objectID": "posts/run-phi-on-device-llama-cpp/index.html#step-3-use-it-for-your-own-tasks",
+    "href": "posts/run-phi-on-device-llama-cpp/index.html#step-3-use-it-for-your-own-tasks",
+    "title": "Run Phi-3.5 with llama.cpp",
+    "section": "Step 3: Use it for your own tasks",
+    "text": "Step 3: Use it for your own tasks\nThat’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.\nand.. that’s it!"
   },
   {
     "objectID": "posts/what-is-home/index.html",
