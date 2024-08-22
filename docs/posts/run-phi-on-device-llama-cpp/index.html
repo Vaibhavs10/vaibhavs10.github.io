@@ -194,13 +194,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>I’m a strong believer that as we continue to traverse the AI/ ASI/ AGI landscape, the net compute required for accessing it would decrease i.e.&nbsp;we’ll get smaller but stronger models.</p>
-<p>As these models continue to become smaller, it’s more likely that you can run inference directly on your device. Hence, I continue to keep an eye out for smaller models.</p>
+<p>As these models continue to become smaller and stronger, it’s more likely that you can run inference directly on your device and replace your on-line/ API based LLM usage (like ChatGPT, Gemini, Claude, etc). Hence, I continue to keep an eye out for smaller models.</p>
 <p>The big question here, is what use-cases do you actually use these on-device models for?</p>
-<p>I use them for a few select task, like, rewriting, summarizing, quick syntax lookups, or just quick vibe checks on a topic (asking the model to critique what I’ve written).</p>
+<p>I use them for a few select task, like, rewriting, summarizing, quick syntax lookups, or just quick vibe checks on a topic (asking the model to critique what I’ve written) and creative explorations.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="examples.png" class="img-fluid figure-img"></p>
-<figcaption>Chatting with Phi 3.5 on my Macbook</figcaption>
+<figcaption>Chatting with Phi 3.5 on my Macbook with llama.cpp</figcaption>
 </figure>
 </div>
 <p>This brings us to Phi 3.5. The other day, Microsoft released an update to their Phi series of small scale LLMs: Phi 3.5.</p>
@@ -255,7 +255,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">llama-cli</span> <span class="at">--hf-repo</span> bartowski/Phi-3.5-mini-instruct-GGUF <span class="dt">\</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>--hf-file Phi-3.5-mini-instruct-Q8_0.gguf <span class="dt">\</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>-p <span class="st">"Hey my name is Sof, what are you upto?"</span> <span class="at">-c</span> 8192 <span class="at">-cnv</span> <span class="at">--color</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>-c</code> is the context window size, <code>-cnv</code> is to use the conversation/ chat mode and <code>--color</code> is to colorize the output</p>
+<p><code>-c</code> is the context window size, <code>-cnv</code> is to use the conversation/ chat mode and <code>--color</code> is to colorize the output.</p>
+<p>Bonus: Now go try other <a href="https://huggingface.co/models?library=gguf">GGUF models on the Hub</a> and compare their performance with Phi 3.5.</p>
 <p>and.. that’s it!</p>
 
 

@@ -7,13 +7,13 @@ categories: [llm, llama.cpp, mac, metal, cuda, phi3.5, phi]
 
 I'm a strong believer that as we continue to traverse the AI/ ASI/ AGI landscape, the net compute required for accessing it would decrease i.e. we'll get smaller but stronger models.
 
-As these models continue to become smaller, it's more likely that you can run inference directly on your device. Hence, I continue to keep an eye out for smaller models. 
+As these models continue to become smaller and stronger, it's more likely that you can run inference directly on your device and replace your on-line/ API based LLM usage (like ChatGPT, Gemini, Claude, etc). Hence, I continue to keep an eye out for smaller models. 
 
 The big question here, is what use-cases do you actually use these on-device models for?
 
-I use them for a few select task, like, rewriting, summarizing, quick syntax lookups, or just quick vibe checks on a topic (asking the model to critique what I've written).
+I use them for a few select task, like, rewriting, summarizing, quick syntax lookups, or just quick vibe checks on a topic (asking the model to critique what I've written) and creative explorations.
 
-![Chatting with Phi 3.5 on my Macbook](examples.png)
+![Chatting with Phi 3.5 on my Macbook with llama.cpp](examples.png)
 
 This brings us to Phi 3.5. The other day, Microsoft released an update to their Phi series of small scale LLMs: Phi 3.5.
 
@@ -96,6 +96,8 @@ llama-cli --hf-repo bartowski/Phi-3.5-mini-instruct-GGUF \
 -p "Hey my name is Sof, what are you upto?" -c 8192 -cnv --color
 ```
 
-`-c` is the context window size, `-cnv` is to use the conversation/ chat mode and `--color` is to colorize the output
+`-c` is the context window size, `-cnv` is to use the conversation/ chat mode and `--color` is to colorize the output.
+
+Bonus: Now go try other [GGUF models on the Hub](https://huggingface.co/models?library=gguf) and compare their performance with Phi 3.5.
 
 and.. that's it!
