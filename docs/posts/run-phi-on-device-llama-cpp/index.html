@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="VB">
-<meta name="dcterms.date" content="2024-08-21">
+<meta name="dcterms.date" content="2024-08-22">
 
 <title>VB’s Notes and Ramblings - Run Phi-3.5 with llama.cpp</title>
 <style>
@@ -174,7 +174,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 21, 2024</p>
+        <p class="date">August 22, 2024</p>
       </div>
     </div>
     
@@ -193,9 +193,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>I’m a strong believer that as we continue to traverse the AI/ ASI/ AGI landscape, the net compute required for accessing it would decrease i.e.&nbsp;we’ll get smaller but stronger models. As these models continue to become smaller, it’s more likely that you can run inference directly on your device. Hence, I continue to keep an eye out for smaller models.</p>
-<p>The big question here, is what use-cases do you actually use these on-device models for? I use them for a few select task, like, rewriting, summarizing, quick syntax lookups, or just quick vibe checks on a topic (asking the model to critique what I’ve written).</p>
-<p><insert a="" picture="" of="" chat="" here=""></insert></p>
+<p>I’m a strong believer that as we continue to traverse the AI/ ASI/ AGI landscape, the net compute required for accessing it would decrease i.e.&nbsp;we’ll get smaller but stronger models.</p>
+<p>As these models continue to become smaller, it’s more likely that you can run inference directly on your device. Hence, I continue to keep an eye out for smaller models.</p>
+<p>The big question here, is what use-cases do you actually use these on-device models for?</p>
+<p>I use them for a few select task, like, rewriting, summarizing, quick syntax lookups, or just quick vibe checks on a topic (asking the model to critique what I’ve written).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="examples.png" class="img-fluid figure-img"></p>
+<figcaption>Chatting with Phi 3.5 on my Macbook</figcaption>
+</figure>
+</div>
 <p>This brings us to Phi 3.5. The other day, Microsoft released an update to their Phi series of small scale LLMs: Phi 3.5.</p>
 <p>The highlight: Phi 3.5 mini, MoE and vision with 128K context, multilingual &amp; MIT license! 🔥</p>
 <p>The MoE beats Gemini flash and the Vision model is competitive with GPT4o.</p>
@@ -225,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-1-setup-llama.cpp" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-setup-llama.cpp">Step 1: Setup llama.cpp</h2>
 <p>On a mac, you can install llama.cpp using homebrew:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install llama-cpp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install llama.cpp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>On a Windows/ Linux device, you can follow the instructions on the <a href="https://github.com/ggerganov/llama.cpp/blob/master/docs/build.md">llama.cpp Docs</a>)</p>
 <p>For example, a typical build command for CUDA enabled device looks like this:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ggerganov/llama.cpp <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
@@ -238,11 +245,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To be able to run a LLM on-device all you need is to find the model on the hub and simply point the llama.cpp’s built binaries to it. There are over <a href="https://huggingface.co/models?library=gguf">30,000 quantized llama.cpp models</a> on the Hub. For our use-case we’ll use the <a href="https://huggingface.co/lmstudio-community/Phi-3.5-mini-instruct-GGUF">lmstudio-community/Phi-3.5-mini-instruct-GGUF</a> repo by the good folks at lm-studio.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">llama-cli</span> <span class="at">--hf-repo</span> lmstudio-community/Phi-3.5-mini-instruct-GGUF <span class="dt">\</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>--hf-file Phi-3.5-mini-instruct-Q6_K.gguf <span class="dt">\</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>-p <span class="st">"The meaning to life and the universe is"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>-p <span class="st">"The meaning to life and the universe is"</span> <span class="at">-c</span> 8192</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="step-3-use-it-for-your-own-tasks" class="level2">
 <h2 class="anchored" data-anchor-id="step-3-use-it-for-your-own-tasks">Step 3: Use it for your own tasks</h2>
 <p>That’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.</p>
+<p>Go on and try out some of your own prompts, and see how it works. There’s myriads of options you can use whilst playing with the model, check out the <a href="https://github.com/ggerganov/llama.cpp/tree/master/examples/main">llama.cpp docs</a> for more details.</p>
+<p>Here’s some of the options I use quite a bit:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">llama-cli</span> <span class="at">--hf-repo</span> bartowski/Phi-3.5-mini-instruct-GGUF <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>--hf-file Phi-3.5-mini-instruct-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>-p <span class="st">"Hey my name is Sof, what are you upto?"</span> <span class="at">-c</span> 8192 <span class="at">-cnv</span> <span class="at">--color</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>-c</code> is the context window size, <code>-cnv</code> is to use the conversation/ chat mode and <code>--color</code> is to colorize the output</p>
 <p>and.. that’s it!</p>
 
 
