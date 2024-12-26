@@ -1,14 +1,23 @@
 /*-- scss:defaults --*/
 
 /*-- scss:rules --*/
-.listing-title {
-  font-size: 1.3em;
-  font-weight: 600;
-  margin-bottom: 0.5em;
+.quarto-listing-default .quarto-listing-title {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-bottom: 0.7em;
+  margin-top: 1em;
   color: #2c3e50;  // A dark blue-grey color
+  border-bottom: 2px solid #eaeaea;  // Adds a subtle underline
+  padding-bottom: 0.3em;
   
   &:hover {
     color: #3498db;  // A lighter blue for hover state
     text-decoration: none;
+    border-bottom-color: #3498db;  // Underline changes color on hover
   }
+}
+
+// Add some spacing between listing entries
+.quarto-listing-default .quarto-listing-entry {
+  margin-bottom: 2em;
 } 
