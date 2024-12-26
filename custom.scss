@@ -1,0 +1,14 @@
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+.listing-title {
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  color: #2c3e50;  // A dark blue-grey color
+  
+  &:hover {
+    color: #3498db;  // A lighter blue for hover state
+    text-decoration: none;
+  }
+} 

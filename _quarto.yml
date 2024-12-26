@@ -14,7 +14,7 @@ website:
 format:
   html:
     theme:
-      light: [default]
+      light: [default, custom.scss]
     css: styles.css
     mainfont: "Courier New"
     fontsize: 1em
