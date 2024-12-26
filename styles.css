@@ -1,1 +1,31 @@
 /* css styles */
+
+/* Basic styling for that early web feel */
+body {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 0 2rem;
+}
+
+a {
+  color: #0000EE;  /* Classic blue hyperlink color */
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #551A8B;  /* Classic visited link color */
+}
+
+/* Simple navigation styling */
+.navbar {
+  border-bottom: 1px solid #000000;
+  padding: 1rem 0;
+}
+
+/* Basic content styling */
+.content {
+  line-height: 1.6;
+  margin: 2rem 0;
+}

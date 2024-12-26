@@ -5,6 +5,7 @@ project:
 website:
   title: "VB's Notes and Ramblings"
   navbar:
+    background: none
     right:
       - about.qmd
       - now.qmd
@@ -12,5 +13,12 @@ website:
         href: https://twitter.com/reach_vb
 format:
   html:
-    theme: simplex
+    theme:
+      light: [default]
     css: styles.css
+    mainfont: "Courier New"
+    fontsize: 1em
+    linestretch: 1.7
+    page-layout: article
+    toc: true
+    html-math-method: katex
