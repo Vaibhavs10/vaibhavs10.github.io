@@ -1,23 +1,38 @@
 /*-- scss:defaults --*/
 
 /*-- scss:rules --*/
-.quarto-listing-default .quarto-listing-title {
-  font-size: 1.5em;
+// Style the main listing page post titles
+.listing-category article h3 a,
+.quarto-listing article h3 a {
+  font-size: 1.3em;
   font-weight: 700;
-  margin-bottom: 0.7em;
-  margin-top: 1em;
-  color: #2c3e50;  // A dark blue-grey color
-  border-bottom: 2px solid #eaeaea;  // Adds a subtle underline
-  padding-bottom: 0.3em;
+  color: #2c3e50;
+  text-decoration: none;
+  display: block;
+  margin: 0.5em 0 0.3em 0;
   
   &:hover {
-    color: #3498db;  // A lighter blue for hover state
-    text-decoration: none;
-    border-bottom-color: #3498db;  // Underline changes color on hover
+    color: #3498db;
+    text-decoration: underline;
   }
 }
 
-// Add some spacing between listing entries
-.quarto-listing-default .quarto-listing-entry {
-  margin-bottom: 2em;
+// More compact spacing between post entries
+.quarto-listing article {
+  margin-bottom: 1.2em;
+  padding-bottom: 0.8em;
+  border-bottom: 1px solid #eaeaea;
+}
+
+// Make description text more compact
+.quarto-listing article .listing-description {
+  margin: 0.3em 0;
+  line-height: 1.4;
+  font-size: 0.95em;
+}
+
+// Compress metadata/date information
+.quarto-listing article .listing-date {
+  font-size: 0.9em;
+  margin: 0;
 } 
