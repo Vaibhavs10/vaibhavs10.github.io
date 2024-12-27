@@ -2,7 +2,7 @@
 title: "All things running 🏃‍♂️"
 author: "VB"
 date: "2024-12-27"
-categories: [things, running]
+categories: [things, running, nutrition, recovery, marathon]
 ---
 
 I love running, and have recently embarked on the journey to race a marathon in June 2025. In the past, I've reached half-marathon distances multiple times, but have never went higher than that.
@@ -15,6 +15,7 @@ This page is a collection of resources and tips I've found online, that I either
 2. Get a watch that at the very least tracks splits/ time elapsed. I recently upgraded to a Apple Watch Series 10 (~460 EUR) and it does it's job.
 3. Comfy clothes that make you feel comfortable whilst running - decathalon has a very good selection (specially for winters), you don't need to spend a lot on this - but get this right, specially for winters.
 4. Shoes - again this is quite vibe based, you cannot go wrong either way, this requires a bit of experimentation ofc - for ref I've been using 80 EUR Puma running shoes for past 1.5 years, and it's pretty good.
+5. Optional but recommended: create a Strava account, it's a great way to keep yourself motivated and track your progress. Here's [mine](https://www.strava.com/athletes/13731596).
 
 ## Recovery
 
@@ -22,23 +23,25 @@ This page is a collection of resources and tips I've found online, that I either
 2. Whilst the jury is out on the need of stretching, I've anecdotaly found static stretches to help feel quite a bit flexible the rest of the day - [here's what I follow](https://www.nike.com/a/stretches-after-running).
 3. It's a good idea to introduce one or two rest days in the week - a [good reddit thread](https://www.reddit.com/r/running/comments/mjtv3j/how_necessary_are_rest_days/).
 4. Magnesium helps with sore legs (I usually take 500mg after a long run) - [good read](https://www.runnersworld.com/uk/nutrition/diet/a35947990/magnesium-benefits-for-runners/).
-5. Take a nice long shower, you deserve it, and you probably stink a lot too.
+5. Take a nice long shower, you deserve it, and you probably stink a lot too ;) 
 
 ## Nutrition
 
 Few basic things I've learned:
+
 1. Make sure to drink enough water 30-45 minutes before the run, you can even take a bit of electrolytes (although no too much).
 2. Chase up the run with a protein shake and chocolate milk, and drink loads of water in the hours after the run.
 3. Avoid over caffeinating before the run (I've experimented a bit and I do well as long as I've had one coffee, more than that makes my heart race a bit too much).
 4. Don't eat a big breakfast or anything that takes a long time to digests one hour before the run (avoid dairy, fiber and fruits)
 
-### Up to 15 KMs
+Up to 15 KMs
 
 1. Carry on as you would for a normal run, but make sure to hydrate well after the run.
+2. Don't run till you hit a wall, everyone has different energy consumption, learn your limits, running on fumes almost always causes injury/ cramps.
 
-### Up to 30KMs
+Up to 30KMs
 
-1. Take up 1-2 isotonic + energy gels, the goal is to get 60-80g catbs per hour of your run. (As of the date of the post, I haven't tried this yet)
+Take up 1-2 isotonic + energy gels, the goal is to get 60-80g catbs per hour of your run. (As of the date of the post, I haven't tried this yet)
 
 ## Things I'd like to include in my training
 
