@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "VB’s thoughts, comments and musings",
     "section": "",
-    "text": "Run Phi-3.5 with llama.cpp\n\n\n\n\n\n\nllm\n\n\nllama.cpp\n\n\nmac\n\n\nmetal\n\n\ncuda\n\n\nphi3.5\n\n\nphi\n\n\n\n\n\n\n\n\n\nAug 22, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nList of random things I keep forgetting\n\n\n\n\n\n\nthings\n\n\n\n\n\n\n\n\n\nJul 29, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nLive async, live happy\n\n\n\n\n\n\nasync\n\n\n\n\n\n\n\n\n\nJul 29, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nWhat is home?\n\n\n\n\n\n\nhome\n\n\n\n\n\n\n\n\n\nDec 26, 2023\n\n\nVB\n\n\n\n\n\n\nNo matching items"
+    "text": "All things running 🏃‍♂️\n\n\n\n\n\n\nthings\n\n\nrunning\n\n\n\n\n\n\n\n\n\nDec 27, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nRun Phi-3.5 with llama.cpp\n\n\n\n\n\n\nllm\n\n\nllama.cpp\n\n\nmac\n\n\nmetal\n\n\ncuda\n\n\nphi3.5\n\n\nphi\n\n\n\n\n\n\n\n\n\nAug 22, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nList of random things I keep forgetting\n\n\n\n\n\n\nthings\n\n\n\n\n\n\n\n\n\nJul 29, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nLive async, live happy\n\n\n\n\n\n\nasync\n\n\n\n\n\n\n\n\n\nJul 29, 2024\n\n\nVB\n\n\n\n\n\n\n\n\n\n\n\n\nWhat is home?\n\n\n\n\n\n\nhome\n\n\n\n\n\n\n\n\n\nDec 26, 2023\n\n\nVB\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/things-i-keep-forgetting/index.html",
@@ -47,6 +47,41 @@
     "title": "Run Phi-3.5 with llama.cpp",
     "section": "Step 3: Use it for your own tasks",
     "text": "Step 3: Use it for your own tasks\nThat’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.\nGo on and try out some of your own prompts, and see how it works. There’s myriads of options you can use whilst playing with the model, check out the llama.cpp docs for more details.\nHere’s some of the options I use quite a bit:\nllama-cli --hf-repo bartowski/Phi-3.5-mini-instruct-GGUF \\\n--hf-file Phi-3.5-mini-instruct-Q8_0.gguf \\\n-p \"Hey my name is Sof, what are you upto?\" -c 8192 -cnv --color\n-c is the context window size, -cnv is to use the conversation/ chat mode and --color is to colorize the output.\nBonus: Now go try other GGUF models on the Hub and compare their performance with Phi 3.5.\nand.. that’s it!"
+  },
+  {
+    "objectID": "posts/all-things-running/index.html",
+    "href": "posts/all-things-running/index.html",
+    "title": "All things running 🏃‍♂️",
+    "section": "",
+    "text": "I love running, and have recently embarked on the journey to race a marathon in June 2025. In the past, I’ve reached half-marathon distances multiple times, but have never went higher than that.\nThis page is a collection of resources and tips I’ve found online, that I either have found useful or would like to try out in the future."
+  },
+  {
+    "objectID": "posts/all-things-running/index.html#training",
+    "href": "posts/all-things-running/index.html#training",
+    "title": "All things running 🏃‍♂️",
+    "section": "Training",
+    "text": "Training\n\nIt’s recommended to follow a training plan, something that mixes speed work with longer runs. I’m using Runna to generate and follow a plan (it’s a bit expensive ~20 EUR/month).\nGet a watch that at the very least tracks splits/ time elapsed. I recently upgraded to a Apple Watch Series 10 (~460 EUR) and it does it’s job.\nComfy clothes that make you feel comfortable whilst running - decathalon has a very good selection (specially for winters), you don’t need to spend a lot on this - but get this right, specially for winters.\nShoes - again this is quite vibe based, you cannot go wrong either way, this requires a bit of experimentation ofc - for ref I’ve been using 80 EUR Puma running shoes for past 1.5 years, and it’s pretty good."
+  },
+  {
+    "objectID": "posts/all-things-running/index.html#recovery",
+    "href": "posts/all-things-running/index.html#recovery",
+    "title": "All things running 🏃‍♂️",
+    "section": "Recovery",
+    "text": "Recovery\n\nIt’s good to walk a KM or two after runs, it helps bring the heart rate down and helps “settle” the legs - good discussion.\nWhilst the jury is out on the need of stretching, I’ve anecdotaly found static stretches to help feel quite a bit flexible the rest of the day - here’s what I follow.\nIt’s a good idea to introduce one or two rest days in the week - a good reddit thread.\nMagnesium helps with sore legs (I usually take 500mg after a long run) - good read.\nTake a nice long shower, you deserve it, and you probably stink a lot too."
+  },
+  {
+    "objectID": "posts/all-things-running/index.html#nutrition",
+    "href": "posts/all-things-running/index.html#nutrition",
+    "title": "All things running 🏃‍♂️",
+    "section": "Nutrition",
+    "text": "Nutrition\nFew basic things I’ve learned: 1. Make sure to drink enough water 30-45 minutes before the run, you can even take a bit of electrolytes (although no too much). 2. Chase up the run with a protein shake and chocolate milk, and drink loads of water in the hours after the run. 3. Avoid over caffeinating before the run (I’ve experimented a bit and I do well as long as I’ve had one coffee, more than that makes my heart race a bit too much). 4. Don’t eat a big breakfast or anything that takes a long time to digests one hour before the run (avoid dairy, fiber and fruits)\n\nUp to 15 KMs\n\nCarry on as you would for a normal run, but make sure to hydrate well after the run.\n\n\n\nUp to 30KMs\n\nTake up 1-2 isotonic + energy gels, the goal is to get 60-80g catbs per hour of your run. (As of the date of the post, I haven’t tried this yet)"
+  },
+  {
+    "objectID": "posts/all-things-running/index.html#things-id-like-to-include-in-my-training",
+    "href": "posts/all-things-running/index.html#things-id-like-to-include-in-my-training",
+    "title": "All things running 🏃‍♂️",
+    "section": "Things I’d like to include in my training",
+    "text": "Things I’d like to include in my training\n\nStrength training - specially for knees and ankles.\nCycling - I might pick this up on rest days just to boost my VO2 max a bit."
   },
   {
     "objectID": "posts/what-is-home/index.html",

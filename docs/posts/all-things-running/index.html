@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="VB">
+<meta name="dcterms.date" content="2024-12-27">
 
-<title>VB’s thoughts, comments and musings – VB's Notes and Ramblings</title>
+<title>All things running 🏃‍♂️ – VB’s Notes and Ramblings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-15b851b4b768782e3641b87b82c86b73.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-15b851b4b768782e3641b87b82c86b73.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,81 +68,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -152,7 +80,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg border-bottom" data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">VB’s Notes and Ramblings</span>
     </a>
   </div>
@@ -163,11 +91,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./now.html"> 
+    <a class="nav-link" href="../../now.html"> 
 <span class="menu-text">Now</span></a>
   </li>  
   <li class="nav-item compact">
@@ -185,230 +113,110 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">VB’s thoughts, comments and musings</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">All things running 🏃‍♂️</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">things</div>
+                <div class="quarto-category">running</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>VB </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 27, 2024</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div><div class="category" data-category="YXN5bmM=">async <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y3VkYQ==">cuda <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aG9tZQ==">home <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGxhbWEuY3Bw">llama.cpp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGxt">llm <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWFj">mac <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWV0YWw=">metal <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cGhp">phi <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cGhpMy41">phi3.5 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cnVubmluZw==">running <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGhpbmdz">things <span class="quarto-category-count">(2)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#training" id="toc-training" class="nav-link active" data-scroll-target="#training">Training</a></li>
+  <li><a href="#recovery" id="toc-recovery" class="nav-link" data-scroll-target="#recovery">Recovery</a></li>
+  <li><a href="#nutrition" id="toc-nutrition" class="nav-link" data-scroll-target="#nutrition">Nutrition</a>
+  <ul class="collapse">
+  <li><a href="#up-to-15-kms" id="toc-up-to-15-kms" class="nav-link" data-scroll-target="#up-to-15-kms">Up to 15 KMs</a></li>
+  <li><a href="#up-to-30kms" id="toc-up-to-30kms" class="nav-link" data-scroll-target="#up-to-30kms">Up to 30KMs</a></li>
+  </ul></li>
+  <li><a href="#things-id-like-to-include-in-my-training" id="toc-things-id-like-to-include-in-my-training" class="nav-link" data-scroll-target="#things-id-like-to-include-in-my-training">Things I’d like to include in my training</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<p>I love running, and have recently embarked on the journey to race a marathon in June 2025. In the past, I’ve reached half-marathon distances multiple times, but have never went higher than that.</p>
+<p>This page is a collection of resources and tips I’ve found online, that I either have found useful or would like to try out in the future.</p>
+<section id="training" class="level2">
+<h2 class="anchored" data-anchor-id="training">Training</h2>
+<ol type="1">
+<li>It’s recommended to follow a training plan, something that mixes speed work with longer runs. I’m using <a href="https://runna.com/">Runna</a> to generate and follow a plan (it’s a bit expensive ~20 EUR/month).</li>
+<li>Get a watch that at the very least tracks splits/ time elapsed. I recently upgraded to a Apple Watch Series 10 (~460 EUR) and it does it’s job.</li>
+<li>Comfy clothes that make you feel comfortable whilst running - decathalon has a very good selection (specially for winters), you don’t need to spend a lot on this - but get this right, specially for winters.</li>
+<li>Shoes - again this is quite vibe based, you cannot go wrong either way, this requires a bit of experimentation ofc - for ref I’ve been using 80 EUR Puma running shoes for past 1.5 years, and it’s pretty good.</li>
+</ol>
+</section>
+<section id="recovery" class="level2">
+<h2 class="anchored" data-anchor-id="recovery">Recovery</h2>
+<ol type="1">
+<li>It’s good to walk a KM or two after runs, it helps bring the heart rate down and helps “settle” the legs - <a href="https://www.reddit.com/r/running/comments/raej53/do_you_walk_at_all_pre_or_post_run/">good discussion</a>.</li>
+<li>Whilst the jury is out on the need of stretching, I’ve anecdotaly found static stretches to help feel quite a bit flexible the rest of the day - <a href="https://www.nike.com/a/stretches-after-running">here’s what I follow</a>.</li>
+<li>It’s a good idea to introduce one or two rest days in the week - a <a href="https://www.reddit.com/r/running/comments/mjtv3j/how_necessary_are_rest_days/">good reddit thread</a>.</li>
+<li>Magnesium helps with sore legs (I usually take 500mg after a long run) - <a href="https://www.runnersworld.com/uk/nutrition/diet/a35947990/magnesium-benefits-for-runners/">good read</a>.</li>
+<li>Take a nice long shower, you deserve it, and you probably stink a lot too.</li>
+</ol>
+</section>
+<section id="nutrition" class="level2">
+<h2 class="anchored" data-anchor-id="nutrition">Nutrition</h2>
+<p>Few basic things I’ve learned: 1. Make sure to drink enough water 30-45 minutes before the run, you can even take a bit of electrolytes (although no too much). 2. Chase up the run with a protein shake and chocolate milk, and drink loads of water in the hours after the run. 3. Avoid over caffeinating before the run (I’ve experimented a bit and I do well as long as I’ve had one coffee, more than that makes my heart race a bit too much). 4. Don’t eat a big breakfast or anything that takes a long time to digests one hour before the run (avoid dairy, fiber and fruits)</p>
+<section id="up-to-15-kms" class="level3">
+<h3 class="anchored" data-anchor-id="up-to-15-kms">Up to 15 KMs</h3>
+<ol type="1">
+<li>Carry on as you would for a normal run, but make sure to hydrate well after the run.</li>
+</ol>
+</section>
+<section id="up-to-30kms" class="level3">
+<h3 class="anchored" data-anchor-id="up-to-30kms">Up to 30KMs</h3>
+<ol type="1">
+<li>Take up 1-2 isotonic + energy gels, the goal is to get 60-80g catbs per hour of your run. (As of the date of the post, I haven’t tried this yet)</li>
+</ol>
+</section>
+</section>
+<section id="things-id-like-to-include-in-my-training" class="level2">
+<h2 class="anchored" data-anchor-id="things-id-like-to-include-in-my-training">Things I’d like to include in my training</h2>
+<ol type="1">
+<li>Strength training - specially for knees and ankles.</li>
+<li>Cycling - I might pick this up on rest days just to boost my VO2 max a bit.</li>
+</ol>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="dGhpbmdzJTJDcnVubmluZw==" data-listing-date-sort="1735254000000" data-listing-file-modified-sort="1735313712560" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="497">
-<div class="thumbnail">
-<p><a href="./posts/all-things-running/index.html" class="no-external"></a></p><a href="./posts/all-things-running/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/all-things-running/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/all-things-running/index.html" class="no-external">All things running 🏃‍♂️</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/all-things-running/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('dGhpbmdz'); return false;">
-things
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cnVubmluZw=='); return false;">
-running
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/all-things-running/index.html" class="no-external">I love running, and have recently embarked on the journey to race a marathon in June 2025. In the past, I’ve reached half-marathon distances multiple times, but have never…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/all-things-running/index.html" class="no-external">
-<div class="listing-date">
-Dec 27, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="bGxtJTJDbGxhbWEuY3BwJTJDbWFjJTJDbWV0YWwlMkNjdWRhJTJDcGhpMy41JTJDcGhp" data-listing-date-sort="1724277600000" data-listing-file-modified-sort="1734714194124" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="623">
-<div class="thumbnail">
-<p><a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external"></a></p><a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/run-phi-on-device-llama-cpp/examples.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">Run Phi-3.5 with llama.cpp</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">
-llm
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bGxhbWEuY3Bw'); return false;">
-llama.cpp
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bWFj'); return false;">
-mac
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bWV0YWw='); return false;">
-metal
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y3VkYQ=='); return false;">
-cuda
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cGhpMy41'); return false;">
-phi3.5
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cGhp'); return false;">
-phi
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">I’m a strong believer that as we continue to traverse the AI/ ASI/ AGI landscape, the net compute required for accessing it would decrease i.e.&nbsp;we’ll get smaller but…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">
-<div class="listing-date">
-Aug 22, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="dGhpbmdz" data-listing-date-sort="1722204000000" data-listing-file-modified-sort="1734714194124" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="144">
-<div class="thumbnail">
-<p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a></p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">List of random things I keep forgetting</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('dGhpbmdz'); return false;">
-things
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">I often end up looking for certain commands/ code snippets so here is a list.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">
-<div class="listing-date">
-Jul 29, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="YXN5bmM=" data-listing-date-sort="1722204000000" data-listing-file-modified-sort="1734714194121" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="244">
-<div class="thumbnail">
-<p><a href="./posts/live-async/index.html" class="no-external"></a></p><a href="./posts/live-async/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/live-async/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/live-async/index.html" class="no-external">Live async, live happy</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/live-async/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('YXN5bmM='); return false;">
-async
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/live-async/index.html" class="no-external">Why I don’t take calls and take ages to respond?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/live-async/index.html" class="no-external">
-<div class="listing-date">
-Jul 29, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="aG9tZQ==" data-listing-date-sort="1703545200000" data-listing-file-modified-sort="1734714194124" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="737">
-<div class="thumbnail">
-<p><a href="./posts/what-is-home/index.html" class="no-external"></a></p><a href="./posts/what-is-home/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/what-is-home/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/what-is-home/index.html" class="no-external">What is home?</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/what-is-home/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('aG9tZQ=='); return false;">
-home
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/what-is-home/index.html" class="no-external"><em>Written on 26th December 2023, from Gurgaon, India.</em></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/what-is-home/index.html" class="no-external">
-<div class="listing-date">
-Dec 26, 2023
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
