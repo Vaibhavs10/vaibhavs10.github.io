@@ -5,21 +5,34 @@ date: "2024-12-27"
 categories: [things, running]
 ---
 
-I love running, and have recently embarked on the journey to race a marathon in June 2025. In the past, I've done multiple half marathons, but have never went higher than that.
+I love running, and have recently embarked on the journey to race a marathon in June 2025. In the past, I've reached half-marathon distances multiple times, but have never went higher than that.
 
 This page is a collection of resources and tips I've found online, that I either have found useful or would like to try out in the future.
 
 ## Training
+
 1. It's recommended to follow a training plan, something that mixes speed work with longer runs. I'm using [Runna](https://runna.ai/) to generate and follow a plan (it's a bit expensive ~20 EUR/month).
-2. Get a watch that at the very least tracks splits/ time elapsed. I recently upgraded to a Apple Watch Series 10 (~460 EUR) and it's working out quite well.
-3.  
+2. Get a watch that at the very least tracks splits/ time elapsed. I recently upgraded to a Apple Watch Series 10 (~460 EUR) and it does it's job.
+3. Comfy clothes that make you feel comfortable whilst running - decathalon has a very good selection (specially for winters), you don't need to spend a lot on this - but get this right, specially for winters.
+4. Shoes - again this is quite vibe based, you cannot go wrong either way, this requires a bit of experimentation ofc - for ref I've been using 80 EUR Puma running shoes for past 1.5 years, and it's pretty good.
 
 ## Recovery
 
-## Nutrition
-Few basic things I've learned:
-1. Make sure to drink enough water 30-45 minutes before the run, you can even take a bit of electrolytes (although no too much)
-2. Chase up the run with a protein shake and chocolate milk, and drink loads of water in the hours after the run.
-3. Avoid over caffeinating before the run (I've experimented a bit and mostly do well as long as I've had one coffee, more than that makes my heart race a bit too much).
+1. It's good to walk a km or two after runs, it helps bring the heart rate down and helps "settle" the legs.
+2. Whilst the jury is out on the need of stretching, I've anecdotaly found static stretches to help feel quite a bit flexible the rest of the day.
+3. It's a good idea to introduce one or two rest days in the week.
+4. Magnesium helps with sore legs (I usually take 500mg after a long run).
+5. Take a nice long shower, you deserve it, and you probably stink a lot too.
 
-1. Up to 15KM long runs:
+## Nutrition
+
+Few basic things I've learned:
+1. Make sure to drink enough water 30-45 minutes before the run, you can even take a bit of electrolytes (although no too much).
+2. Chase up the run with a protein shake and chocolate milk, and drink loads of water in the hours after the run.
+3. Avoid over caffeinating before the run (I've experimented a bit and I do well as long as I've had one coffee, more than that makes my heart race a bit too much).
+4. Don't eat a big breakfast or anything that takes a long time to digests one hour before the run (avoid dairy, fiber and fruits)
+
+### Up to 15 KMs
+
+1. Carry on as you would for a normal run, but make sure to hydrate well after the run.
+2. 
