@@ -1,0 +1,96 @@
+---
+title: "Export and play with Strava analytics data"
+author: "VB"
+date: "2024-12-30"
+categories: [analytics, python, running, strava, marathon, hugging face]
+---
+
+This is just a fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.
+
+Pre-requisites:
+1. Create an API application: https://www.strava.com/settings/api in your strava account (put all the website etc details as localhost)
+2. Set API keys as Environment variables `STRAVA_CLIENT_ID` & `STRAVA_CLIENT_SECRET`
+
+## Setup Python Environment
+
+Pretty straightforward with `uv`: `uv venv --python 3.12`
+
+Followed by, `source .venv/bin/activate`
+
+You can install all required packages via `uv pip install pandas huggingface_hub`
+
+## Python Codebase
+
+```python
+import os
+import requests
+import webbrowser
+import json
+import time
+import pandas as pd
+from huggingface_hub import HfApi, create_repo
+
+api = HfApi()
+
+# request initial token
+
+redirect_uri = 'http://localhost:8000'
+
+client_id = os.environ['STRAVA_CLIENT_ID']
+client_secret = os.environ['STRAVA_CLIENT_SECRET']
+
+request_url = f'http://www.strava.com/oauth/authorize?client_id={client_id}' \
+                      f'&response_type=code&redirect_uri={redirect_uri}' \
+                      f'&approval_prompt=force' \
+                      f'&scope=profile:read_all,activity:read_all'
+
+webbrowser.open(request_url)
+code = input('Insert the code from the url: ')
+    
+token = requests.post(url='https://www.strava.com/api/v3/oauth/token',
+                     data={'client_id': client_id,
+                           'client_secret': client_secret,
+                           'code': code,
+                           'grant_type': 'authorization_code'})
+token = token.json()
+
+# import all user activities
+
+page = 1
+response = []
+count = 1
+
+while True:
+    
+    # request new page of activities
+    endpoint = f"https://www.strava.com/api/v3/athlete/activities?" \
+                  f"access_token={token['access_token']}&" \
+                  f"page={page}&" \
+                  f"per_page=50"
+    
+    response = requests.get(endpoint).json()
+
+    with open(f'data/data-{count}.json', 'w', encoding='utf-8') as f:
+        json.dump(response, f, ensure_ascii=False, indent=4)
+    
+    count+=1
+
+    # check if page contains activities
+    if len(response):
+        page += 1  
+
+    else:
+      break  
+
+#create_repo("reach-vb/strava-stats", repo_type="dataset")
+
+api.upload_folder(
+    folder_path="data/",
+    path_in_repo="/", # Upload to a specific folder
+    repo_id="reach-vb/strava-stats",
+    repo_type="dataset",
+    allow_patterns="*.json",
+)
+
+
+```
