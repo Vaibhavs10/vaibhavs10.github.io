@@ -25,35 +25,35 @@
     "href": "posts/run-phi-on-device-ollama/index.html",
     "title": "Run Phi-4 with ollama and Hugging Face",
     "section": "",
-    "text": "This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac.\n\n\nOn a mac, you can install ollama using homebrew:\nbrew install ollama\nOn a Windows/ Linux device, you can follow the instructions on the Ollama Docs)\n\n\n\nollama serve\n\n\n\nAfter some research I found that the Phi-4 GGUFs from Unsloth are the most accurate. They ran bunch of evals and also converted the model to LLaMa format. You can find it here: unsloth/phi-4-GGUF.\nollama run hf.co/unsloth/phi-4-GGUF\nI’d also recommend reading the blogpost about the fixes for the Phi-4 model here.\n\n\n\nThat’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.\nGo on and try out some of your own prompts, and see how it works.\n\n\n\nChatting with Phi 4 on my Macbook with Ollama\n\n\nBonus: Now go try other GGUF models on the Hub and compare their performance with Phi 4.\nand.. that’s it!"
+    "text": "This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac."
   },
   {
     "objectID": "posts/run-phi-on-device-ollama/index.html#step-1-setup-ollama",
     "href": "posts/run-phi-on-device-ollama/index.html#step-1-setup-ollama",
     "title": "Run Phi-4 with ollama and Hugging Face",
-    "section": "",
-    "text": "On a mac, you can install ollama using homebrew:\nbrew install ollama\nOn a Windows/ Linux device, you can follow the instructions on the Ollama Docs)"
+    "section": "Step 1: Setup ollama",
+    "text": "Step 1: Setup ollama\nOn a mac, you can install ollama using homebrew:\nbrew install ollama\nOn a Windows/ Linux device, you can follow the instructions on the Ollama Docs)"
   },
   {
     "objectID": "posts/run-phi-on-device-ollama/index.html#step-2-kickstart-ollama",
     "href": "posts/run-phi-on-device-ollama/index.html#step-2-kickstart-ollama",
     "title": "Run Phi-4 with ollama and Hugging Face",
-    "section": "",
-    "text": "ollama serve"
+    "section": "Step 2: Kickstart Ollama",
+    "text": "Step 2: Kickstart Ollama\nollama serve"
   },
   {
     "objectID": "posts/run-phi-on-device-ollama/index.html#step-3-run-inference-with-phi-4",
     "href": "posts/run-phi-on-device-ollama/index.html#step-3-run-inference-with-phi-4",
     "title": "Run Phi-4 with ollama and Hugging Face",
-    "section": "",
-    "text": "After some research I found that the Phi-4 GGUFs from Unsloth are the most accurate. They ran bunch of evals and also converted the model to LLaMa format. You can find it here: unsloth/phi-4-GGUF.\nollama run hf.co/unsloth/phi-4-GGUF\nI’d also recommend reading the blogpost about the fixes for the Phi-4 model here."
+    "section": "Step 3: Run inference with Phi-4",
+    "text": "Step 3: Run inference with Phi-4\nAfter some research I found that the Phi-4 GGUFs from Unsloth are the most accurate. They ran bunch of evals and also converted the model to LLaMa format. You can find it here: unsloth/phi-4-GGUF.\nollama run hf.co/unsloth/phi-4-GGUF\nI’d also recommend reading the blogpost about the fixes for the Phi-4 model here."
   },
   {
     "objectID": "posts/run-phi-on-device-ollama/index.html#step-4-use-it-for-your-own-tasks",
     "href": "posts/run-phi-on-device-ollama/index.html#step-4-use-it-for-your-own-tasks",
     "title": "Run Phi-4 with ollama and Hugging Face",
-    "section": "",
-    "text": "That’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.\nGo on and try out some of your own prompts, and see how it works.\n\n\n\nChatting with Phi 4 on my Macbook with Ollama\n\n\nBonus: Now go try other GGUF models on the Hub and compare their performance with Phi 4.\nand.. that’s it!"
+    "section": "Step 4: Use it for your own tasks",
+    "text": "Step 4: Use it for your own tasks\nThat’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.\nGo on and try out some of your own prompts, and see how it works.\n\n\n\nChatting with Phi 4 on my Macbook with Ollama\n\n\nBonus: Now go try other GGUF models on the Hub and compare their performance with Phi 4.\nand.. that’s it!"
   },
   {
     "objectID": "posts/all-things-running/index.html",

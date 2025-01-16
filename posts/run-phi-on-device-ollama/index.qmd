@@ -5,8 +5,6 @@ date: "2025-01-16"
 categories: [llm, ollama, mac, metal, cuda, phi4, phi]
 ---
 
-# Run Microsoft Phi-4 blazingly fast on your Mac
-
 This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac.
 
 ## Step 1: Setup ollama
@@ -42,7 +40,7 @@ That's the fun bit, once the model is loaded, you can do whatever you want, at t
 
 Go on and try out some of your own prompts, and see how it works.
 
-![Chatting with Phi 4 on my Macbook with Ollama](examples.png)
+![Chatting with Phi 4 on my Macbook with Ollama](example.png)
 
 Bonus: Now go try other [GGUF models on the Hub](https://huggingface.co/models?library=gguf) and compare their performance with Phi 4.
 
