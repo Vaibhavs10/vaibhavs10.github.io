@@ -17,7 +17,7 @@ brew install ollama
 
 On a Windows/ Linux device, you can follow the instructions on the [Ollama Docs](https://ollama.com/download))
 
-## Step 2: Kickstart Ollama
+## Step 2: Kickstart ollama
 
 ```bash
 ollama serve
@@ -45,3 +45,5 @@ Go on and try out some of your own prompts, and see how it works.
 Bonus: Now go try other [GGUF models on the Hub](https://huggingface.co/models?library=gguf) and compare their performance with Phi 4.
 
 and.. that's it!
+
+Oh, sorry, one last thing, you can now even run private GGUFs from the Hugging Face Hub via ollama, [read here](https://huggingface.co/docs/hub/en/ollama).
