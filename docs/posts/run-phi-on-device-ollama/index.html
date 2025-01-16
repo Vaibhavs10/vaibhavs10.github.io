@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="VB">
+<meta name="dcterms.date" content="2025-01-16">
 
-<title>VB’s thoughts, comments and musings – VB's Notes and Ramblings</title>
+<title>Run Phi-4 with ollama and Hugging Face – VB’s Notes and Ramblings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +22,59 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-15b851b4b768782e3641b87b82c86b73.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-15b851b4b768782e3641b87b82c86b73.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,81 +102,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -152,7 +114,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg border-bottom" data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">VB’s Notes and Ramblings</span>
     </a>
   </div>
@@ -163,11 +125,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./now.html"> 
+    <a class="nav-link" href="../../now.html"> 
 <span class="menu-text">Now</span></a>
   </li>  
   <li class="nav-item compact">
@@ -185,290 +147,103 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">VB’s thoughts, comments and musings</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Run Phi-4 with ollama and Hugging Face</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">llm</div>
+                <div class="quarto-category">ollama</div>
+                <div class="quarto-category">mac</div>
+                <div class="quarto-category">metal</div>
+                <div class="quarto-category">cuda</div>
+                <div class="quarto-category">phi4</div>
+                <div class="quarto-category">phi</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>VB </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 16, 2025</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="YXN5bmM=">async <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y3VkYQ==">cuda <span class="quarto-category-count">(2)</span></div><div class="category" data-category="aG9tZQ==">home <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGxhbWEuY3Bw">llama.cpp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGxt">llm <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bWFj">mac <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bWFyYXRob24=">marathon <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWV0YWw=">metal <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bnV0cml0aW9u">nutrition <span class="quarto-category-count">(1)</span></div><div class="category" data-category="b2xsYW1h">ollama <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cGhp">phi <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cGhpMy41">phi3.5 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cGhpNA==">phi4 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cmVjb3Zlcnk=">recovery <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cnVubmluZw==">running <span class="quarto-category-count">(1)</span></div><div class="category" data-category="dGhpbmdz">things <span class="quarto-category-count">(2)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#run-microsoft-phi-4-blazingly-fast-on-your-mac" id="toc-run-microsoft-phi-4-blazingly-fast-on-your-mac" class="nav-link active" data-scroll-target="#run-microsoft-phi-4-blazingly-fast-on-your-mac">Run Microsoft Phi-4 blazingly fast on your Mac</a>
+  <ul class="collapse">
+  <li><a href="#step-1-setup-ollama" id="toc-step-1-setup-ollama" class="nav-link" data-scroll-target="#step-1-setup-ollama">Step 1: Setup ollama</a></li>
+  <li><a href="#step-2-kickstart-ollama" id="toc-step-2-kickstart-ollama" class="nav-link" data-scroll-target="#step-2-kickstart-ollama">Step 2: Kickstart Ollama</a></li>
+  <li><a href="#step-3-run-inference-with-phi-4" id="toc-step-3-run-inference-with-phi-4" class="nav-link" data-scroll-target="#step-3-run-inference-with-phi-4">Step 3: Run inference with Phi-4</a></li>
+  <li><a href="#step-4-use-it-for-your-own-tasks" id="toc-step-4-use-it-for-your-own-tasks" class="nav-link" data-scroll-target="#step-4-use-it-for-your-own-tasks">Step 4: Use it for your own tasks</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<section id="run-microsoft-phi-4-blazingly-fast-on-your-mac" class="level1">
+<h1>Run Microsoft Phi-4 blazingly fast on your Mac</h1>
+<p>This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac.</p>
+<section id="step-1-setup-ollama" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-setup-ollama">Step 1: Setup ollama</h2>
+<p>On a mac, you can install ollama using homebrew:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install ollama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>On a Windows/ Linux device, you can follow the instructions on the <a href="https://ollama.com/download">Ollama Docs</a>)</p>
+</section>
+<section id="step-2-kickstart-ollama" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-kickstart-ollama">Step 2: Kickstart Ollama</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> serve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-3-run-inference-with-phi-4" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-run-inference-with-phi-4">Step 3: Run inference with Phi-4</h2>
+<p>After some research I found that the Phi-4 GGUFs from Unsloth are the most accurate. They ran bunch of evals and also converted the model to LLaMa format. You can find it here: <a href="https://huggingface.co/unsloth/phi-4-GGUF">unsloth/phi-4-GGUF</a>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>I’d also recommend reading the blogpost about the fixes for the Phi-4 model <a href="https://unsloth.ai/blog/phi4">here</a>.</p>
+</section>
+<section id="step-4-use-it-for-your-own-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-use-it-for-your-own-tasks">Step 4: Use it for your own tasks</h2>
+<p>That’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.</p>
+<p>Go on and try out some of your own prompts, and see how it works.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="examples.png" class="img-fluid figure-img"></p>
+<figcaption>Chatting with Phi 4 on my Macbook with Ollama</figcaption>
+</figure>
+</div>
+<p>Bonus: Now go try other <a href="https://huggingface.co/models?library=gguf">GGUF models on the Hub</a> and compare their performance with Phi 4.</p>
+<p>and.. that’s it!</p>
 
 
+</section>
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="bGxtJTJDb2xsYW1hJTJDbWFjJTJDbWV0YWwlMkNjdWRhJTJDcGhpNCUyQ3BoaQ==" data-listing-date-sort="1736982000000" data-listing-file-modified-sort="1737039576107" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="179">
-<div class="thumbnail">
-<p><a href="./posts/run-phi-on-device-ollama/index.html" class="no-external"></a></p><a href="./posts/run-phi-on-device-ollama/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/run-phi-on-device-ollama/examples.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/run-phi-on-device-ollama/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/run-phi-on-device-ollama/index.html" class="no-external">Run Phi-4 with ollama and Hugging Face</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/run-phi-on-device-ollama/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">
-llm
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('b2xsYW1h'); return false;">
-ollama
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bWFj'); return false;">
-mac
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bWV0YWw='); return false;">
-metal
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y3VkYQ=='); return false;">
-cuda
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cGhpNA=='); return false;">
-phi4
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cGhp'); return false;">
-phi
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/run-phi-on-device-ollama/index.html" class="no-external">This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/run-phi-on-device-ollama/index.html" class="no-external">
-<div class="listing-date">
-Jan 16, 2025
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="dGhpbmdzJTJDcnVubmluZyUyQ251dHJpdGlvbiUyQ3JlY292ZXJ5JTJDbWFyYXRob24=" data-listing-date-sort="1735254000000" data-listing-file-modified-sort="1736769833654" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="630">
-<div class="thumbnail">
-<p><a href="./posts/all-things-running/index.html" class="no-external"></a></p><a href="./posts/all-things-running/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/all-things-running/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/all-things-running/index.html" class="no-external">All things running 🏃‍♂️</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/all-things-running/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('dGhpbmdz'); return false;">
-things
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cnVubmluZw=='); return false;">
-running
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bnV0cml0aW9u'); return false;">
-nutrition
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cmVjb3Zlcnk='); return false;">
-recovery
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bWFyYXRob24='); return false;">
-marathon
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/all-things-running/index.html" class="no-external">I love running, and have recently embarked on the journey to race a marathon in June 2025. In the past, I’ve reached half-marathon distances multiple times, but have never…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/all-things-running/index.html" class="no-external">
-<div class="listing-date">
-Dec 27, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="bGxtJTJDbGxhbWEuY3BwJTJDbWFjJTJDbWV0YWwlMkNjdWRhJTJDcGhpMy41JTJDcGhp" data-listing-date-sort="1724277600000" data-listing-file-modified-sort="1734714194124" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="623">
-<div class="thumbnail">
-<p><a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external"></a></p><a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/run-phi-on-device-llama-cpp/examples.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">Run Phi-3.5 with llama.cpp</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">
-llm
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bGxhbWEuY3Bw'); return false;">
-llama.cpp
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bWFj'); return false;">
-mac
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('bWV0YWw='); return false;">
-metal
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Y3VkYQ=='); return false;">
-cuda
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cGhpMy41'); return false;">
-phi3.5
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('cGhp'); return false;">
-phi
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">I’m a strong believer that as we continue to traverse the AI/ ASI/ AGI landscape, the net compute required for accessing it would decrease i.e.&nbsp;we’ll get smaller but…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/run-phi-on-device-llama-cpp/index.html" class="no-external">
-<div class="listing-date">
-Aug 22, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="dGhpbmdz" data-listing-date-sort="1722204000000" data-listing-file-modified-sort="1734714194124" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="144">
-<div class="thumbnail">
-<p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a></p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">List of random things I keep forgetting</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('dGhpbmdz'); return false;">
-things
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">I often end up looking for certain commands/ code snippets so here is a list.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/things-i-keep-forgetting/index.html" class="no-external">
-<div class="listing-date">
-Jul 29, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="YXN5bmM=" data-listing-date-sort="1722204000000" data-listing-file-modified-sort="1734714194121" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="244">
-<div class="thumbnail">
-<p><a href="./posts/live-async/index.html" class="no-external"></a></p><a href="./posts/live-async/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/live-async/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/live-async/index.html" class="no-external">Live async, live happy</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/live-async/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('YXN5bmM='); return false;">
-async
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/live-async/index.html" class="no-external">Why I don’t take calls and take ages to respond?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/live-async/index.html" class="no-external">
-<div class="listing-date">
-Jul 29, 2024
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="aG9tZQ==" data-listing-date-sort="1703545200000" data-listing-file-modified-sort="1734714194124" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="737">
-<div class="thumbnail">
-<p><a href="./posts/what-is-home/index.html" class="no-external"></a></p><a href="./posts/what-is-home/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/what-is-home/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/what-is-home/index.html" class="no-external">What is home?</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/what-is-home/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('aG9tZQ=='); return false;">
-home
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/what-is-home/index.html" class="no-external"><em>Written on 26th December 2023, from Gurgaon, India.</em></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/what-is-home/index.html" class="no-external">
-<div class="listing-date">
-Dec 26, 2023
-</div>
-<div class="listing-author">
-VB
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
