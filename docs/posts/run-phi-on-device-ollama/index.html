@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="VB">
+<meta name="dcterms.date" content="2025-01-16">
 
-<title>Now – VB’s Notes and Ramblings</title>
+<title>Run Phi-4 with ollama and Hugging Face – VB’s Notes and Ramblings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,25 +22,59 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-15b851b4b768782e3641b87b82c86b73.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-15b851b4b768782e3641b87b82c86b73.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,17 +104,17 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg border-bottom" data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">VB’s Notes and Ramblings</span>
     </a>
   </div>
@@ -89,11 +125,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./now.html" aria-current="page"> 
+    <a class="nav-link" href="../../now.html"> 
 <span class="menu-text">Now</span></a>
   </li>  
   <li class="nav-item compact">
@@ -109,7 +145,44 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Run Phi-4 with ollama and Hugging Face</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">llm</div>
+                <div class="quarto-category">ollama</div>
+                <div class="quarto-category">mac</div>
+                <div class="quarto-category">metal</div>
+                <div class="quarto-category">cuda</div>
+                <div class="quarto-category">phi4</div>
+                <div class="quarto-category">phi</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>VB </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 16, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -117,70 +190,50 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#research-work" id="toc-research-work" class="nav-link active" data-scroll-target="#research-work">📚 Research &amp; Work</a></li>
-  <li><a href="#volunteering" id="toc-volunteering" class="nav-link" data-scroll-target="#volunteering">🙌 Volunteering</a></li>
-  <li><a href="#mental-health" id="toc-mental-health" class="nav-link" data-scroll-target="#mental-health">🧠 Mental health</a></li>
-  <li><a href="#home" id="toc-home" class="nav-link" data-scroll-target="#home">🏡 “Home”</a></li>
-  <li><a href="#travel-public-speaking" id="toc-travel-public-speaking" class="nav-link" data-scroll-target="#travel-public-speaking">✈️ Travel &amp; Public speaking</a></li>
+  <li><a href="#step-1-setup-ollama" id="toc-step-1-setup-ollama" class="nav-link active" data-scroll-target="#step-1-setup-ollama">Step 1: Setup ollama</a></li>
+  <li><a href="#step-2-kickstart-ollama" id="toc-step-2-kickstart-ollama" class="nav-link" data-scroll-target="#step-2-kickstart-ollama">Step 2: Kickstart ollama</a></li>
+  <li><a href="#step-3-run-inference-with-phi-4" id="toc-step-3-run-inference-with-phi-4" class="nav-link" data-scroll-target="#step-3-run-inference-with-phi-4">Step 3: Run inference with Phi-4</a></li>
+  <li><a href="#step-4-use-it-for-your-own-tasks" id="toc-step-4-use-it-for-your-own-tasks" class="nav-link" data-scroll-target="#step-4-use-it-for-your-own-tasks">Step 4: Use it for your own tasks</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Now</h1>
+
+
+
+
+<p>This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac.</p>
+<section id="step-1-setup-ollama" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-setup-ollama">Step 1: Setup ollama</h2>
+<p>On a mac, you can install ollama using homebrew:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install ollama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>On a Windows/ Linux device, you can follow the instructions on the <a href="https://ollama.com/download">Ollama Docs</a>)</p>
+</section>
+<section id="step-2-kickstart-ollama" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-kickstart-ollama">Step 2: Kickstart ollama</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> serve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-3-run-inference-with-phi-4" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-run-inference-with-phi-4">Step 3: Run inference with Phi-4</h2>
+<p>After some research I found that the Phi-4 GGUFs from Unsloth are the most accurate. They ran bunch of evals and also converted the model to LLaMa format. You can find it here: <a href="https://huggingface.co/unsloth/phi-4-GGUF">unsloth/phi-4-GGUF</a>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>I’d also recommend reading the blogpost about the fixes for the Phi-4 model <a href="https://unsloth.ai/blog/phi4">here</a>.</p>
+</section>
+<section id="step-4-use-it-for-your-own-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-use-it-for-your-own-tasks">Step 4: Use it for your own tasks</h2>
+<p>That’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.</p>
+<p>Go on and try out some of your own prompts, and see how it works.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="example.png" class="img-fluid figure-img"></p>
+<figcaption>Chatting with Phi 4 on my Macbook with Ollama</figcaption>
+</figure>
 </div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>What am I focused on at this point in life?</p>
-<p>Updated 13th April 2025, from Paris, FR.</p>
-<section id="research-work" class="level1">
-<h1>📚 Research &amp; Work</h1>
-<hr>
-<p>Life has been in hyper-drive since the last time I wrote one of these. My role at work (Hugging Face) has changed quite drastically, lot more high stakes and hell of a lot more fun. Be it collaborating with some of the top labs, researching Audio LMs, Text-to-Speech or about helping the team excute new product ideas/ directions - it has been a hoot and a half.</p>
-<p>It’s also good realisation to take it easy every now and then, all gas and no pitstop is not as fun. That said, this job has pretty much made me an adrenaline junkie with so much cool stuff happening all around.</p>
-<p>I’m also quite lucky to have people who have my best interests around me at work too, looking at you Julien, Lys, and Pedro - priviliged to be working with these lads!</p>
-<p>Fun tid-bit: I’ve understood that I’m good for nothing in the mornings and usually my brain kicks-in around mid-day.</p>
-<p>Lesson from last couple months - you/ your team is as good as the incentives they are provided with, change the incentives, you can change the outcomes!</p>
-</section>
-<section id="volunteering" class="level1">
-<h1>🙌 Volunteering</h1>
-<hr>
-<p>Still haven’t found the calm or the energy to get back to volunteering. More than the volunteering I do miss the friends I made along the way. I’m hoping I get a chance to meet some of these lovelies soon.</p>
-<p>On the brightside, I’m moving on nicely from last years dramatic EuroPython :)</p>
-</section>
-<section id="mental-health" class="level1">
-<h1>🧠 Mental health</h1>
-<hr>
-<p>Basically, endurance sports is all you need to get the good old man up in the head to stop playing tricks with you! Been running and biking off-late and it has been keeping me sane whilst everything around me is in hyperdrive.</p>
-<p>This also means I have a huge dependence on running/ biking to take the edge off - spend Feb/ March battling with a crazy case of spint splints &amp; plantar fasciitis and the mind did take a good toll.</p>
-<p>Still, overall it’s been mostly positive and I’m happy thet there’s a consistent way to channelise energy now!</p>
-</section>
-<section id="home" class="level1">
-<h1>🏡 “Home”</h1>
-<hr>
-<p>Oof, loads of thinking about this one, whilst I really love where I live currently - it comes with it’s own side effects. Mostly comes down to how deeply integrated one is in their surroundings. I love the nature around but it still doesn’t feel like home, with friends scattered around different countries, I feel a little lost sometimes. It’s a chicken and egg problem, you need to put in the time to feel at home but at the same time because you don’t feel at home you put in time in mindless pursuits.</p>
-<p>Hoping to figure out long term plans soon and put them in motion ^^’</p>
-</section>
-<section id="travel-public-speaking" class="level1">
-<h1>✈️ Travel &amp; Public speaking</h1>
-<hr>
-<p>After two years of hiatus from public speaking, I’m getting back into action this year with a few guest lectures/ workshops and talks lined up already. Going to be fun rest of the year and I’m here for it!</p>
+<p>Bonus: Now go try other <a href="https://huggingface.co/models?library=gguf">GGUF models on the Hub</a> and compare their performance with Phi 4.</p>
+<p>and.. that’s it!</p>
+<p>Oh, sorry, one last thing, you can now even run private GGUFs from the Hugging Face Hub via ollama, <a href="https://huggingface.co/docs/hub/en/ollama">read here</a>.</p>
 
 
 </section>

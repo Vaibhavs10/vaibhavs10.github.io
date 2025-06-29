@@ -1,0 +1,49 @@
+---
+title: "Run Phi-4 with ollama and Hugging Face"
+author: "VB"
+date: "2025-01-16"
+categories: [llm, ollama, mac, metal, cuda, phi4, phi]
+---
+
+This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac.
+
+## Step 1: Setup ollama
+
+On a mac, you can install ollama using homebrew:
+
+```bash
+brew install ollama
+```
+
+On a Windows/ Linux device, you can follow the instructions on the [Ollama Docs](https://ollama.com/download))
+
+## Step 2: Kickstart ollama
+
+```bash
+ollama serve
+```
+
+## Step 3: Run inference with Phi-4
+
+After some research I found that the Phi-4 GGUFs from Unsloth are the most accurate. They ran bunch of evals and also converted the model to LLaMa format.
+You can find it here: [unsloth/phi-4-GGUF](https://huggingface.co/unsloth/phi-4-GGUF).
+
+```bash
+ollama run hf.co/unsloth/phi-4-GGUF
+```
+
+I'd also recommend reading the blogpost about the fixes for the Phi-4 model [here](https://unsloth.ai/blog/phi4).
+
+## Step 4: Use it for your own tasks
+
+That's the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.
+
+Go on and try out some of your own prompts, and see how it works.
+
+![Chatting with Phi 4 on my Macbook with Ollama](example.png)
+
+Bonus: Now go try other [GGUF models on the Hub](https://huggingface.co/models?library=gguf) and compare their performance with Phi 4.
+
+and.. that's it!
+
+Oh, sorry, one last thing, you can now even run private GGUFs from the Hugging Face Hub via ollama, [read here](https://huggingface.co/docs/hub/en/ollama).

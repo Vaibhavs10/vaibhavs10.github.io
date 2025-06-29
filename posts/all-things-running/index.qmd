@@ -16,6 +16,7 @@ This page is a collection of resources and tips I've found online, that I either
 3. Comfy clothes that make you feel comfortable whilst running - decathalon has a very good selection (specially for winters), you don't need to spend a lot on this - but get this right, specially for winters - [good read](https://www.reddit.com/r/running/wiki/faq/#wiki_clothing_.26amp.3B_shoes).
 4. Shoes - again this is quite vibe based, you cannot go wrong either way, this requires a bit of experimentation ofc - for ref I've been using 80 EUR Puma running shoes for past 1.5 years, and it's pretty good - [another worthwhile read](https://www.reddit.com/r/running/wiki/index/common_questions/#wiki_what_shoes_do_i_buy.3F).
 5. Optional but recommended: create a Strava account, it's a great way to keep yourself motivated and track your progress. Here's [mine](https://www.strava.com/athletes/13731596).
+6. A fun way to keep yourself motivated is to run races leading up to the marathon, these could be 10Ks, half marathons or just fun runs (keeps the goal achievable).
 
 ## Recovery
 
@@ -29,21 +30,64 @@ This page is a collection of resources and tips I've found online, that I either
 
 Few basic things I've learned:
 
-1. Make sure to drink enough water 30-45 minutes before the run, you can even take a bit of electrolytes (although no too much).
-2. Chase up the run with a protein shake and chocolate milk, and drink loads of water in the hours after the run.
+1. Make sure to drink enough water 30-45 minutes before the run, you can even take a bit of electrolytes (although not too much).
+2. Chase up the run with a protein shake and chocolate milk, and drink loads of water in the hours after the run. It's almost critical to eat something within 30 minutes of your run.
 3. Avoid over caffeinating before the run (I've experimented a bit and I do well as long as I've had one coffee, more than that makes my heart race a bit too much).
-4. Don't eat a big breakfast or anything that takes a long time to digests one hour before the run (avoid dairy, fiber and fruits)
+4. Don't eat a big breakfast or anything that takes a long time to digests one hour before the run (avoid dairy, fiber and fruits).
+5. Having a carb rich meal before the run helps feeling overall more energetic throughout the run (I've just started experimenting with this).
 
 Up to 15 KMs
 
 1. Carry on as you would for a normal run, but make sure to hydrate well after the run.
 2. Don't run till you hit a wall, everyone has different energy consumption, learn your limits, running on fumes almost always causes injury/ cramps.
+3. It's worth getting atleast two seperate running shoes, which you alternate between runs - this helps with overuse injuries.
+4. As long as it's more than an hour, taking a gel is more than recommended.
 
 Up to 30KMs
 
-Take up 1-2 isotonic + energy gels, the goal is to get 60-80g catbs per hour of your run. (As of the date of the post, I haven't tried this yet)
+1. Take up 1-2 isotonic + energy gels, the goal is to get 60-80g catbs per hour of your run. (As of the date of the post, I haven't tried this yet)
 
-## Things I'd like to include in my training
+## Shin splints
 
-1. Strength training - specially for knees and ankles.
-2. Cycling - I might pick this up on rest days just to boost my VO2 max a bit.
+Last week (week of 19 Jan), I ramped up my running to 45KMs a week AND this was after an intense week of skiing. It was a bit stupid and straight up delusional for me to subject myself to that - but, well, we live and learn.
+
+Here's some stuff I've realised and learnt in the past week:
+
+1. You just gotta wait it out, and do as little as possible for a few days (even avoid walking as much).
+2. Ice that bastard, even multiple times a day - I'd just use a frozen pack of peas for 15-20 minutes at a time.
+3. Do really guided and slow foam rolling, it takes some getting used to, but it's a good way to release some knots and tension in the shins/ calves.
+4. The thing that worked the best is to massage around and directly at the shin splint area using both your thumbs, specially in the early days it can hurt a bit, but it gets better progressively.
+5. This is something reddit has recommended quite a bit, [here](https://gizmodo.com/banish-shin-splints-forever-with-one-magical-exercise-5902699)
+
+Lesson learnt: don't go too hard too fast, and don't be too stubborn to take it easy.
+
+## Plantar fasciitis
+
+After recovering a bit from the shin splints I ended up getting a pretty bad case of PF. 
+
+Here's some stuff I've learnt about it:
+
+1. Buy shoes after measuring your feet and the size of your upper box specifically, most cases stem from super tight shoes.
+2. Do not walk barefoot, for couple months - buy a pair of birkenstock and stick with them for couple months.
+3. Really load up your legs specifically your calves - squats, lunges, calf raises and one leg RDLs are your best friend.
+4. Don't stop running, keep accumulating slow kms (even if it's walking speed).
+5. It's going to be awhile before you feel 100% again - but it's okay, you'll be fine!
+
+## Zone 2 Running
+
+For the past 4-5 weeks (from 25th May) I've been experimenting doing a lot of volume at Easy pace, and I mean *really* easy pace. 
+The real motivation was to reduce the number of times I got injured whilst trying to build volume.
+
+That said, it's brutal and humbles you quite quickly. As someone who suffered from Asthma growing up and basically kept an arms length away from sports it's been surreal trying to run slowly.
+
+Here's some stuff I've learnt about it:
+
+1. It's going to be tough. Jogging is your best friend.
+2. Go slow but try to go long (even if it means that you walk for prolonged periods of time).
+3. Measure your heart rate, try to stay within the zone, ofc if you go uphill hte you might dip into Z3, it's okay - don't overthink it.
+4. Try to add some strides before cool down, they are a good way to keep the fun alive.
+5. Be prepared to be humbled, everyone and their mums will be faster than you on strava, remember, it's all for you - fuck the rest.
+6. Try to focus on cadence, try to keep it above 165 (it'll help you avoid injuries).
+7. It's going to get better sooner than you think.
+
+atm I'm average from 07:00-08:30/ km in Zone 2, I started at 09:30/ km 5 weeks back, you build good posture and cadence back.

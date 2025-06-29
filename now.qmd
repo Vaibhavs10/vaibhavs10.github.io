@@ -4,47 +4,48 @@ title: "Now"
 
 What am I focused on at this point in life?
 
-Updated 30th September 2024, from Stuttgart, DE.
+Updated 13th April 2025, from Paris, FR.
 
 # 📚 Research & Work
 ---
 
-Work has been hectic but enjoyable. I have been forunate to collaborate with some of the brightest minds in the field at the moment.
-I have been spending more time understanding the intrecacies and implications of running ML on the edge and deployment.
+Life has been in hyper-drive since the last time I wrote one of these. My role at work (Hugging Face) has changed quite drastically, lot more high stakes and hell of a lot more fun.
+Be it collaborating with some of the top labs, researching Audio LMs, Text-to-Speech or about helping the team excute new product ideas/ directions - it has been a hoot and a half.
 
-I haven't been able to find a single continuous block of time to put my head down and do good old research or even read papers in a long while. Still not sure what's the best way, but I'll figure it out.
+It's also good realisation to take it easy every now and then, all gas and no pitstop is not as fun. That said, this job has pretty much made me an adrenaline junkie with so much cool stuff happening all around.
 
-It's been quite surreal to see some of the projects that I worked on be out and about in the wild making real-life impact. Time to double down on what gets the blood pumping.
+I'm also quite lucky to have people who have my best interests around me at work too, looking at you Julien, Lys, and Pedro - priviliged to be working with these lads!
+
+Fun tid-bit: I've understood that I'm good for nothing in the mornings and usually my brain kicks-in around mid-day.
+
+Lesson from last couple months - you/ your team is as good as the incentives they are provided with, change the incentives, you can change the outcomes!
 
 # 🙌 Volunteering
 ---
 
-I stepped back from EuroPython organisation and am looking forward to complete my tenure this year. Truth be told, there was a lot of friction (mostly because of me) this year. I'm happy to see the chapter close with my best friends in the coming weeks.
-The past 1.5 years have been quite chaotic, moving countries, building a home, settling in has all been incredibly taxing. I'm looking forward to having less things on my plate and focus on getting better.
+Still haven't found the calm or the energy to get back to volunteering. More than the volunteering I do miss the friends I made along the way. I'm hoping I get a chance to meet some of these lovelies soon.
 
-I have been dedicating extra chunk of time working on building Proof of Concepts/ examples/ tutorials on using better, more powerful AI models at the touch of your computer.
+On the brightside, I'm moving on nicely from last years dramatic EuroPython :)
 
 # 🧠 Mental health
 ---
 
-Sounds unbelievable but I have been quite stable (mentally) in the recent times. I do owe a lot of this to Sof. I am quite lucky to have her in my life, she just knows how to comfort me and ndges me with the right prompts. She's a good prompt engineer ;)
+Basically, endurance sports is all you need to get the good old man up in the head to stop playing tricks with you! Been running and biking off-late and it has been keeping me sane whilst everything around me is in hyperdrive.
 
-My physical health on the other hand has been on a decline, I fall sick at the drop of the hat and it's not fun loading up on medicines every other week.
-Although, I did recently get back into running and picked up longboarding, both are fun and good ways to keep the blood flowing. With a little bit of consistency I might get better afterall.
+This also means I have a huge dependence on running/ biking to take the edge off - spend Feb/ March battling with a crazy case of spint splints & plantar fasciitis and the mind did take a good toll.
 
-Note: I still suck at keeping in touch with people, hoping I auto-magically fix it soon.
+Still, overall it's been mostly positive and I'm happy thet there's a consistent way to channelise energy now!
 
 # 🏡 “Home”
 ---
 
-Spent the last couple days in Stuttgart, reliving the old days, meeting friends and people I spent considerable amount of last 4 years with. I find myself thinking/ fascinating about where should I move next - each country, city and street has pros and cons.
-But, spending time figuring out what is it that I like in a city is fun. The introspection and discussion around this would make for a blogpost on its own - looking forward to writing it.
+Oof, loads of thinking about this one, whilst I really love where I live currently - it comes with it's own side effects. Mostly comes down to how deeply integrated one is in their surroundings. I love the nature around but it still doesn't feel like home, with friends scattered around different countries, I feel a little lost sometimes.
+It's a chicken and egg problem, you need to put in the time to feel at home but at the same time because you don't feel at home you put in time in mindless pursuits.
 
-I do quite enjoy where I live currently - It's just nothing beats being able to walk in a forest, hill all less than one hour by public transport from you (looking at you Stuttgart).
+Hoping to figure out long term plans soon and put them in motion ^^'
 
-# ✈️ Travel & Plans going forward
+# ✈️ Travel & Public speaking
 ---
 
-When this year started both Sof and I decided to reduce travel to bare minimum. I don't know where this got out of hand, but June was the only month where we did not travel anywhere, looking forward it looks like this would be the case for the whole year.
+After two years of hiatus from public speaking, I'm getting back into action this year with a few guest lectures/ workshops and talks lined up already. Going to be fun rest of the year and I'm here for it!
 
-Gearing up for some intense travel till the end of the year! 😅

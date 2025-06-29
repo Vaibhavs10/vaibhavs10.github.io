@@ -31,5 +31,8 @@
   },
   "posts/all-things-running/index.qmd": {
     "index.html": "dd448540"
+  },
+  "posts/run-phi-on-device-ollama/index.qmd": {
+    "index.html": "ac7f143e"
   }
 }
