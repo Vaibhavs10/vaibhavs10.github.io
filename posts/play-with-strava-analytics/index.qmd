@@ -1,15 +1,17 @@
 ---
 title: "Export and play with Strava analytics data"
 author: "VB"
-date: "2024-12-30"
+date: "2024-06-29"
 categories: [analytics, python, running, strava, marathon, hugging face]
 ---
 
 This is just a fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.
 
 Pre-requisites:
-1. Create an API application: https://www.strava.com/settings/api in your strava account (put all the website etc details as localhost)
+1. Create an API application: https://www.strava.com/settings/api in your strava account (put all the website and other details as localhost)
 2. Set API keys as Environment variables `STRAVA_CLIENT_ID` & `STRAVA_CLIENT_SECRET`
+
+you can set the env variables simply by `export STRAVA_CLIENT_ID=...` & `export STRAVA_CLIENT_SECRET=...`
 
 ## Setup Python Environment
 
@@ -20,6 +22,8 @@ Followed by, `source .venv/bin/activate`
 You can install all required packages via `uv pip install pandas huggingface_hub`
 
 ## Python Codebase
+
+You can also find the script here: https://github.com/Vaibhavs10/strava-analyse/blob/main/dump-data.py
 
 ```python
 import os
@@ -92,5 +96,6 @@ api.upload_folder(
     allow_patterns="*.json",
 )
 
-
 ```
+
+Once you've run it go over to your dataset on Hugging Face, here's mine for example
