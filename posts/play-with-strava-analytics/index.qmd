@@ -27,11 +27,11 @@ You can also find the script here: https://github.com/Vaibhavs10/strava-analyse/
 
 ```python
 import os
+import shutil
 import requests
 import webbrowser
 import json
 import time
-import pandas as pd
 from huggingface_hub import HfApi, create_repo
 
 api = HfApi()
@@ -58,11 +58,10 @@ token = requests.post(url='https://www.strava.com/api/v3/oauth/token',
                            'grant_type': 'authorization_code'})
 token = token.json()
 
-# import all user activities
+# Collect all activities in memory so we can enforce a consistent schema across every item
+all_activities = []
 
 page = 1
-response = []
-count = 1
 
 while True:
     
@@ -72,29 +71,51 @@ while True:
                   f"page={page}&" \
                   f"per_page=50"
     
-    response = requests.get(endpoint).json()
+    page_data = requests.get(endpoint).json()
 
-    with open(f'data/data-{count}.json', 'w', encoding='utf-8') as f:
-        json.dump(response, f, ensure_ascii=False, indent=4)
-    
-    count+=1
+    # Break when no more activities are returned
+    if not page_data:
+        break
 
-    # check if page contains activities
-    if len(response):
-        page += 1  
+    all_activities.extend(page_data)
+    page += 1
 
-    else:
-      break  
+    # Be nice to the Strava API – small pause to avoid rate-limit issues
+    time.sleep(0.2)
 
-create_repo("reach-vb/strava-stats", repo_type="dataset", exists_ok=True)
+# ------------------------------------------------------------------------------------
+# Ensure every activity has the same set of keys so downstream processors (e.g. the
+# Hugging Face datasets builder) see a consistent schema across the entire file.
+# ------------------------------------------------------------------------------------
 
-api.upload_folder(
-    folder_path="data/",
-    path_in_repo="/", # Upload to a specific folder
+# Compute the union of keys that appear across all activities
+all_keys = {k for activity in all_activities for k in activity.keys()}
+
+# Back-fill any missing keys with `None`
+for activity in all_activities:
+    missing = all_keys.difference(activity)
+    for key in missing:
+        activity[key] = None
+
+# Re-create a clean data directory and write the consolidated JSON file
+shutil.rmtree("data", ignore_errors=True)
+os.makedirs("data", exist_ok=True)
+
+consolidated_path = "data/activities.json"
+with open(consolidated_path, "w", encoding="utf-8") as fp:
+    json.dump(all_activities, fp, ensure_ascii=False, indent=4)
+
+# Ensure the dataset repository exists (creates it if missing)
+create_repo("reach-vb/strava-stats", repo_type="dataset", exist_ok=True)
+
+# Upload only the consolidated JSON file
+api.upload_file(
+    path_or_fileobj=consolidated_path,
+    path_in_repo="activities.json",
     repo_id="reach-vb/strava-stats",
     repo_type="dataset",
-    allow_patterns="*.json",
 )
+
 
 ```
 
