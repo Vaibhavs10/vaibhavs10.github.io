@@ -11,7 +11,7 @@ np TITLE='?' :                # ':' ← this is the bit that was missing
     ./scripts/new-post.sh "{{TITLE}}"
 
 preview:
-    quarto preview --watch
+    quarto preview
 
 publish:
     ./scripts/publish.sh

@@ -34,5 +34,8 @@
   },
   "posts/run-phi-on-device-ollama/index.qmd": {
     "index.html": "ac7f143e"
+  },
+  "posts/notes-on-flux-kontext-dev/index.qmd": {
+    "index.html": "43da8175"
   }
 }
