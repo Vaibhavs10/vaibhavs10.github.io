@@ -86,7 +86,7 @@ while True:
     else:
       break  
 
-#create_repo("reach-vb/strava-stats", repo_type="dataset")
+create_repo("reach-vb/strava-stats", repo_type="dataset", exists_ok=True)
 
 api.upload_folder(
     folder_path="data/",
@@ -98,4 +98,11 @@ api.upload_folder(
 
 ```
 
-Once you've run it go over to your dataset on Hugging Face, here's mine for example
+Note: when you run the script you'll be prompted to authorise access to your strava App. Once you click Authorise it'll redirect you too a page that doesn't exist 👀.
+Don't worry about it and look at the URL it is trying to redirect too, it should look something like `http://localhost:8000/?state=&code=e55c038bcf96ea6deff15c68649afc9554e6fbd6&scope=read,activity:read_all,profile:read_all`
+
+The thing that matters to us is the string after `code`, just copy and paste it to the script and that's it! 
+
+Once you've run it go over to your dataset on Hugging Face, here's mine for example: https://huggingface.co/datasets/reach-vb/strava-stats
+
+Now go ahead and play with it and let me know how it goes.
