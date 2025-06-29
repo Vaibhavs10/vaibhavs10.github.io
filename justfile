@@ -1,9 +1,17 @@
 # justfile
-np     TITLE="?"      # usage: just np "My title"
-        ./scripts/new-post.sh {{TITLE}}
+# ─────────────────────────────────────────
+# Usage examples
+#   just np "My Cool Post"
+#   just preview
+#   just publish
+# ─────────────────────────────────────────
+
+# new-post
+np TITLE='?' :                # ':' ← this is the bit that was missing
+    ./scripts/new-post.sh "{{TITLE}}"
 
 preview:
-        quarto preview --watch
+    quarto preview --watch
 
 publish:
-        ./scripts/publish.sh
+    ./scripts/publish.sh
