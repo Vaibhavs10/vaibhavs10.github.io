@@ -1,5 +1,5 @@
 ---
-title: "Export and play with your Strava data"
+title: "Export and play with your Strava data on Hugging Face"
 author: "VB"
 date: "2025-07-06"
 categories: [analytics, python, running, strava, marathon, hugging face, Data Studio]
