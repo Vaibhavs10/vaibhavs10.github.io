@@ -37,5 +37,8 @@
   },
   "posts/play-with-strava-analytics/index.qmd": {
     "index.html": "3b400dd2"
+  },
+  "posts/play-with-strava-data-on-hugging-face/index.qmd": {
+    "index.html": "3b3b4851"
   }
 }
