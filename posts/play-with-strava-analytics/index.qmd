@@ -1,0 +1,186 @@
+---
+title: "Export and play with your Strava data"
+author: "VB"
+date: "2025-07-06"
+categories: [analytics, python, running, strava, marathon, hugging face]
+---
+
+A fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.
+
+Pre-requisites:
+1. Create an API application: https://www.strava.com/settings/api in your strava account (set `localhost` as the website and other details)
+2. Set API keys as Environment variables `STRAVA_CLIENT_ID` & `STRAVA_CLIENT_SECRET`
+
+you can set the env variables simply by `export STRAVA_CLIENT_ID=...` & `export STRAVA_CLIENT_SECRET=...`
+
+Setup the env and scraper:
+
+1. Clone the github repository via: `git clone https://github.com/Vaibhavs10/strava-analyse.git`
+2. Setup the python env with `uv`: `uv venv --python 3.12`, followed by, `source .venv/bin/activate`
+3. Install all required packages via `uv pip install requests huggingface_hub`
+4. Run `huggingface-cli login` (required to upload the dataset to Hugging Face)
+5. Run the python script and follow the instructions: `python upload-strava-to-hf.py`
+
+Note: when you run the script you'll be prompted to authorise access to your strava App. Once you click Authorise it'll redirect you too a page that doesn't exist 👀.
+Don't worry about it and look at the URL it is trying to redirect too, it should look something like `http://localhost:8000/?state=&code=e55c038bcf96ea6deff15c68649afc9554e6fbd6&scope=read,activity:read_all,profile:read_all`
+The thing that matters to us is the string after `code`, just copy and paste it to the script and that's it! 
+
+If all goes well, you should be able to go to your dataset on Hugging Face, here's mine for example: https://huggingface.co/datasets/reach-vb/strava-stats
+
+![Strava Dataset](https://huggingface.co/datasets/reach-vb/random-images/resolve/main/strava-ss.png)
+
+With the Hugging Face dataset comes a lot of interesting possiblilities to identify trends using SQL or even pandas/ polars too. Since the dataset is small we can just run SQL queries via DataStudio.
+
+Let's crunch some numbers!
+
+To start with, how many cummulative kms have I run through the years?
+
+Best part about Datastudio is you can just ask the AI to write a SQL query for you 🔥
+
+![Data Studio AI Query](https://huggingface.co/datasets/reach-vb/random-images/resolve/main/datastudio-query.png)
+
+```SQL
+WITH run_stats AS (
+    SELECT
+        EXTRACT(YEAR FROM start_date::DATE) AS year,
+        SUM(distance) / 1000 AS total_distance_km,
+        SUM(moving_time) AS total_moving_time_seconds
+    FROM
+        train
+    WHERE
+        type = 'Run'
+        AND distance > 0
+        AND moving_time > 0
+    GROUP BY
+        year
+)
+SELECT
+    year,
+    total_distance_km,
+    -- Calculate minutes and seconds separately for proper pace format
+    FLOOR((total_moving_time_seconds/60) / total_distance_km) || ':' || 
+    LPAD(FLOOR(MOD((total_moving_time_seconds/60) / total_distance_km, 1) * 60)::VARCHAR, 2, '0') AS avg_pace_per_km,
+    bar(total_distance_km, 0, MAX(total_distance_km) OVER (), 30) AS distance_chart,
+    bar((total_moving_time_seconds/60) / total_distance_km, 0, MAX((total_moving_time_seconds/60) / total_distance_km) OVER (), 30) AS pace_chart
+FROM
+    run_stats
+ORDER BY
+    year;
+```
+
+Result:
+
+| year | total_distance_km | avg_pace_per_km | distance_chart | pace_chart |
+|------|------------------|-----------------|----------------|------------|
+| 2020 | 78.129 | 7:18 | ████▌ | ████████████████████████████████ |
+| 2021 | 414.0414 | 6:27 | ████████████████████████▏ | ████████████████████████████▌ |
+| 2022 | 169.5316 | 5:59 | █████████ | ████████████████████████████▌ |
+| 2023 | 73.4308 | 6:48 | ████▎ | █████████████████████████████▉ |
+| 2024 | 363.506 | 6:31 | █████████████████████▎ | ████████████████████████████▊ |
+| 2025 | 512.7066 | 7:16 | ████████████████████████████████ | ██████████████████████████████▊ |
+
+I was at my fastest self in 2022 (though with much less kms). 2023 was the least I've ran across the years and 2025 (so far) has been the most I've ran (albeit with a much slower pace owing too Zone 2 training).
+
+Next, let's look more deeply into the year so far and how the runs have been shaping up.
+
+```SQL
+SELECT
+    EXTRACT(MONTH FROM start_date::DATE) AS month,
+    COUNT(*) AS num_runs,
+    ROUND(SUM(distance) / 1000, 1) AS total_distance_km,
+    ROUND(AVG(average_heartrate), 1) AS avg_heartrate,
+    -- Calculate pace in min:sec per km from moving_time and distance
+    CONCAT(
+        FLOOR((SUM(moving_time) / SUM(distance) * 1000) / 60),  -- minutes
+        ':', 
+        LPAD(CAST(FLOOR(MOD(SUM(moving_time) / SUM(distance) * 1000, 60)) AS VARCHAR), 2, '0')  -- seconds with leading zero
+    ) AS avg_pace_min_per_km,
+    ROUND(AVG(distance) / 1000, 2) AS avg_distance_per_run_km,
+    ROUND(AVG(average_watts), 1) AS avg_power
+FROM 
+    train
+WHERE 
+    type = 'Run' 
+    AND distance > 2000
+    AND EXTRACT(YEAR FROM start_date::DATE) = 2025
+GROUP BY 
+    EXTRACT(MONTH FROM start_date::DATE)
+ORDER BY 
+    month;
+```
+
+Result:
+
+| month | num_runs | total_distance_km | avg_heartrate | avg_pace_min_per_km | avg_distance_per_run_km | avg_power |
+|-------|----------|-------------------|---------------|---------------------|------------------------|-----------|
+| 1 | 8 | 70.7 | 161.6 | 6:24 | 8.84 | 176.2 |
+| 2 | 9 | 52.2 | 163.3 | 6:27 | 5.81 | 184.4 |
+| 3 | 8 | 46.3 | 153.9 | 7:15 | 5.78 | 161.8 |
+| 4 | 14 | 82.7 | 157.5 | 6:46 | 5.91 | 178.7 |
+| 5 | 15 | 104.2 | 152.7 | 7:59 | 6.94 | 157.7 |
+| 6 | 16 | 119.1 | 154.5 | 7:51 | 7.44 | 162.7 |
+| 7 | 4 | 34.0 | 152.0 | 7:19 | 8.50 | 160.6 |
+
+June was the month with the most kms so far. It's nice to see Zone 2 progression a bit from May -> July (7:59 to 7:19 min/ km). As someone with the aerobic base of a potato it's quite nice to see some progress.
+
+Alright, let's delve a bit more deeper into how my Zone 2 running transformation is going
+
+```SQL
+SELECT
+    start_date::DATE AS date,
+    ROUND(SUM(distance) / 1000, 1) AS total_distance_km,
+    ROUND(AVG(average_heartrate), 1) AS avg_heartrate,
+    -- Properly formatted pace as MM:SS with leading zero for single-digit seconds
+    CONCAT(
+        FLOOR(SUM(moving_time) / SUM(distance) * 1000 / 60)::INTEGER,  -- minutes
+        ':',
+        LPAD(
+            (ROUND(SUM(moving_time) / SUM(distance) * 1000) % 60)::INTEGER::VARCHAR,  -- seconds converted to integer first
+            2, '0'
+        )
+    ) AS avg_pace_min_per_km,
+    ROUND(AVG(average_watts), 1) AS avg_power
+FROM 
+    train
+WHERE 
+    type = 'Run' 
+    AND distance > 7500  -- Filter for runs greater than 7.5 km
+    AND EXTRACT(YEAR FROM start_date::DATE) IN (2024, 2025)  -- Only 2024 and 2025 runs
+GROUP BY 
+    start_date::DATE
+ORDER BY 
+    date ASC  -- Order from oldest to latest
+```
+
+Results:
+
+| date | total_distance_km | avg_heartrate | avg_pace_min_per_km | avg_power |
+|------|-------------------|---------------|---------------------|-----------|
+| 2025-01-18 | 17.1 | 164.3 | 6:23 | 177.5 |
+| 2025-02-15 | 10.0 | 170.1 | 6:30 | 184.3 |
+| 2025-02-20 | 7.5 | 167.3 | 6:29 | 184.3 |
+| 2025-04-12 | 10.0 | 170.0 | 6:51 | 181.0 |
+| 2025-04-17 | 8.1 | 156.8 | 6:41 | 181.3 |
+| 2025-05-11 | 9.2 | 156.0 | 8:06 | 152.0 |
+| 2025-05-13 | 7.5 | 153.5 | 8:50 | 139.8 |
+| 2025-05-15 | 8.0 | 153.3 | 8:26 | 149.9 |
+| 2025-05-17 | 8.0 | 150.1 | 8:07 | 157.0 |
+| 2025-05-20 | 9.1 | 155.1 | 8:26 | 149.2 |
+| 2025-05-24 | 7.8 | 152.0 | 7:58 | 157.0 |
+| 2025-05-27 | 10.1 | 161.7 | 7:13 | 171.4 |
+| 2025-06-03 | 8.5 | 153.0 | 7:54 | 159.2 |
+| 2025-06-06 | 8.0 | 150.8 | 8:17 | 152.2 |
+| 2025-06-08 | 10.5 | 153.3 | 8:15 | 152.3 |
+| 2025-06-14 | 12.1 | 150.4 | 7:54 | 164.3 |
+| 2025-06-21 | 9.0 | 161.0 | 7:27 | 167.3 |
+| 2025-06-22 | 11.0 | 154.0 | 7:08 | 174.1 |
+| 2025-06-24 | 8.0 | 158.7 | 7:09 | 181.3 |
+| 2025-06-28 | 10.0 | 152.9 | 8:07 | 153.9 |
+| 2025-07-01 | 10.1 | 154.0 | 7:11 | 0.0 |
+| 2025-07-05 | 13.2 | 152.5 | 7:37 | 160.6 |
+
+These were just simple examples but you can really do a lot more with this, checkout segemnts, bike rides power comparisons based on elevation and more.
+
+P.S. You can save all of these queries in your Hugging Face Data Studio as well, so you can just refresh your dataset monthly/ weekly and analyse trends.
+
+Now go ahead and play with it and let me know how it goes.
