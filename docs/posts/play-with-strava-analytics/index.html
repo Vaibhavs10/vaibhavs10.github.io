@@ -156,6 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
                 <div class="quarto-category">strava</div>
                 <div class="quarto-category">marathon</div>
                 <div class="quarto-category">hugging face</div>
+                <div class="quarto-category">Data Studio</div>
               </div>
                   </div>
   </div>
@@ -195,8 +196,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>A fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.</p>
-<p>Pre-requisites: 1. Create an API application: https://www.strava.com/settings/api in your strava account (set <code>localhost</code> as the website and other details) 2. Set API keys as Environment variables <code>STRAVA_CLIENT_ID</code> &amp; <code>STRAVA_CLIENT_SECRET</code></p>
-<p>you can set the env variables simply by <code>export STRAVA_CLIENT_ID=...</code> &amp; <code>export STRAVA_CLIENT_SECRET=...</code></p>
+<p>Pre-requisites:</p>
+<ol type="1">
+<li>Create an API application: https://www.strava.com/settings/api in your strava account (set <code>localhost</code> as the website and other details)</li>
+<li>Set API keys as Environment variables <code>STRAVA_CLIENT_ID</code> &amp; <code>STRAVA_CLIENT_SECRET</code></li>
+</ol>
+<p>You can set the env variables simply by <code>export STRAVA_CLIENT_ID=...</code> &amp; <code>export STRAVA_CLIENT_SECRET=...</code></p>
+<p>Find the codebase here: <a href="https://github.com/Vaibhavs10/strava-analyse">https://github.com/Vaibhavs10/strava-analyse</a></p>
 <p>Setup the env and scraper:</p>
 <ol type="1">
 <li>Clone the github repository via: <code>git clone https://github.com/Vaibhavs10/strava-analyse.git</code></li>
@@ -205,8 +211,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Run <code>huggingface-cli login</code> (required to upload the dataset to Hugging Face)</li>
 <li>Run the python script and follow the instructions: <code>python upload-strava-to-hf.py</code></li>
 </ol>
-<p>Note: when you run the script you’ll be prompted to authorise access to your strava App. Once you click Authorise it’ll redirect you too a page that doesn’t exist 👀. Don’t worry about it and look at the URL it is trying to redirect too, it should look something like <code>http://localhost:8000/?state=&amp;code=e55c038bcf96ea6deff15c68649afc9554e6fbd6&amp;scope=read,activity:read_all,profile:read_all</code> The thing that matters to us is the string after <code>code</code>, just copy and paste it to the script and that’s it!</p>
-<p>If all goes well, you should be able to go to your dataset on Hugging Face, here’s mine for example: https://huggingface.co/datasets/reach-vb/strava-stats</p>
+<p>Note: when you run the script you’ll be prompted to authorise access to your strava App. Once you click Authorise it’ll redirect you too a page that doesn’t exist 👀.</p>
+<p>Don’t worry about it and look at the URL it is trying to redirect too, it should look something like <code>http://localhost:8000/?state=&amp;code=e55c038bcf96ea6deff15c68649afc9554e6fbd6&amp;scope=read,activity:read_all,profile:read_all</code> The thing that matters to us is the string after <code>code</code>, just copy and paste it to the script and that’s it!</p>
+<p>If all goes well, you should be able to go to your dataset on Hugging Face, here’s mine for example: <a href="https://huggingface.co/datasets/reach-vb/strava-stats">https://huggingface.co/datasets/reach-vb/strava-stats</a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://huggingface.co/datasets/reach-vb/random-images/resolve/main/strava-ss.png" class="img-fluid figure-img"></p>
@@ -626,9 +633,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<p>Pretty dope to see the heart rate go down and the pace slightly improve, hoping to double down on this more as the year continues!</p>
 <p>These were just simple examples but you can really do a lot more with this, checkout segemnts, bike rides power comparisons based on elevation and more.</p>
 <p>P.S. You can save all of these queries in your Hugging Face Data Studio as well, so you can just refresh your dataset monthly/ weekly and analyse trends.</p>
-<p>Now go ahead and play with it and let me know how it goes.</p>
+<p>Now go ahead and play with it and let me know how it goes. 🤙</p>
 
 
 

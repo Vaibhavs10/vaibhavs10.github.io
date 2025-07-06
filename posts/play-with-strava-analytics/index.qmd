@@ -2,16 +2,19 @@
 title: "Export and play with your Strava data"
 author: "VB"
 date: "2025-07-06"
-categories: [analytics, python, running, strava, marathon, hugging face]
+categories: [analytics, python, running, strava, marathon, hugging face, Data Studio]
 ---
 
 A fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.
 
 Pre-requisites:
+
 1. Create an API application: https://www.strava.com/settings/api in your strava account (set `localhost` as the website and other details)
 2. Set API keys as Environment variables `STRAVA_CLIENT_ID` & `STRAVA_CLIENT_SECRET`
 
-you can set the env variables simply by `export STRAVA_CLIENT_ID=...` & `export STRAVA_CLIENT_SECRET=...`
+You can set the env variables simply by `export STRAVA_CLIENT_ID=...` & `export STRAVA_CLIENT_SECRET=...`
+
+Find the codebase here: [https://github.com/Vaibhavs10/strava-analyse](https://github.com/Vaibhavs10/strava-analyse)
 
 Setup the env and scraper:
 
@@ -22,10 +25,11 @@ Setup the env and scraper:
 5. Run the python script and follow the instructions: `python upload-strava-to-hf.py`
 
 Note: when you run the script you'll be prompted to authorise access to your strava App. Once you click Authorise it'll redirect you too a page that doesn't exist 👀.
+
 Don't worry about it and look at the URL it is trying to redirect too, it should look something like `http://localhost:8000/?state=&code=e55c038bcf96ea6deff15c68649afc9554e6fbd6&scope=read,activity:read_all,profile:read_all`
 The thing that matters to us is the string after `code`, just copy and paste it to the script and that's it! 
 
-If all goes well, you should be able to go to your dataset on Hugging Face, here's mine for example: https://huggingface.co/datasets/reach-vb/strava-stats
+If all goes well, you should be able to go to your dataset on Hugging Face, here's mine for example: [https://huggingface.co/datasets/reach-vb/strava-stats](https://huggingface.co/datasets/reach-vb/strava-stats)
 
 ![Strava Dataset](https://huggingface.co/datasets/reach-vb/random-images/resolve/main/strava-ss.png)
 
@@ -179,8 +183,10 @@ Results:
 | 2025-07-01 | 10.1 | 154.0 | 7:11 | 0.0 |
 | 2025-07-05 | 13.2 | 152.5 | 7:37 | 160.6 |
 
+Pretty dope to see the heart rate go down and the pace slightly improve, hoping to double down on this more as the year continues!
+
 These were just simple examples but you can really do a lot more with this, checkout segemnts, bike rides power comparisons based on elevation and more.
 
 P.S. You can save all of these queries in your Hugging Face Data Studio as well, so you can just refresh your dataset monthly/ weekly and analyse trends.
 
-Now go ahead and play with it and let me know how it goes.
+Now go ahead and play with it and let me know how it goes. 🤙
