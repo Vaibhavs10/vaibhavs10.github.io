@@ -1,11 +1,11 @@
 ---
-title: "Export and play with Strava analytics data"
+title: "Export and play with your Strava data"
 author: "VB"
-date: "2024-06-29"
+date: "2024-07-06"
 categories: [analytics, python, running, strava, marathon, hugging face]
 ---
 
-This is just a fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.
+A fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.
 
 Pre-requisites:
 1. Create an API application: https://www.strava.com/settings/api in your strava account (set `localhost` as the website and other details)
@@ -27,13 +27,17 @@ The thing that matters to us is the string after `code`, just copy and paste it 
 
 If all goes well, you should be able to go to your dataset on Hugging Face, here's mine for example: https://huggingface.co/datasets/reach-vb/strava-stats
 
-<Image of the dataset>
+![Strava Dataset](https://huggingface.co/datasets/reach-vb/random-images/resolve/main/strava-ss.png)
 
 With the Hugging Face dataset comes a lot of interesting possiblilities to identify trends using SQL or even pandas/ polars too. Since the dataset is small we can just run SQL queries via DataStudio.
 
 Let's crunch some numbers!
 
 To start with, how many cummulative kms have I run through the years?
+
+Best part about Datastudio is you can just ask the AI to write a SQL query for you 🔥
+
+![Data Studio AI Query](https://huggingface.co/datasets/reach-vb/random-images/resolve/main/datastudio-query.png)
 
 ```SQL
 WITH run_stats AS (
@@ -75,7 +79,9 @@ Result:
 | 2024 | 363.506 | 6:31 | █████████████████████▎ | ████████████████████████████▊ |
 | 2025 | 512.7066 | 7:16 | ████████████████████████████████ | ██████████████████████████████▊ |
 
-Next, I've been running in Zone 2 (to increase volume and recover from injuries) let's see how that's going.
+I was at my fastest self in 2022 (though with much less kms). 2023 was the least I've ran across the years and 2025 (so far) has been the most I've ran (albeit with a much slower pace owing too Zone 2 training).
+
+Next, let's look more deeply into the year so far and how the runs have been shaping up.
 
 ```SQL
 SELECT
@@ -114,6 +120,8 @@ Result:
 | 5 | 15 | 104.2 | 152.7 | 7:59 | 6.94 | 157.7 |
 | 6 | 16 | 119.1 | 154.5 | 7:51 | 7.44 | 162.7 |
 | 7 | 4 | 34.0 | 152.0 | 7:19 | 8.50 | 160.6 |
+
+June was the month with the most kms so far. It's nice to see Zone 2 progression a bit from May -> July (7:59 to 7:19 min/ km). As someone with the aerobic base of a potato it's quite nice to see some progress.
 
 Alright, let's delve a bit more deeper into how my Zone 2 running transformation is going
 
@@ -172,5 +180,7 @@ Results:
 | 2025-07-05 | 13.2 | 152.5 | 7:37 | 160.6 |
 
 These were just simple examples but you can really do a lot more with this, checkout segemnts, bike rides power comparisons based on elevation and more.
+
+P.S. You can save all of these queries in your Hugging Face Data Studio as well, so you can just refresh your dataset monthly/ weekly and analyse trends.
 
 Now go ahead and play with it and let me know how it goes.
