@@ -1,7 +1,7 @@
 ---
 title: "Export and play with your Strava data"
 author: "VB"
-date: "2024-07-06"
+date: "2025-07-06"
 categories: [analytics, python, running, strava, marathon, hugging face]
 ---
 
