@@ -8,122 +8,30 @@ categories: [analytics, python, running, strava, marathon, hugging face]
 This is just a fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.
 
 Pre-requisites:
-1. Create an API application: https://www.strava.com/settings/api in your strava account (put all the website and other details as localhost)
+1. Create an API application: https://www.strava.com/settings/api in your strava account (set `localhost` as the website and other details)
 2. Set API keys as Environment variables `STRAVA_CLIENT_ID` & `STRAVA_CLIENT_SECRET`
 
 you can set the env variables simply by `export STRAVA_CLIENT_ID=...` & `export STRAVA_CLIENT_SECRET=...`
 
-## Setup Python Environment
+Setup the env and scraper:
 
-Pretty straightforward with `uv`: `uv venv --python 3.12`
-
-Followed by, `source .venv/bin/activate`
-
-You can install all required packages via `uv pip install pandas huggingface_hub`
-
-## Python Codebase
-
-You can also find the script here: https://github.com/Vaibhavs10/strava-analyse/blob/main/dump-data.py
-
-```python
-import os
-import shutil
-import requests
-import webbrowser
-import json
-import time
-from huggingface_hub import HfApi, create_repo
-
-api = HfApi()
-
-# request initial token
-
-redirect_uri = 'http://localhost:8000'
-
-client_id = os.environ['STRAVA_CLIENT_ID']
-client_secret = os.environ['STRAVA_CLIENT_SECRET']
-
-request_url = f'http://www.strava.com/oauth/authorize?client_id={client_id}' \
-                      f'&response_type=code&redirect_uri={redirect_uri}' \
-                      f'&approval_prompt=force' \
-                      f'&scope=profile:read_all,activity:read_all'
-
-webbrowser.open(request_url)
-code = input('Insert the code from the url: ')
-    
-token = requests.post(url='https://www.strava.com/api/v3/oauth/token',
-                     data={'client_id': client_id,
-                           'client_secret': client_secret,
-                           'code': code,
-                           'grant_type': 'authorization_code'})
-token = token.json()
-
-# Collect all activities in memory so we can enforce a consistent schema across every item
-all_activities = []
-
-page = 1
-
-while True:
-    
-    # request new page of activities
-    endpoint = f"https://www.strava.com/api/v3/athlete/activities?" \
-                  f"access_token={token['access_token']}&" \
-                  f"page={page}&" \
-                  f"per_page=50"
-    
-    page_data = requests.get(endpoint).json()
-
-    # Break when no more activities are returned
-    if not page_data:
-        break
-
-    all_activities.extend(page_data)
-    page += 1
-
-    # Be nice to the Strava API – small pause to avoid rate-limit issues
-    time.sleep(0.2)
-
-# ------------------------------------------------------------------------------------
-# Ensure every activity has the same set of keys so downstream processors (e.g. the
-# Hugging Face datasets builder) see a consistent schema across the entire file.
-# ------------------------------------------------------------------------------------
-
-# Compute the union of keys that appear across all activities
-all_keys = {k for activity in all_activities for k in activity.keys()}
-
-# Back-fill any missing keys with `None`
-for activity in all_activities:
-    missing = all_keys.difference(activity)
-    for key in missing:
-        activity[key] = None
-
-# Re-create a clean data directory and write the consolidated JSON file
-shutil.rmtree("data", ignore_errors=True)
-os.makedirs("data", exist_ok=True)
-
-consolidated_path = "data/activities.json"
-with open(consolidated_path, "w", encoding="utf-8") as fp:
-    json.dump(all_activities, fp, ensure_ascii=False, indent=4)
-
-# Ensure the dataset repository exists (creates it if missing)
-create_repo("reach-vb/strava-stats", repo_type="dataset", exist_ok=True)
-
-# Upload only the consolidated JSON file
-api.upload_file(
-    path_or_fileobj=consolidated_path,
-    path_in_repo="activities.json",
-    repo_id="reach-vb/strava-stats",
-    repo_type="dataset",
-)
-
-
-```
+1. Clone the github repository via: `git clone https://github.com/Vaibhavs10/strava-analyse.git`
+2. Setup the python env with `uv`: `uv venv --python 3.12`, followed by, `source .venv/bin/activate`
+3. Install all required packages via `uv pip install requests huggingface_hub`
+4. Run `huggingface-cli login` (required to upload the dataset to Hugging Face)
+5. Run the python script and follow the instructions: `python upload-strava-to-hf.py`
 
 Note: when you run the script you'll be prompted to authorise access to your strava App. Once you click Authorise it'll redirect you too a page that doesn't exist 👀.
 Don't worry about it and look at the URL it is trying to redirect too, it should look something like `http://localhost:8000/?state=&code=e55c038bcf96ea6deff15c68649afc9554e6fbd6&scope=read,activity:read_all,profile:read_all`
-
 The thing that matters to us is the string after `code`, just copy and paste it to the script and that's it! 
 
-Once you've run it go over to your dataset on Hugging Face, here's mine for example: https://huggingface.co/datasets/reach-vb/strava-stats
+If all goes well, you should be able to go to your dataset on Hugging Face, here's mine for example: https://huggingface.co/datasets/reach-vb/strava-stats
+
+<Image of the dataset>
+
+With the Hugging Face dataset comes a lot of interesting possiblilities to identify trends using SQL or even pandas. Since the dataset is small we can just run SQL queries via DataStudio.
+
+Let's crunch some numbers:
+
 
 Now go ahead and play with it and let me know how it goes.
