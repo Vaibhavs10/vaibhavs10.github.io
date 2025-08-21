@@ -1,9 +1,29 @@
 ---
-title: "Bragsheet"
+title: "Brag Sheet"
 author: "VB"
 date: "2025-08-21"
-categories: []
+categories: [Brag Sheet, Work, Research, Career]
 draft: true      # flip to false when ready
 ---
 
-<!-- Start writing below this line -->
+# Brag Sheet
+
+Everyone should put together a brag sheet, show off their body of work and most importantly be proud of what they've accomplished so far!
+
+In chronological order, stuff I'm proud in my work life:
+
+### Hugging Face (2022 - Now)
+
+I play multiple roles at HF and switch between them when needed - Project Manager, Developer Advocacy, Machine Learning Engineer, Research Scientist all whilst being Individual Contributor. Worked across Monetisation, Backend, Frontend, Advocacy, Research and Open Source teams. It's something I'm deeply proud of, I do what needs doing, when it needs doing.
+
+- Led the release of some of the most impactful open models (OpenAI gpt-oss, Meta Llama 3 and above, Google Gemma and more)
+- Scaled pivotal initiatives like Enterprise Hub, Notebooks, Inference Providers, ZeroGPU from scratch
+- Built tooling to foster a budding on-device ecosystem with llama.cpp, MLX, ONNX, for context [a single space](https://huggingface.co/spaces/ggml-org/gguf-my-repo) resulted in [~21K active GGUFs](https://huggingface.co/models?other=gguf-my-repo)
+- Set standards for evaluations across Speech Recognition and Text to Speech with [Open ASR Leaderboard]() + [TTS Arena]()
+- Helped SmolLM series of models by advising on model capabilities and integrating them with [WebGPU (MLC)](), [llama.cpp](), [MLX]()
+- Spent time terminally online cultivating community feedback and dog fooding our offerings (probably my fav part of the job)
+- Created hundereds of artefacts to build an ecosystem across HF offerings via [blog], [github], [x dot com], [linkedin]
+- Most importantly, put together a team of DevRels I believe in more than myself
+
+This isn't all a solo effort, thousands of slack messages, PRs and a team that I can count on. In addition to Julien who continued to encourage me to take risky bets and see them through.
+
