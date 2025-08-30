@@ -1,9 +1,8 @@
 ---
 title: "Brag Sheet"
 author: "VB"
-date: "2025-08-21"
+date: "2025-08-30"
 categories: [Brag Sheet, Work, Research, Career]
-draft: true      # flip to false when ready
 ---
 
 # Brag Sheet
@@ -23,7 +22,22 @@ I play multiple roles at HF and switch between them when needed - Project Manage
 - Helped SmolLM series of models by advising on model capabilities and integrating them with [WebGPU (MLC)](), [llama.cpp](), [MLX]()
 - Spent time terminally online cultivating community feedback and dog fooding our offerings (probably my fav part of the job)
 - Created hundereds of artefacts to build an ecosystem across HF offerings via [blog], [github], [x dot com], [linkedin]
-- Most importantly, put together a team of DevRels I believe in more than myself
+- Most importantly, put together a team of DevRels and on-device engineers I believe in more than myself
 
-This isn't all a solo effort, thousands of slack messages, PRs and a team that I can count on. In addition to Julien who continued to encourage me to take risky bets and see them through.
+This isn't all a solo effort, thousands of slack messages, PRs and a team that I can count on. In addition to the HF leadership team and specifically Julien who continued to encourage me to take risky bets and see them through.
 
+### Research (2020 - 2023)
+
+- Work on alternate attention methods Nyströmformer and Reformer for Auto Regressive Text to Speech.
+- Built diffusion based post-training network for TTS.
+
+### Life
+
+I have pivoted four times in my life so far and it's been a joy each time:
+
+- Spent 2015-17 worked in sales and independent consulting for startups in India
+- 2017-2020 served as a Data Science/ Management consultant for Deloitte - helping close > 4$ deals
+- 2020-2023 researched NLP & Speech in Stuttgart, Germany
+- 2022-Now leading Developer Experience and Community at Hugging Face
+
+Each of these have taught me skills which I use everyday.
