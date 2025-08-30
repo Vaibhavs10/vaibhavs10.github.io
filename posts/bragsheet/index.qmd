@@ -1,0 +1,43 @@
+---
+title: "Brag Sheet"
+author: "VB"
+date: "2025-08-30"
+categories: [Brag Sheet, Work, Research, Career]
+---
+
+# Brag Sheet
+
+Everyone should put together a brag sheet, show off their body of work and most importantly be proud of what they've accomplished so far!
+
+In chronological order, stuff I'm proud in my work life:
+
+### Hugging Face (2022 - Now)
+
+I play multiple roles at HF and switch between them when needed - Project Manager, Developer Advocacy, Machine Learning Engineer, Research Scientist all whilst being Individual Contributor. Worked across Monetisation, Backend, Frontend, Advocacy, Research and Open Source teams. It's something I'm deeply proud of, I do what needs doing, when it needs doing.
+
+- Led the release of some of the most impactful open models (OpenAI gpt-oss, Meta Llama 3 and above, Google Gemma and more)
+- Scaled pivotal initiatives like Enterprise Hub, Notebooks, Inference Providers, ZeroGPU from scratch
+- Built tooling to foster a budding on-device ecosystem with llama.cpp, MLX, ONNX, for context [a single space](https://huggingface.co/spaces/ggml-org/gguf-my-repo) resulted in [~21K active GGUFs](https://huggingface.co/models?other=gguf-my-repo)
+- Set standards for evaluations across Speech Recognition and Text to Speech with [Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard) + [TTS Arena](https://huggingface.co/spaces/TTS-AGI/TTS-Arena-V2)
+- Helped SmolLM series of models by advising on model capabilities and integrating them with [WebGPU (MLC)](https://simonwillison.net/2024/Nov/29/structured-generation-smollm2-webgpu/), [llama.cpp](https://github.com/ggml-org/llama.cpp/pull/14581), [MLX](https://github.com/ml-explore/mlx-lm/pull/272)
+- Spent time terminally online cultivating community feedback and dog fooding our offerings (probably my fav part of the job)
+- Created hundereds of artefacts to build an ecosystem across HF offerings via [blog](https://huggingface.co/blog), [github](https://github.com/vaibhavs10), [x dot com](https://x.com/reach_vb), [linkedin](https://www.linkedin.com/in/vaibhavs10/)
+- Most importantly, put together a team of DevRels and on-device engineers I believe in more than myself
+
+This isn't all a solo effort, thousands of slack messages, PRs and a team that I can count on. In addition to the HF leadership team and specifically Julien who continued to encourage me to take risky bets and see them through.
+
+### Research (2020 - 2023)
+
+- Work on alternate attention methods Nyströmformer and Reformer for Auto Regressive Text to Speech (Tacotron + FastSpeech 2)
+- Built diffusion based post-training network for TTS (FastSpeech 2 + Shallow Diffusion)
+
+### Life
+
+I have pivoted four times in my life so far and it's been a joy each time:
+
+- Spent 2015-17 worked in sales and independent consulting for startups in India
+- 2017-2020 served as a Data Science/ Management consultant for Deloitte - helping close > 4$ deals
+- 2020-2023 researched NLP & Speech in Stuttgart, Germany
+- 2022-Now leading Developer Experience and Community at Hugging Face
+
+Each of these have taught me skills which I use everyday.
