@@ -13,7 +13,9 @@ In chronological order, stuff I'm proud in my work life:
 
 ### Hugging Face (2022 - Now)
 
-I play multiple roles at HF and switch between them when needed - Project Manager, Developer Advocacy, Machine Learning Engineer, Research Scientist all whilst being Individual Contributor. Worked across Monetisation, Backend, Frontend, Advocacy, Research and Open Source teams. It's something I'm deeply proud of, I do what needs doing, when it needs doing.
+I play multiple roles at HF and switch between them when needed - Project Manager, Developer Advocacy, Machine Learning Engineer, Research Scientist all whilst being Individual Contributor. 
+
+Worked across Monetisation, Backend, Frontend, Advocacy, Research and Open Source teams. 
 
 - Led the release of some of the most impactful open models (OpenAI gpt-oss, Meta Llama 3 and above, Google Gemma and more)
 - Scaled pivotal initiatives like Enterprise Hub, Notebooks, Inference Providers, ZeroGPU from scratch
@@ -36,7 +38,7 @@ This isn't all a solo effort, thousands of slack messages, PRs and a team that I
 I have pivoted four times in my life so far and it's been a joy each time:
 
 - Spent 2015-17 worked in sales and independent consulting for startups in India
-- 2017-2020 served as a Data Science/ Management consultant for Deloitte - helping close > 4$ deals
+- 2017-2020 served as a Data Science/ Management consultant for Deloitte - helped close > 4M$ deals
 - 2020-2023 researched NLP & Speech in Stuttgart, Germany
 - 2022-Now leading Developer Experience and Community at Hugging Face
 
