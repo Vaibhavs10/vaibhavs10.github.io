@@ -1,31 +1,162 @@
 /* css styles */
 
-/* Basic styling for that early web feel */
+/* Monochrome terminal-inspired theme (light mode) */
+:root {
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #555555;
+  --border: #000000;
+  --link: #000000;
+  --visited: #555555;
+  --code-bg: #f5f5f5;
+  --code-fg: #111111;
+}
+
+html, body {
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
 body {
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #ffffff;
-  color: #000000;
   padding: 0 2rem;
+  line-height: 1.7;
 }
 
+/* Links: clean underline, no color pop */
 a {
-  color: #0000EE;  /* Classic blue hyperlink color */
+  color: var(--link);
   text-decoration: underline;
 }
 
 a:visited {
-  color: #551A8B;  /* Classic visited link color */
+  color: var(--visited);
 }
 
-/* Simple navigation styling */
-.navbar {
-  border-bottom: 1px solid #000000;
+a:hover, a:focus {
+  text-decoration-thickness: 2px;
+}
+
+/* Navigation: flat, bordered, monochrome */
+.navbar,
+.navbar-dark,
+.navbar-light {
+  background: var(--bg) !important;
+  border-bottom: 1px solid var(--border);
   padding: 1rem 0;
 }
 
-/* Basic content styling */
-.content {
-  line-height: 1.6;
-  margin: 2rem 0;
+.navbar a,
+.navbar-brand,
+.navbar-nav .nav-link {
+  color: var(--fg) !important;
+  text-decoration: none;
+}
+
+.navbar a:hover,
+.navbar-nav .nav-link:hover {
+  text-decoration: underline;
+}
+
+/* Content containers */
+.content,
+.page-content,
+.quarto-container,
+.quarto-title-block,
+.quarto-appendix {
+  background: transparent;
+}
+
+/* Headings: bold, crisp */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--fg);
+  font-weight: 700;
+}
+
+/* Horizontal rule & general borders */
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* Code blocks and inline code */
+pre, code, kbd, samp {
+  background: var(--code-bg);
+  color: var(--code-fg);
+}
+
+pre {
+  border: 1px solid var(--border);
+  padding: 1rem;
+}
+
+code {
+  border: 1px solid var(--border);
+  padding: 0.1em 0.3em;
+}
+
+/* Blockquotes */
+blockquote {
+  color: var(--muted);
+  border-left: 3px solid var(--border);
+  margin-left: 0;
+  padding-left: 1rem;
+}
+
+/* Tables */
+table {
+  background: transparent;
+  color: var(--fg);
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+}
+
+th, td {
+  border: 1px solid var(--border) !important;
+}
+
+thead th {
+  background: #111111;
+}
+
+/* Buttons (rare on this site, but keep consistent) */
+.btn, .btn-primary, .btn-secondary {
+  background: transparent !important;
+  color: var(--fg) !important;
+  border: 1px solid var(--fg) !important;
+}
+
+.btn:hover {
+  background: #111111 !important;
+}
+
+/* Forms (search, etc.) */
+input, textarea, select {
+  background: #111111;
+  color: var(--fg);
+  border: 1px solid var(--border);
+}
+
+/* TOC & sidebars */
+#TOC, .toc, .quarto-sidebar {
+  background: transparent;
+  color: var(--fg);
+}
+
+.toc a, .toc .nav-link {
+  color: var(--fg);
+}
+
+/* Footer */
+.footer, .quarto-footer {
+  background: transparent;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+/* Accessibility */
+:focus {
+  outline: 1px dotted var(--fg);
+  outline-offset: 2px;
 }

@@ -1,18 +1,17 @@
 /*-- scss:defaults --*/
 
 /*-- scss:rules --*/
-// Style the main listing page post titles
+// Monochrome listing styles to match terminal theme
 .listing-category article h3 a,
 .quarto-listing article h3 a {
   font-size: 1.3em;
   font-weight: 700;
-  color: #2c3e50;
+  color: #111111;
   text-decoration: none;
   display: block;
   margin: 0.5em 0 0.3em 0;
-  
+
   &:hover {
-    color: #3498db;
     text-decoration: underline;
   }
 }
@@ -21,7 +20,7 @@
 .quarto-listing article {
   margin-bottom: 1.2em;
   padding-bottom: 0.8em;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid #000000;
 }
 
 // Make description text more compact
@@ -29,10 +28,12 @@
   margin: 0.3em 0;
   line-height: 1.4;
   font-size: 0.95em;
+  color: #444444;
 }
 
 // Compress metadata/date information
 .quarto-listing article .listing-date {
   font-size: 0.9em;
   margin: 0;
-} 
+  color: #555555;
+}
