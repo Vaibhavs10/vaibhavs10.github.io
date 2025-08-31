@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="VB">
-<meta name="dcterms.date" content="2025-01-16">
+<meta name="dcterms.date" content="2025-08-13">
 
-<title>Run Phi-4 with ollama and Hugging Face – VB’s Notes and Ramblings</title>
+<title>Building Smart Agents with MCP and OpenAI gpt-oss – VB’s Notes and Ramblings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -74,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-15b851b4b768782e3641b87b82c86b73.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-39775da1b720616d4be2aac3cd5f0ca2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -148,15 +148,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Run Phi-4 with ollama and Hugging Face</h1>
+      <h1 class="title">Building Smart Agents with MCP and OpenAI gpt-oss</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">llm</div>
-                <div class="quarto-category">ollama</div>
-                <div class="quarto-category">mac</div>
-                <div class="quarto-category">metal</div>
-                <div class="quarto-category">cuda</div>
-                <div class="quarto-category">phi4</div>
-                <div class="quarto-category">phi</div>
+                <div class="quarto-category">mcp</div>
+                <div class="quarto-category">openai</div>
+                <div class="quarto-category">gpt-oss</div>
+                <div class="quarto-category">tiny-agents</div>
+                <div class="quarto-category">playwright</div>
+                <div class="quarto-category">huggingface</div>
+                <div class="quarto-category">huggingface-mcp</div>
+                <div class="quarto-category">browser-automation</div>
               </div>
                   </div>
   </div>
@@ -174,7 +175,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 16, 2025</p>
+        <p class="date">August 13, 2025</p>
       </div>
     </div>
     
@@ -190,10 +191,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#step-1-setup-ollama" id="toc-step-1-setup-ollama" class="nav-link active" data-scroll-target="#step-1-setup-ollama">Step 1: Setup ollama</a></li>
-  <li><a href="#step-2-kickstart-ollama" id="toc-step-2-kickstart-ollama" class="nav-link" data-scroll-target="#step-2-kickstart-ollama">Step 2: Kickstart ollama</a></li>
-  <li><a href="#step-3-run-inference-with-phi-4" id="toc-step-3-run-inference-with-phi-4" class="nav-link" data-scroll-target="#step-3-run-inference-with-phi-4">Step 3: Run inference with Phi-4</a></li>
-  <li><a href="#step-4-use-it-for-your-own-tasks" id="toc-step-4-use-it-for-your-own-tasks" class="nav-link" data-scroll-target="#step-4-use-it-for-your-own-tasks">Step 4: Use it for your own tasks</a></li>
+  <li><a href="#example-local-browser-agent" id="toc-example-local-browser-agent" class="nav-link active" data-scroll-target="#example-local-browser-agent"><strong>Example</strong>: Local Browser Agent</a>
+  <ul class="collapse">
+  <li><a href="#step-0-log-in-to-hugging-face" id="toc-step-0-log-in-to-hugging-face" class="nav-link" data-scroll-target="#step-0-log-in-to-hugging-face">Step 0: Log in to Hugging Face</a></li>
+  <li><a href="#step-1-define-the-agent" id="toc-step-1-define-the-agent" class="nav-link" data-scroll-target="#step-1-define-the-agent">Step 1: Define the Agent</a></li>
+  </ul></li>
+  <li><a href="#example-accessing-hugging-face-mcp-servers" id="toc-example-accessing-hugging-face-mcp-servers" class="nav-link" data-scroll-target="#example-accessing-hugging-face-mcp-servers"><strong>Example</strong>: Accessing Hugging Face MCP Servers</a></li>
+  <li><a href="#step-1-find-an-mcp-server" id="toc-step-1-find-an-mcp-server" class="nav-link" data-scroll-target="#step-1-find-an-mcp-server">Step 1: Find an MCP Server</a>
+  <ul class="collapse">
+  <li><a href="#step-2-run-it" id="toc-step-2-run-it" class="nav-link" data-scroll-target="#step-2-run-it">Step 2: Run it!</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -204,38 +211,137 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac.</p>
-<section id="step-1-setup-ollama" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-setup-ollama">Step 1: Setup ollama</h2>
-<p>On a mac, you can install ollama using homebrew:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install ollama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>On a Windows/ Linux device, you can follow the instructions on the <a href="https://ollama.com/download">Ollama Docs</a>)</p>
+<blockquote class="blockquote">
+<p>[!NOTE] This post is to be accompanied by it’s GitHub repository <a href="https://github.com/Vaibhavs10/mcp-with-openai-gpt-oss">here</a></p>
+</blockquote>
+<p>In this guide, we’ll explore using MCP and demonstrate how to build AI agents using <code>gpt-oss</code> as the LLM backbone. We’ll use Hugging Face’s lightweight MCP clients:</p>
+<ol type="1">
+<li><code>@huggingface/tiny-agents</code> (TypeScript)</li>
+<li><code>huggingface_hub[mcp]</code> (Python)</li>
+</ol>
+<p>The key to building effective AI agents lies in their tools. MCP provides a standardized interface for tool interaction, making it simple to create powerful agents.</p>
+<p>Let’s dive in by creating a web-savvy agent that can browse and search the internet for you.</p>
+<section id="example-local-browser-agent" class="level2">
+<h2 class="anchored" data-anchor-id="example-local-browser-agent"><strong>Example</strong>: Local Browser Agent</h2>
+<p>Let’s build a browser agent that can browse and search the internet for you. We’ve already implemented this in <code>/browser-agent</code> directory in case you want to skip ahead.</p>
+<section id="step-0-log-in-to-hugging-face" class="level3">
+<h3 class="anchored" data-anchor-id="step-0-log-in-to-hugging-face">Step 0: Log in to Hugging Face</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">huggingface-cli</span> login</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will ask you for your HF API token. You can get it from <a href="https://huggingface.co/settings/tokens">here</a>.</p>
 </section>
-<section id="step-2-kickstart-ollama" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-kickstart-ollama">Step 2: Kickstart ollama</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> serve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="step-3-run-inference-with-phi-4" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-run-inference-with-phi-4">Step 3: Run inference with Phi-4</h2>
-<p>After some research I found that the Phi-4 GGUFs from Unsloth are the most accurate. They ran bunch of evals and also converted the model to LLaMa format. You can find it here: <a href="https://huggingface.co/unsloth/phi-4-GGUF">unsloth/phi-4-GGUF</a>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>I’d also recommend reading the blogpost about the fixes for the Phi-4 model <a href="https://unsloth.ai/blog/phi4">here</a>.</p>
-</section>
-<section id="step-4-use-it-for-your-own-tasks" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-use-it-for-your-own-tasks">Step 4: Use it for your own tasks</h2>
-<p>That’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.</p>
-<p>Go on and try out some of your own prompts, and see how it works.</p>
+<section id="step-1-define-the-agent" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-define-the-agent">Step 1: Define the Agent</h3>
+<p>Both the JS and Python Tiny agent clients are meant to be quite easy to play and experiment with. They expect a transparent <code>agent.json</code> which includes the details of which LLM should be used and what tools it should have access to.</p>
+<p>Let’s define our agent using OpenAI’s latest <code>gpt-oss</code> 120B as the LLM and connect it to <a href="https://github.com/microsoft/playwright-mcp">this Playwright MCP server</a> that provides browser automation capabilities to your agent. We’ve added this in <code>/browser-agent/agent.json</code> for you to use.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"openai/gpt-oss-120b"</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"fireworks-ai"</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"servers"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"stdio"</span><span class="fu">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"npx"</span><span class="fu">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"args"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"@playwright/mcp@latest"</span><span class="ot">]</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Optionally, we can define a System Prompt that helps steer the LLM. This is defined in <code>/browser-agent/PROMPT.md</code> for you to use.</p>
+<blockquote class="blockquote">
+<p>You are an agent - please keep going until the user’s query is completely resolved, before ending your turn and yielding back to the user. Only terminate your turn when you are sure that the problem is solved, or if you need more info from the user to solve the problem.</p>
+<p>If you are not sure about anything pertaining to the user’s request, use your tools to read files and gather the relevant information: do NOT guess or make up an answer.</p>
+<p>You MUST plan extensively before each function call, and reflect extensively on the outcomes of the previous function calls. DO NOT do this entire process by making function calls only, as this can impair your ability to solve the problem and think insightfully.</p>
+<p>Help the User with their task.</p>
+</blockquote>
+<pre><code>
+That's it, let's take it out for a spin.
+
+### Step 2: Run the agent
+
+To run the agent in Python, we simply install the `tiny-agents` package, which is part of the `huggingface_hub` library.
+
+```bash
+pip install -U "huggingface_hub[mcp]&gt;=0.32.0"</code></pre>
+<p>Followed by running our agent:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tiny-agents</span> run ./browser-agent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="example.png" class="img-fluid figure-img"></p>
-<figcaption>Chatting with Phi 4 on my Macbook with Ollama</figcaption>
+<p><img src="assets/init-browser.png" class="img-fluid figure-img"></p>
+<figcaption>CLI Init Browser</figcaption>
 </figure>
 </div>
-<p>Bonus: Now go try other <a href="https://huggingface.co/models?library=gguf">GGUF models on the Hub</a> and compare their performance with Phi 4.</p>
-<p>and.. that’s it!</p>
-<p>Oh, sorry, one last thing, you can now even run private GGUFs from the Hugging Face Hub via ollama, <a href="https://huggingface.co/docs/hub/en/ollama">read here</a>.</p>
+<p>When the agent starts, you can chat with it to ask him to solve tasks. For example, try to ask it to find the top 10 Hugging Face models, and see if it’s able to connect to the website using the Playwright MCP tool we configured!</p>
+<blockquote class="blockquote">
+<p>[!NOTE] You can do exactly the same thing with our JavaScript client as well.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> @huggingface/tiny-agents run ./browser-agent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://youtu.be/zxlKwOd4VOk"><img src="https://img.youtube.com/vi/zxlKwOd4VOk/0.jpg" class="img-fluid figure-img" alt="Browser Agent Demo"></a></p>
+<figcaption>Browser Agent Demo</figcaption>
+</figure>
+</div>
+<p>Voila, you now have a capable browser agent with you!</p>
+</section>
+</section>
+<section id="example-accessing-hugging-face-mcp-servers" class="level2">
+<h2 class="anchored" data-anchor-id="example-accessing-hugging-face-mcp-servers"><strong>Example</strong>: Accessing Hugging Face MCP Servers</h2>
+<p>Let’s take it up a notch and give more creative freedom to our AI Agent, cue, <a href="https://hf.co/mcp">Hugging Face MCP Server</a>. The HF MCP server allows you to not only interact with the HF Hub but also with 1000s of AI spaces on <a href="https://hf.co/spaces">hf.co/spaces</a>.</p>
+<p>Let’s get it set up!</p>
+</section>
+<section id="step-1-find-an-mcp-server" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-find-an-mcp-server">Step 1: Find an MCP Server</h2>
+<p>Head over to <a href="https://hf.co/mcp">hf.co/mcp</a> and add the spaces/ demo that you want to be able to play with</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/hf-mcp.png" class="img-fluid figure-img"></p>
+<figcaption>Hugging Face MCP Settings page</figcaption>
+</figure>
+</div>
+<p>For example, I’ve added the following space</p>
+<ol type="1">
+<li><a href="https://huggingface.co/spaces/evalstate/FLUX.1-Krea-dev">evalstate/FLUX.1-Krea-dev</a> - a popular aesthetic text to image model by Black Forest Labs</li>
+<li><a href="https://huggingface.co/spaces/evalstate/ltx-video-distilled">evalstate/ltx-video-distilled</a> - a popular image/ text to video by Lightricks</li>
+</ol>
+<p>Next, let’s update our <code>agent.json</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"openai/gpt-oss-120b"</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"fireworks-ai"</span><span class="fu">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"inputs"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"promptString"</span><span class="fu">,</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"hf-token"</span><span class="fu">,</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Your Hugging Face Token"</span><span class="fu">,</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"password"</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"servers"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"http"</span><span class="fu">,</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"url"</span><span class="fu">:</span> <span class="st">"https://huggingface.co/mcp"</span><span class="fu">,</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"headers"</span><span class="fu">:</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                <span class="dt">"Authorization"</span><span class="fu">:</span> <span class="st">"Bearer ${input:hf-token}"</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span>   </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="step-2-run-it" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-run-it">Step 2: Run it!</h3>
+<p>Let’s run it with Tiny agents just like we did with the local browser agent.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tiny-agents</span> run ./hf-mcp-server</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>[!NOTE] Again, you can do exactly the same thing with our JavaScript client as well.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> @huggingface/tiny-agents run ./hf-mcp-server</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://youtu.be/OEaPk3FoK7M"><img src="https://img.youtube.com/vi/OEaPk3FoK7M/0.jpg" class="img-fluid figure-img" alt="Watch the demo video"></a></p>
+<figcaption>Watch the demo video</figcaption>
+</figure>
+</div>
+<p>That’s it! What would you build next with it?</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

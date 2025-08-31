@@ -3,6 +3,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/bragsheet/index.html",
+      "/posts/mcp-with-openai-gpt-oss/index.html",
       "/posts/play-with-strava-data-on-hugging-face/index.html",
       "/posts/run-phi-on-device-ollama/index.html",
       "/posts/all-things-running/index.html",

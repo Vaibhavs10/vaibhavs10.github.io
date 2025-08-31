@@ -1,11 +1,9 @@
 ---
-title: "MCP with OpenAI gpt-oss"
+title: "Building Smart Agents with MCP and OpenAI gpt-oss"
 author: "VB"
 date: "2025-08-13"
 categories: [mcp, openai, gpt-oss, tiny-agents, playwright, huggingface, huggingface-mcp, browser-automation]
 ---
-
-# Building Smart Agents with MCP and OpenAI *gpt-oss* 🔥
 
 > [!NOTE]
 > This post is to be accompanied by it's GitHub repository [here](https://github.com/Vaibhavs10/mcp-with-openai-gpt-oss)
@@ -78,7 +76,7 @@ Followed by running our agent:
 tiny-agents run ./browser-agent
 ```
 
-![CLI Init Browser](assets/init-browser.png)
+![CLI Init Browser](https://huggingface.co/datasets/reach-vb/random-images/raw/main/init-browser.png)
 
 When the agent starts, you can chat with it to ask him to solve tasks. For example, try to ask it to find the top 10 Hugging Face models, and see if it's able to connect to the website using the Playwright MCP tool we configured!
 
@@ -103,7 +101,7 @@ Let's get it set up!
 
 Head over to [hf.co/mcp](https://hf.co/mcp) and add the spaces/ demo that you want to be able to play with
 
-![Hugging Face MCP Settings page](assets/hf-mcp.png)
+![Hugging Face MCP Settings page](https://huggingface.co/datasets/reach-vb/random-images/raw/main/hf-mcp.png)
 
 For example, I've added the following space 
 
