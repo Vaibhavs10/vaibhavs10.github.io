@@ -118,6 +118,7 @@ th, td {
 
 thead th {
   background: #111111;
+  color: #ffffff;
 }
 
 /* Buttons (rare on this site, but keep consistent) */
@@ -129,13 +130,18 @@ thead th {
 
 .btn:hover {
   background: #111111 !important;
+  color: #ffffff !important;
 }
 
 /* Forms (search, etc.) */
 input, textarea, select {
-  background: #111111;
+  background: var(--bg);
   color: var(--fg);
   border: 1px solid var(--border);
+}
+
+::placeholder {
+  color: var(--muted);
 }
 
 /* TOC & sidebars */
