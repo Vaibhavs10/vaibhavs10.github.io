@@ -43,5 +43,8 @@
   },
   "posts/bragsheet/index.qmd": {
     "index.html": "d6d76da8"
+  },
+  "posts/mcp-with-openai-gpt-oss/index.qmd": {
+    "index.html": "95bcb35a"
   }
 }
