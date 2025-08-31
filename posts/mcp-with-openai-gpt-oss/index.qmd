@@ -1,0 +1,9 @@
+---
+title: "MCP with OpenAI gpt-oss"
+author: "VB"
+date: "2025-08-31"
+categories: []
+draft: true      # flip to false when ready
+---
+
+<!-- Start writing below this line -->
