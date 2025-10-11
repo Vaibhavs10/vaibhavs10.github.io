@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="VB">
-<meta name="dcterms.date" content="2024-07-29">
+<meta name="dcterms.date" content="2025-10-11">
+<meta name="description" content="Paste Mermaid syntax, render instantly, copy the SVG.">
 
-<title>List of random things I keep forgetting – VB’s Notes and Ramblings</title>
+<title>Mermaid Scratchpad – VB’s Notes and Ramblings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-15b851b4b768782e3641b87b82c86b73.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-39775da1b720616d4be2aac3cd5f0ca2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -113,28 +113,27 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">List of random things I keep forgetting</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">things</div>
+    <div class="quarto-title column-page">
+      <h1 class="title">Mermaid Scratchpad</h1>
+                  <div>
+        <div class="description">
+          Paste Mermaid syntax, render instantly, copy the SVG.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">tools</div>
               </div>
                   </div>
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page">
 
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>VB </p>
-            </div>
-    </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 29, 2024</p>
+        <p class="date">October 11, 2025</p>
       </div>
     </div>
     
@@ -142,30 +141,229 @@ ul.task-list li input[type="checkbox"] {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
-    </div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
 
 
-<p>I often end up looking for certain commands/ code snippets so here is a list.</p>
-<ol type="1">
-<li>Change the server language to English: <code>export LC_ALL=C</code></li>
-<li>Look at the username for of who is running a process on a multi-user server: <code>ps -u -p &lt;PROCESS_ID&gt;</code></li>
-<li>Re-authenticate with github after your PAT has expired: <code>gh auth login -h [github.com](http://github.com/)</code></li>
-<li>Pip install without clogging the cache dir, add a <code>--no-cache-dir</code> flag to your <code>pip install</code> commands.</li>
-<li>Create a virtual environment with <code>python -m venv &lt;path_to_the_environment&gt;</code> command.</li>
-<li>Run a python script with nohup and pipe the output to a file. <code>nohup python my_script_is_the_best.py &amp;&gt; my_scripts_output.out 2&gt;&amp;1 &amp;</code></li>
-<li>Batch convert <code>wav</code> files to <code>mp3</code> files with <code>ffmpeg</code> - <code>for f in *.{wav,WAV}; do ffmpeg -i "$f" -c:a libmp3lame -q:a 2 "${f%.*}.mp3"; done</code></li>
-<li>Append a prefix to specific files in a directory - <code>for f in {0,1,2,3,4,5}.mp3; do mv "$f" "GAN_$f"; done</code></li>
-</ol>
+<p>Drop a Mermaid diagram definition into the editor and see the rendered output on the right. Works offline once the page loads, so it’s handy when sketching architecture or flows.</p>
+<section class="mermaid-playground">
+  <div class="mermaid-playground__input">
+    <label class="mermaid-playground__label" for="mermaid-editor">Paste Mermaid definition</label>
+    <textarea id="mermaid-editor" spellcheck="false" autocomplete="off" autocapitalize="off" rows="14">graph TD
+  A[Start] --&gt; B{Is it working?}
+  B --&gt;|Yes| C[Ship it]
+  B --&gt;|No| D[Fix it]</textarea>
+    <p class="mermaid-playground__hint">Auto-renders as you type. Tap Render to refresh manually.</p>
+  </div>
+  <div class="mermaid-playground__output">
+    <div class="mermaid-playground__toolbar">
+      <span id="mermaid-status">Waiting for diagram…</span>
+      <button id="mermaid-render" type="button">Render</button>
+    </div>
+    <div id="mermaid-preview" class="mermaid-preview" aria-live="polite" aria-busy="false"></div>
+  </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  (function () {
+    const textarea = document.getElementById('mermaid-editor');
+    const preview = document.getElementById('mermaid-preview');
+    const status = document.getElementById('mermaid-status');
+    const renderButton = document.getElementById('mermaid-render');
+
+    if (!textarea || !preview || typeof mermaid === 'undefined') {
+      return;
+    }
+
+    function currentTheme() {
+      const theme = document.documentElement.getAttribute('data-bs-theme');
+      return theme === 'dark' ? 'dark' : 'neutral';
+    }
+
+    function initializeMermaid() {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: currentTheme(),
+        securityLevel: 'loose'
+      });
+    }
+
+    let renderCount = 0;
+    initializeMermaid();
+
+    async function renderDiagram(source) {
+      const clean = source.trim();
+
+      if (!clean) {
+        preview.innerHTML = '';
+        status.textContent = 'Add a Mermaid diagram to render it.';
+        preview.setAttribute('aria-busy', 'false');
+        return;
+      }
+
+      preview.setAttribute('aria-busy', 'true');
+      const id = `mermaid-diagram-${++renderCount}`;
+
+      try {
+        const { svg } = await mermaid.render(id, clean);
+        preview.innerHTML = svg;
+        status.textContent = 'Rendered just now.';
+      } catch (error) {
+        status.textContent = `Mermaid error: ${error.message}.`;
+        preview.innerHTML = '';
+      } finally {
+        preview.setAttribute('aria-busy', 'false');
+      }
+    }
+
+    const debouncedRender = debounce(() => renderDiagram(textarea.value), 250);
+    textarea.addEventListener('input', debouncedRender);
+    renderButton.addEventListener('click', () => renderDiagram(textarea.value));
+    renderDiagram(textarea.value);
+
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const reinitialize = () => {
+      initializeMermaid();
+      renderDiagram(textarea.value);
+    };
+
+    if (prefersDark.addEventListener) {
+      prefersDark.addEventListener('change', reinitialize);
+    } else if (prefersDark.addListener) {
+      prefersDark.addListener(reinitialize);
+    }
+
+    if (typeof MutationObserver !== 'undefined') {
+      const themeObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.attributeName === 'data-bs-theme') {
+            reinitialize();
+            break;
+          }
+        }
+      });
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-bs-theme']
+      });
+    }
+
+    function debounce(callback, delay) {
+      let timeoutId;
+      return function () {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => callback.apply(this, arguments), delay);
+      };
+    }
+  })();
+</script>
+<style>
+  .mermaid-playground {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+    width: min(100%, 72rem);
+    margin-inline: auto;
+  }
+
+  @media (min-width: 768px) {
+    .mermaid-playground {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .mermaid-playground__input,
+  .mermaid-playground__output {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mermaid-playground__label {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .mermaid-playground__hint {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--bs-secondary-color, #555);
+  }
+
+  #mermaid-editor {
+    width: 100%;
+    min-height: 16rem;
+    padding: 0.75rem;
+    font-family: "Courier New", monospace;
+    font-size: 0.95rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    border-radius: 0.5rem;
+    background-color: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #111);
+    resize: vertical;
+    line-height: 1.4;
+  }
+
+  .mermaid-playground__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--bs-secondary-color, #555);
+  }
+
+  .mermaid-playground__toolbar button {
+    padding: 0.45rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: transparent;
+    color: var(--bs-body-color, #111);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .mermaid-playground__toolbar button:hover,
+  .mermaid-playground__toolbar button:focus-visible {
+    border-color: var(--bs-body-color, #111);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .mermaid-preview {
+    min-height: 16rem;
+    padding: 0.75rem;
+    border: 1px dashed var(--bs-border-color, #c5c5c5);
+    border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mermaid-preview svg {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 600px) {
+    #mermaid-editor {
+      min-height: 14rem;
+    }
+
+    .mermaid-preview {
+      min-height: 14rem;
+    }
+  }
+</style>
 
 
 
