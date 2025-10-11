@@ -46,5 +46,11 @@
   },
   "posts/mcp-with-openai-gpt-oss/index.qmd": {
     "index.html": "95bcb35a"
+  },
+  "mermaid.qmd": {
+    "mermaid.html": "77d6f8fe"
+  },
+  "posts/mermaid-scratchpad/index.qmd": {
+    "index.html": "4fdd49c9"
   }
 }

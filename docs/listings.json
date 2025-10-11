@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/mermaid-scratchpad/index.html",
       "/posts/bragsheet/index.html",
       "/posts/mcp-with-openai-gpt-oss/index.html",
       "/posts/play-with-strava-data-on-hugging-face/index.html",

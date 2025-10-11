@@ -1,0 +1,231 @@
+---
+title: "Mermaid Scratchpad"
+date: "2025-10-11"
+description: "Paste Mermaid syntax, render instantly, copy the SVG."
+categories: [tools]
+page-layout: full
+toc: false
+freeze: false
+---
+
+Drop a Mermaid diagram definition into the editor and see the rendered output on the right. Works offline once the page loads, so it’s handy when sketching architecture or flows.
+
+```{=html}
+<section class="mermaid-playground">
+  <div class="mermaid-playground__input">
+    <label class="mermaid-playground__label" for="mermaid-editor">Paste Mermaid definition</label>
+    <textarea id="mermaid-editor" spellcheck="false" autocomplete="off" autocapitalize="off" rows="14">graph TD
+  A[Start] --> B{Is it working?}
+  B -->|Yes| C[Ship it]
+  B -->|No| D[Fix it]</textarea>
+    <p class="mermaid-playground__hint">Auto-renders as you type. Tap Render to refresh manually.</p>
+  </div>
+  <div class="mermaid-playground__output">
+    <div class="mermaid-playground__toolbar">
+      <span id="mermaid-status">Waiting for diagram…</span>
+      <button id="mermaid-render" type="button">Render</button>
+    </div>
+    <div id="mermaid-preview" class="mermaid-preview" aria-live="polite" aria-busy="false"></div>
+  </div>
+</section>
+```
+
+```{=html}
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  (function () {
+    const textarea = document.getElementById('mermaid-editor');
+    const preview = document.getElementById('mermaid-preview');
+    const status = document.getElementById('mermaid-status');
+    const renderButton = document.getElementById('mermaid-render');
+
+    if (!textarea || !preview || typeof mermaid === 'undefined') {
+      return;
+    }
+
+    function currentTheme() {
+      const theme = document.documentElement.getAttribute('data-bs-theme');
+      return theme === 'dark' ? 'dark' : 'neutral';
+    }
+
+    function initializeMermaid() {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: currentTheme(),
+        securityLevel: 'loose'
+      });
+    }
+
+    let renderCount = 0;
+    initializeMermaid();
+
+    async function renderDiagram(source) {
+      const clean = source.trim();
+
+      if (!clean) {
+        preview.innerHTML = '';
+        status.textContent = 'Add a Mermaid diagram to render it.';
+        preview.setAttribute('aria-busy', 'false');
+        return;
+      }
+
+      preview.setAttribute('aria-busy', 'true');
+      const id = `mermaid-diagram-${++renderCount}`;
+
+      try {
+        const { svg } = await mermaid.render(id, clean);
+        preview.innerHTML = svg;
+        status.textContent = 'Rendered just now.';
+      } catch (error) {
+        status.textContent = `Mermaid error: ${error.message}.`;
+        preview.innerHTML = '';
+      } finally {
+        preview.setAttribute('aria-busy', 'false');
+      }
+    }
+
+    const debouncedRender = debounce(() => renderDiagram(textarea.value), 250);
+    textarea.addEventListener('input', debouncedRender);
+    renderButton.addEventListener('click', () => renderDiagram(textarea.value));
+    renderDiagram(textarea.value);
+
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const reinitialize = () => {
+      initializeMermaid();
+      renderDiagram(textarea.value);
+    };
+
+    if (prefersDark.addEventListener) {
+      prefersDark.addEventListener('change', reinitialize);
+    } else if (prefersDark.addListener) {
+      prefersDark.addListener(reinitialize);
+    }
+
+    if (typeof MutationObserver !== 'undefined') {
+      const themeObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.attributeName === 'data-bs-theme') {
+            reinitialize();
+            break;
+          }
+        }
+      });
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-bs-theme']
+      });
+    }
+
+    function debounce(callback, delay) {
+      let timeoutId;
+      return function () {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => callback.apply(this, arguments), delay);
+      };
+    }
+  })();
+</script>
+```
+
+```{=html}
+<style>
+  .mermaid-playground {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+    width: min(100%, 72rem);
+    margin-inline: auto;
+  }
+
+  @media (min-width: 768px) {
+    .mermaid-playground {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .mermaid-playground__input,
+  .mermaid-playground__output {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mermaid-playground__label {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .mermaid-playground__hint {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--bs-secondary-color, #555);
+  }
+
+  #mermaid-editor {
+    width: 100%;
+    min-height: 16rem;
+    padding: 0.75rem;
+    font-family: "Courier New", monospace;
+    font-size: 0.95rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    border-radius: 0.5rem;
+    background-color: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #111);
+    resize: vertical;
+    line-height: 1.4;
+  }
+
+  .mermaid-playground__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--bs-secondary-color, #555);
+  }
+
+  .mermaid-playground__toolbar button {
+    padding: 0.45rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: transparent;
+    color: var(--bs-body-color, #111);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .mermaid-playground__toolbar button:hover,
+  .mermaid-playground__toolbar button:focus-visible {
+    border-color: var(--bs-body-color, #111);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .mermaid-preview {
+    min-height: 16rem;
+    padding: 0.75rem;
+    border: 1px dashed var(--bs-border-color, #c5c5c5);
+    border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mermaid-preview svg {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 600px) {
+    #mermaid-editor {
+      min-height: 14rem;
+    }
+
+    .mermaid-preview {
+      min-height: 14rem;
+    }
+  }
+</style>
+```
