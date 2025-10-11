@@ -23,7 +23,10 @@ Drop a Mermaid diagram definition into the editor and see the rendered output on
   <div class="mermaid-playground__output">
     <div class="mermaid-playground__toolbar">
       <span id="mermaid-status">Waiting for diagram…</span>
-      <button id="mermaid-render" type="button">Render</button>
+      <div class="mermaid-playground__actions">
+        <button id="mermaid-render" type="button">Render</button>
+        <button id="mermaid-fullscreen" type="button" aria-expanded="false">Fullscreen</button>
+      </div>
     </div>
     <div id="mermaid-preview" class="mermaid-preview" aria-live="polite" aria-busy="false"></div>
   </div>
@@ -38,6 +41,7 @@ Drop a Mermaid diagram definition into the editor and see the rendered output on
     const preview = document.getElementById('mermaid-preview');
     const status = document.getElementById('mermaid-status');
     const renderButton = document.getElementById('mermaid-render');
+    const fullscreenButton = document.getElementById('mermaid-fullscreen');
 
     if (!textarea || !preview || typeof mermaid === 'undefined') {
       return;
@@ -88,6 +92,33 @@ Drop a Mermaid diagram definition into the editor and see the rendered output on
     textarea.addEventListener('input', debouncedRender);
     renderButton.addEventListener('click', () => renderDiagram(textarea.value));
     renderDiagram(textarea.value);
+
+    fullscreenButton?.addEventListener('click', async () => {
+      if (!document.fullscreenElement) {
+        if (preview.requestFullscreen) {
+          try {
+            await preview.requestFullscreen();
+            fullscreenButton.setAttribute('aria-expanded', 'true');
+            status.textContent = 'Fullscreen preview.';
+          } catch (error) {
+            status.textContent = `Fullscreen blocked: ${error.message}.`;
+          }
+        }
+      } else if (document.fullscreenElement === preview && document.exitFullscreen) {
+        await document.exitFullscreen();
+        fullscreenButton.setAttribute('aria-expanded', 'false');
+        status.textContent = 'Exited fullscreen.';
+      } else if (document.exitFullscreen) {
+        await document.exitFullscreen();
+        fullscreenButton.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      const expanded = document.fullscreenElement === preview;
+      fullscreenButton?.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      status.textContent = expanded ? 'Fullscreen preview.' : 'Exited fullscreen.';
+    });
 
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     const reinitialize = () => {
@@ -184,6 +215,11 @@ Drop a Mermaid diagram definition into the editor and see the rendered output on
     color: var(--bs-secondary-color, #555);
   }
 
+  .mermaid-playground__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
   .mermaid-playground__toolbar button {
     padding: 0.45rem 1rem;
     font-size: 0.9rem;
@@ -216,6 +252,14 @@ Drop a Mermaid diagram definition into the editor and see the rendered output on
   .mermaid-preview svg {
     width: 100%;
     height: auto;
+  }
+
+  .mermaid-preview:fullscreen {
+    padding: 2rem;
+    background-color: var(--bs-body-bg, #fff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   @media (max-width: 600px) {

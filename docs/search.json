@@ -18,7 +18,7 @@
     "href": "posts/mermaid-scratchpad/index.html",
     "title": "Mermaid Scratchpad",
     "section": "",
-    "text": "Drop a Mermaid diagram definition into the editor and see the rendered output on the right. Works offline once the page loads, so it’s handy when sketching architecture or flows.\n\n  \n    Paste Mermaid definition\n    graph TD\n  A[Start] --&gt; B{Is it working?}\n  B --&gt;|Yes| C[Ship it]\n  B --&gt;|No| D[Fix it]\n    Auto-renders as you type. Tap Render to refresh manually.\n  \n  \n    \n      Waiting for diagram…\n      Render"
+    "text": "Drop a Mermaid diagram definition into the editor and see the rendered output on the right. Works offline once the page loads, so it’s handy when sketching architecture or flows.\n\n  \n    Paste Mermaid definition\n    graph TD\n  A[Start] --&gt; B{Is it working?}\n  B --&gt;|Yes| C[Ship it]\n  B --&gt;|No| D[Fix it]\n    Auto-renders as you type. Tap Render to refresh manually.\n  \n  \n    \n      Waiting for diagram…\n      \n        Render\n        Fullscreen"
   },
   {
     "objectID": "posts/play-with-strava-data-on-hugging-face/index.html",
