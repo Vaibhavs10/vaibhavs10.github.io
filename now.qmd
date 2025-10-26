@@ -1,6 +1,6 @@
 ---
 title: "Now"
-description: "Current focuses, research, travel, and personal updates from Vaibhav Srinivasan."
+description: "Current focuses, research, travel, and personal updates from Vaibhav Srivastav aka VB."
 ---
 
 What am I focused on at this point in life?

@@ -1,6 +1,6 @@
 ---
 title: "VB's thoughts, comments and musings"
-description: "Fresh writing on audio machine learning, research notes, and experiments from Vaibhav Srinivasan."
+description: "Fresh writing on machine learning, research notes, life and musings from Vaibhav Srivastav aka VB."
 listing:
   contents: posts
   sort: "date desc"
