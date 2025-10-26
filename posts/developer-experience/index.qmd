@@ -6,4 +6,19 @@ categories: []
 draft: true      # flip to false when ready
 ---
 
-<!-- Start writing below this line -->
+Outline:
+
+- What makes a good DevX/ DevRel?
+- Why should you care about DevX (as a company)?
+- What have works
+- where are we headed
+
+This post is a a collection of my thoughts on Developer Experience/ Relations and some predictions for the future.
+
+## What makes a good DevX/ DevRel?
+
+Simply put: It's the one where a developer using your tool/ product doesn't even know that you exist.
+
+You want to have enough pathways for the developer to find your product/ tool/ service and get whatever they need done without having to ask/ search for you.
+More so you want to meet your developers where they are - GitHub, X, Discord, Slack, etc.
+You want to be there when they need you, not when you want to be there.
