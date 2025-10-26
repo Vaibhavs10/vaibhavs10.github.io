@@ -1,5 +1,6 @@
 ---
 title: "Now"
+description: "Current focuses, research, travel, and personal updates from Vaibhav Srinivasan."
 ---
 
 What am I focused on at this point in life?
@@ -48,4 +49,3 @@ Hoping to figure out long term plans soon and put them in motion ^^'
 ---
 
 After two years of hiatus from public speaking, I'm getting back into action this year with a few guest lectures/ workshops and talks lined up already. Going to be fun rest of the year and I'm here for it!
-

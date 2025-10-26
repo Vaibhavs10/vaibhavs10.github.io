@@ -1,5 +1,6 @@
 ---
 title: "About"
+description: "Background on Vaibhav Srinivasan, ML Developer Advocate focused on audio and NLP."
 about:
   template: solana
   links:

@@ -1,0 +1,2078 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>VB&#39;s Notes and Ramblings</title>
+<link>https://vaibhavs10.github.io/</link>
+<atom:link href="https://vaibhavs10.github.io/index.xml" rel="self" type="application/rss+xml"/>
+<description>Fresh writing on audio machine learning, research notes, and experiments from Vaibhav Srinivasan.</description>
+<image>
+<url>https://vaibhavs10.github.io/images/social-card.jpg</url>
+<title>VB&#39;s Notes and Ramblings</title>
+<link>https://vaibhavs10.github.io/</link>
+</image>
+<generator>quarto-1.6.39</generator>
+<lastBuildDate>Fri, 10 Oct 2025 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>Mermaid Scratchpad</title>
+  <link>https://vaibhavs10.github.io/posts/mermaid-scratchpad/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Drop a Mermaid diagram definition into the editor and see the rendered output on the right. Works offline once the page loads, so it’s handy when sketching architecture or flows.</p>
+<section class="mermaid-playground">
+  <div class="mermaid-playground__input">
+    <label class="mermaid-playground__label" for="mermaid-editor">Paste Mermaid definition</label>
+    <textarea id="mermaid-editor" spellcheck="false" autocomplete="off" autocapitalize="off" rows="14">graph TD
+  A[Start] --&gt; B{Is it working?}
+  B --&gt;|Yes| C[Ship it]
+  B --&gt;|No| D[Fix it]</textarea>
+    <p class="mermaid-playground__hint">Auto-renders as you type. Tap Render to refresh manually.</p>
+  </div>
+  <div class="mermaid-playground__output">
+    <div class="mermaid-playground__toolbar">
+      <span id="mermaid-status">Waiting for diagram…</span>
+      <div class="mermaid-playground__actions">
+        <button id="mermaid-render" type="button">Render</button>
+        <button id="mermaid-fullscreen" type="button" aria-expanded="false">Fullscreen</button>
+      </div>
+    </div>
+    <div id="mermaid-preview" class="mermaid-preview" aria-live="polite" aria-busy="false"></div>
+  </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  (function () {
+    const textarea = document.getElementById('mermaid-editor');
+    const preview = document.getElementById('mermaid-preview');
+    const status = document.getElementById('mermaid-status');
+    const renderButton = document.getElementById('mermaid-render');
+    const fullscreenButton = document.getElementById('mermaid-fullscreen');
+
+    if (!textarea || !preview || typeof mermaid === 'undefined') {
+      return;
+    }
+
+    function currentTheme() {
+      const theme = document.documentElement.getAttribute('data-bs-theme');
+      return theme === 'dark' ? 'dark' : 'neutral';
+    }
+
+    function initializeMermaid() {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: currentTheme(),
+        securityLevel: 'loose'
+      });
+    }
+
+    let renderCount = 0;
+    initializeMermaid();
+
+    async function renderDiagram(source) {
+      const clean = source.trim();
+
+      if (!clean) {
+        preview.innerHTML = '';
+        status.textContent = 'Add a Mermaid diagram to render it.';
+        preview.setAttribute('aria-busy', 'false');
+        return;
+      }
+
+      preview.setAttribute('aria-busy', 'true');
+      const id = `mermaid-diagram-${++renderCount}`;
+
+      try {
+        const { svg } = await mermaid.render(id, clean);
+        preview.innerHTML = svg;
+        status.textContent = 'Rendered just now.';
+      } catch (error) {
+        status.textContent = `Mermaid error: ${error.message}.`;
+        preview.innerHTML = '';
+      } finally {
+        preview.setAttribute('aria-busy', 'false');
+      }
+    }
+
+    const debouncedRender = debounce(() => renderDiagram(textarea.value), 250);
+    textarea.addEventListener('input', debouncedRender);
+    renderButton.addEventListener('click', () => renderDiagram(textarea.value));
+    renderDiagram(textarea.value);
+
+    fullscreenButton?.addEventListener('click', async () => {
+      if (!document.fullscreenElement) {
+        if (preview.requestFullscreen) {
+          try {
+            await preview.requestFullscreen();
+            fullscreenButton.setAttribute('aria-expanded', 'true');
+            status.textContent = 'Fullscreen preview.';
+          } catch (error) {
+            status.textContent = `Fullscreen blocked: ${error.message}.`;
+          }
+        }
+      } else if (document.fullscreenElement === preview && document.exitFullscreen) {
+        await document.exitFullscreen();
+        fullscreenButton.setAttribute('aria-expanded', 'false');
+        status.textContent = 'Exited fullscreen.';
+      } else if (document.exitFullscreen) {
+        await document.exitFullscreen();
+        fullscreenButton.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      const expanded = document.fullscreenElement === preview;
+      fullscreenButton?.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      status.textContent = expanded ? 'Fullscreen preview.' : 'Exited fullscreen.';
+    });
+
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const reinitialize = () => {
+      initializeMermaid();
+      renderDiagram(textarea.value);
+    };
+
+    if (prefersDark.addEventListener) {
+      prefersDark.addEventListener('change', reinitialize);
+    } else if (prefersDark.addListener) {
+      prefersDark.addListener(reinitialize);
+    }
+
+    if (typeof MutationObserver !== 'undefined') {
+      const themeObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.attributeName === 'data-bs-theme') {
+            reinitialize();
+            break;
+          }
+        }
+      });
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-bs-theme']
+      });
+    }
+
+    function debounce(callback, delay) {
+      let timeoutId;
+      return function () {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => callback.apply(this, arguments), delay);
+      };
+    }
+  })();
+</script>
+<style>
+  .mermaid-playground {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+    width: min(100%, 72rem);
+    margin-inline: auto;
+  }
+
+  @media (min-width: 768px) {
+    .mermaid-playground {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .mermaid-playground__input,
+  .mermaid-playground__output {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mermaid-playground__label {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .mermaid-playground__hint {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--bs-secondary-color, #555);
+  }
+
+  #mermaid-editor {
+    width: 100%;
+    min-height: 16rem;
+    padding: 0.75rem;
+    font-family: "Courier New", monospace;
+    font-size: 0.95rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    border-radius: 0.5rem;
+    background-color: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #111);
+    resize: vertical;
+    line-height: 1.4;
+  }
+
+  .mermaid-playground__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--bs-secondary-color, #555);
+  }
+
+  .mermaid-playground__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .mermaid-playground__toolbar button {
+    padding: 0.45rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: transparent;
+    color: var(--bs-body-color, #111);
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .mermaid-playground__toolbar button:hover,
+  .mermaid-playground__toolbar button:focus-visible {
+    border-color: var(--bs-body-color, #111);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .mermaid-preview {
+    min-height: 16rem;
+    padding: 0.75rem;
+    border: 1px dashed var(--bs-border-color, #c5c5c5);
+    border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mermaid-preview svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .mermaid-preview:fullscreen {
+    padding: 2rem;
+    background-color: var(--bs-body-bg, #fff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    #mermaid-editor {
+      min-height: 14rem;
+    }
+
+    .mermaid-preview {
+      min-height: 14rem;
+    }
+  }
+</style>
+
+
+
+ ]]></description>
+  <category>tools</category>
+  <guid>https://vaibhavs10.github.io/posts/mermaid-scratchpad/</guid>
+  <pubDate>Fri, 10 Oct 2025 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Brag Sheet</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/bragsheet/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="brag-sheet" class="level1">
+<h1>Brag Sheet</h1>
+<p>Everyone should put together a brag sheet, show off their body of work and most importantly be proud of what they’ve accomplished so far!</p>
+<p>In chronological order, stuff I’m proud in my work life:</p>
+<section id="hugging-face-2022---now" class="level3">
+<h3 class="anchored" data-anchor-id="hugging-face-2022---now">Hugging Face (2022 - Now)</h3>
+<p>I play multiple roles at HF and switch between them when needed - Project Manager, Developer Advocacy, Machine Learning Engineer, Research Scientist all whilst being Individual Contributor.</p>
+<p>Worked across Monetisation, Backend, Frontend, Advocacy, Research and Open Source teams.</p>
+<ul>
+<li>Led the release of some of the most impactful open models (OpenAI gpt-oss, Meta Llama 3 and above, Google Gemma and more)</li>
+<li>Scaled pivotal initiatives like Enterprise Hub, Notebooks, Inference Providers, ZeroGPU from scratch</li>
+<li>Built tooling to foster a budding on-device ecosystem with llama.cpp, MLX, ONNX, for context <a href="https://huggingface.co/spaces/ggml-org/gguf-my-repo">a single space</a> resulted in <a href="https://huggingface.co/models?other=gguf-my-repo">~21K active GGUFs</a></li>
+<li>Set standards for evaluations across Speech Recognition and Text to Speech with <a href="https://huggingface.co/spaces/hf-audio/open_asr_leaderboard">Open ASR Leaderboard</a> + <a href="https://huggingface.co/spaces/TTS-AGI/TTS-Arena-V2">TTS Arena</a></li>
+<li>Helped SmolLM series of models by advising on model capabilities and integrating them with <a href="https://simonwillison.net/2024/Nov/29/structured-generation-smollm2-webgpu/">WebGPU (MLC)</a>, <a href="https://github.com/ggml-org/llama.cpp/pull/14581">llama.cpp</a>, <a href="https://github.com/ml-explore/mlx-lm/pull/272">MLX</a></li>
+<li>Spent time terminally online cultivating community feedback and dog fooding our offerings (probably my fav part of the job)</li>
+<li>Created hundereds of artefacts to build an ecosystem across HF offerings via <a href="https://huggingface.co/blog">blog</a>, <a href="https://github.com/vaibhavs10">github</a>, <a href="https://x.com/reach_vb">x dot com</a>, <a href="https://www.linkedin.com/in/vaibhavs10/">linkedin</a></li>
+<li>Most importantly, put together a team of DevRels and on-device engineers I believe in more than myself</li>
+</ul>
+<p>This isn’t all a solo effort, thousands of slack messages, PRs and a team that I can count on. In addition to the HF leadership team and specifically Julien who continued to encourage me to take risky bets and see them through.</p>
+</section>
+<section id="research-2020---2023" class="level3">
+<h3 class="anchored" data-anchor-id="research-2020---2023">Research (2020 - 2023)</h3>
+<ul>
+<li>Work on alternate attention methods Nyströmformer and Reformer for Auto Regressive Text to Speech (Tacotron + FastSpeech 2)</li>
+<li>Built diffusion based post-training network for TTS (FastSpeech 2 + Shallow Diffusion)</li>
+</ul>
+</section>
+<section id="life" class="level3">
+<h3 class="anchored" data-anchor-id="life">Life</h3>
+<p>I have pivoted four times in my life so far and it’s been a joy each time:</p>
+<ul>
+<li>Spent 2015-17 worked in sales and independent consulting for startups in India</li>
+<li>2017-2020 served as a Data Science/ Management consultant for Deloitte - helped close &gt; 4M$ deals</li>
+<li>2020-2023 researched NLP &amp; Speech in Stuttgart, Germany</li>
+<li>2022-Now leading Developer Experience and Community at Hugging Face</li>
+</ul>
+<p>Each of these have taught me skills which I use everyday.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Brag Sheet</category>
+  <category>Work</category>
+  <category>Research</category>
+  <category>Career</category>
+  <guid>https://vaibhavs10.github.io/posts/bragsheet/</guid>
+  <pubDate>Fri, 29 Aug 2025 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Building Smart Agents with MCP and OpenAI gpt-oss</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<blockquote class="blockquote">
+<p>[!NOTE] This post is to be accompanied by it’s GitHub repository <a href="https://github.com/Vaibhavs10/mcp-with-openai-gpt-oss">here</a></p>
+</blockquote>
+<p>In this guide, we’ll explore using MCP and demonstrate how to build AI agents using <code>gpt-oss</code> as the LLM backbone. We’ll use Hugging Face’s lightweight MCP clients:</p>
+<ol type="1">
+<li><code>@huggingface/tiny-agents</code> (TypeScript)</li>
+<li><code>huggingface_hub[mcp]</code> (Python)</li>
+</ol>
+<p>The key to building effective AI agents lies in their tools. MCP provides a standardized interface for tool interaction, making it simple to create powerful agents.</p>
+<p>Let’s dive in by creating a web-savvy agent that can browse and search the internet for you.</p>
+<section id="example-local-browser-agent" class="level2">
+<h2 class="anchored" data-anchor-id="example-local-browser-agent"><strong>Example</strong>: Local Browser Agent</h2>
+<p>Let’s build a browser agent that can browse and search the internet for you. We’ve already implemented this in <code>/browser-agent</code> directory in case you want to skip ahead.</p>
+<section id="step-0-log-in-to-hugging-face" class="level3">
+<h3 class="anchored" data-anchor-id="step-0-log-in-to-hugging-face">Step 0: Log in to Hugging Face</h3>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">huggingface-cli</span> login</span></code></pre></div>
+<p>This will ask you for your HF API token. You can get it from <a href="https://huggingface.co/settings/tokens">here</a>.</p>
+</section>
+<section id="step-1-define-the-agent" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-define-the-agent">Step 1: Define the Agent</h3>
+<p>Both the JS and Python Tiny agent clients are meant to be quite easy to play and experiment with. They expect a transparent <code>agent.json</code> which includes the details of which LLM should be used and what tools it should have access to.</p>
+<p>Let’s define our agent using OpenAI’s latest <code>gpt-oss</code> 120B as the LLM and connect it to <a href="https://github.com/microsoft/playwright-mcp">this Playwright MCP server</a> that provides browser automation capabilities to your agent. We’ve added this in <code>/browser-agent/agent.json</code> for you to use.</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb2-2">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"model"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-oss-120b"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb2-3">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"provider"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fireworks-ai"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb2-4">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"servers"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span></span>
+<span id="cb2-5">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb2-6">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"type"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"stdio"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb2-7">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"command"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"npx"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb2-8">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"args"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"@playwright/mcp@latest"</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span id="cb2-9">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb2-10">    <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span id="cb2-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+<p>Optionally, we can define a System Prompt that helps steer the LLM. This is defined in <code>/browser-agent/PROMPT.md</code> for you to use.</p>
+<blockquote class="blockquote">
+<p>You are an agent - please keep going until the user’s query is completely resolved, before ending your turn and yielding back to the user. Only terminate your turn when you are sure that the problem is solved, or if you need more info from the user to solve the problem.</p>
+<p>If you are not sure about anything pertaining to the user’s request, use your tools to read files and gather the relevant information: do NOT guess or make up an answer.</p>
+<p>You MUST plan extensively before each function call, and reflect extensively on the outcomes of the previous function calls. DO NOT do this entire process by making function calls only, as this can impair your ability to solve the problem and think insightfully.</p>
+<p>Help the User with their task.</p>
+</blockquote>
+<pre><code>
+That's it, let's take it out for a spin.
+
+### Step 2: Run the agent
+
+To run the agent in Python, we simply install the `tiny-agents` package, which is part of the `huggingface_hub` library.
+
+```bash
+pip install -U "huggingface_hub[mcp]&gt;=0.32.0"</code></pre>
+<p>Followed by running our agent:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">tiny-agents</span> run ./browser-agent</span></code></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://huggingface.co/datasets/reach-vb/random-images/resolve/main/init-browser.png" class="img-fluid figure-img"></p>
+<figcaption>CLI Init Browser</figcaption>
+</figure>
+</div>
+<p>When the agent starts, you can chat with it to ask him to solve tasks. For example, try to ask it to find the top 10 Hugging Face models, and see if it’s able to connect to the website using the Playwright MCP tool we configured!</p>
+<blockquote class="blockquote">
+<p>[!NOTE] You can do exactly the same thing with our JavaScript client as well.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">npx</span> @huggingface/tiny-agents run ./browser-agent</span></code></pre></div>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://youtu.be/zxlKwOd4VOk"><img src="https://img.youtube.com/vi/zxlKwOd4VOk/0.jpg" class="img-fluid figure-img" alt="Browser Agent Demo"></a></p>
+<figcaption>Browser Agent Demo</figcaption>
+</figure>
+</div>
+<p>Voila, you now have a capable browser agent with you!</p>
+</section>
+</section>
+<section id="example-accessing-hugging-face-mcp-servers" class="level2">
+<h2 class="anchored" data-anchor-id="example-accessing-hugging-face-mcp-servers"><strong>Example</strong>: Accessing Hugging Face MCP Servers</h2>
+<p>Let’s take it up a notch and give more creative freedom to our AI Agent, cue, <a href="https://hf.co/mcp">Hugging Face MCP Server</a>. The HF MCP server allows you to not only interact with the HF Hub but also with 1000s of AI spaces on <a href="https://hf.co/spaces">hf.co/spaces</a>.</p>
+<p>Let’s get it set up!</p>
+</section>
+<section id="step-1-find-an-mcp-server" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-find-an-mcp-server">Step 1: Find an MCP Server</h2>
+<p>Head over to <a href="https://hf.co/mcp">hf.co/mcp</a> and add the spaces/ demo that you want to be able to play with</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://huggingface.co/datasets/reach-vb/random-images/resolve/main/hf-mcp.png" class="img-fluid figure-img"></p>
+<figcaption>Hugging Face MCP Settings page</figcaption>
+</figure>
+</div>
+<p>For example, I’ve added the following space</p>
+<ol type="1">
+<li><a href="https://huggingface.co/spaces/evalstate/FLUX.1-Krea-dev">evalstate/FLUX.1-Krea-dev</a> - a popular aesthetic text to image model by Black Forest Labs</li>
+<li><a href="https://huggingface.co/spaces/evalstate/ltx-video-distilled">evalstate/ltx-video-distilled</a> - a popular image/ text to video by Lightricks</li>
+</ol>
+<p>Next, let’s update our <code>agent.json</code>:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb6-2">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"model"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"openai/gpt-oss-120b"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb6-3">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"provider"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fireworks-ai"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb6-4">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"inputs"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span></span>
+<span id="cb6-5">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb6-6">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"type"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"promptString"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb6-7">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"id"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hf-token"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb6-8">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"description"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Your Hugging Face Token"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb6-9">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"password"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">true</span></span>
+<span id="cb6-10">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb6-11">    <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb6-12">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"servers"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">[</span></span>
+<span id="cb6-13">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb6-14">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"type"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"http"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb6-15">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"url"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://huggingface.co/mcp"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb6-16">            <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"headers"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb6-17">            <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span id="cb6-18">                <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">"Authorization"</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Bearer ${input:hf-token}"</span></span>
+<span id="cb6-19">            <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb6-20">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span id="cb6-21">    <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">]</span>   </span>
+<span id="cb6-22"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">}</span></span></code></pre></div>
+<section id="step-2-run-it" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-run-it">Step 2: Run it!</h3>
+<p>Let’s run it with Tiny agents just like we did with the local browser agent.</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">tiny-agents</span> run ./hf-mcp-server</span></code></pre></div>
+<blockquote class="blockquote">
+<p>[!NOTE] Again, you can do exactly the same thing with our JavaScript client as well.</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">npx</span> @huggingface/tiny-agents run ./hf-mcp-server</span></code></pre></div>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://youtu.be/OEaPk3FoK7M"><img src="https://img.youtube.com/vi/OEaPk3FoK7M/0.jpg" class="img-fluid figure-img" alt="Watch the demo video"></a></p>
+<figcaption>Watch the demo video</figcaption>
+</figure>
+</div>
+<p>That’s it! What would you build next with it?</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>mcp</category>
+  <category>openai</category>
+  <category>gpt-oss</category>
+  <category>tiny-agents</category>
+  <category>playwright</category>
+  <category>huggingface</category>
+  <category>huggingface-mcp</category>
+  <category>browser-automation</category>
+  <guid>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/</guid>
+  <pubDate>Tue, 12 Aug 2025 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Export and play with your Strava data on Hugging Face</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>A fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.</p>
+<p>Pre-requisites:</p>
+<ol type="1">
+<li>Create an API application: https://www.strava.com/settings/api in your strava account (set <code>localhost</code> as the website and other details)</li>
+<li>Set API keys as Environment variables <code>STRAVA_CLIENT_ID</code> &amp; <code>STRAVA_CLIENT_SECRET</code></li>
+</ol>
+<p>You can set the env variables simply by <code>export STRAVA_CLIENT_ID=...</code> &amp; <code>export STRAVA_CLIENT_SECRET=...</code></p>
+<p>Find the codebase here: <a href="https://github.com/Vaibhavs10/strava-analyse">https://github.com/Vaibhavs10/strava-analyse</a></p>
+<p>Setup the env and scraper:</p>
+<ol type="1">
+<li>Clone the github repository via: <code>git clone https://github.com/Vaibhavs10/strava-analyse.git</code></li>
+<li>Setup the python env with <code>uv</code>: <code>uv venv --python 3.12</code>, followed by, <code>source .venv/bin/activate</code></li>
+<li>Install all required packages via <code>uv pip install requests huggingface_hub</code></li>
+<li>Run <code>huggingface-cli login</code> (required to upload the dataset to Hugging Face)</li>
+<li>Run the python script and follow the instructions: <code>python upload-strava-to-hf.py</code></li>
+</ol>
+<p>Note: when you run the script you’ll be prompted to authorise access to your strava App. Once you click Authorise it’ll redirect you too a page that doesn’t exist 👀.</p>
+<p>Don’t worry about it and look at the URL it is trying to redirect too, it should look something like <code>http://localhost:8000/?state=&amp;code=e55c038bcf96ea6deff15c68649afc9554e6fbd6&amp;scope=read,activity:read_all,profile:read_all</code> The thing that matters to us is the string after <code>code</code>, just copy and paste it to the script and that’s it!</p>
+<p>If all goes well, you should be able to go to your dataset on Hugging Face, here’s mine for example: <a href="https://huggingface.co/datasets/reach-vb/strava-stats">https://huggingface.co/datasets/reach-vb/strava-stats</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://huggingface.co/datasets/reach-vb/random-images/resolve/main/strava-ss.png" class="img-fluid figure-img"></p>
+<figcaption>Strava Dataset</figcaption>
+</figure>
+</div>
+<p>With the Hugging Face dataset comes a lot of interesting possiblilities to identify trends using SQL or even pandas/ polars too. Since the dataset is small we can just run SQL queries via DataStudio.</p>
+<p>Let’s crunch some numbers!</p>
+<p>To start with, how many cummulative kms have I run through the years?</p>
+<p>Best part about Datastudio is you can just ask the AI to write a SQL query for you 🔥</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://huggingface.co/datasets/reach-vb/random-images/resolve/main/datastudio-query.png" class="img-fluid figure-img"></p>
+<figcaption>Data Studio AI Query</figcaption>
+</figure>
+</div>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">WITH</span> run_stats <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> (</span>
+<span id="cb1-2">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">SELECT</span></span>
+<span id="cb1-3">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">EXTRACT</span>(<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">YEAR</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> start_date:<span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:DATE</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">year</span>,</span>
+<span id="cb1-4">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(distance) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> total_distance_km,</span>
+<span id="cb1-5">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(moving_time) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> total_moving_time_seconds</span>
+<span id="cb1-6">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span></span>
+<span id="cb1-7">        train</span>
+<span id="cb1-8">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">WHERE</span></span>
+<span id="cb1-9">        <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">type</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Run'</span></span>
+<span id="cb1-10">        <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AND</span> distance <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-11">        <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AND</span> moving_time <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-12">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">GROUP</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">BY</span></span>
+<span id="cb1-13">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">year</span></span>
+<span id="cb1-14">)</span>
+<span id="cb1-15"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">SELECT</span></span>
+<span id="cb1-16">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">year</span>,</span>
+<span id="cb1-17">    total_distance_km,</span>
+<span id="cb1-18">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- Calculate minutes and seconds separately for proper pace format</span></span>
+<span id="cb1-19">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">FLOOR</span>((total_moving_time_seconds<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> total_distance_km) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">||</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">':'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">||</span> </span>
+<span id="cb1-20">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">LPAD</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">FLOOR</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">MOD</span>((total_moving_time_seconds<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> total_distance_km, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>):<span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:VARCHAR</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'0'</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> avg_pace_per_km,</span>
+<span id="cb1-21">    bar(total_distance_km, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">MAX</span>(total_distance_km) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">OVER</span> (), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> distance_chart,</span>
+<span id="cb1-22">    bar((total_moving_time_seconds<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> total_distance_km, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">MAX</span>((total_moving_time_seconds<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> total_distance_km) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">OVER</span> (), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> pace_chart</span>
+<span id="cb1-23"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span></span>
+<span id="cb1-24">    run_stats</span>
+<span id="cb1-25"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">ORDER</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">BY</span></span>
+<span id="cb1-26">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">year</span>;</span></code></pre></div>
+<p>Result:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 26%">
+<col style="width: 24%">
+<col style="width: 23%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>year</th>
+<th>total_distance_km</th>
+<th>avg_pace_per_km</th>
+<th>distance_chart</th>
+<th>pace_chart</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2020</td>
+<td>78.129</td>
+<td>7:18</td>
+<td>████▌</td>
+<td>████████████████████████████████</td>
+</tr>
+<tr class="even">
+<td>2021</td>
+<td>414.0414</td>
+<td>6:27</td>
+<td>████████████████████████▏</td>
+<td>████████████████████████████▌</td>
+</tr>
+<tr class="odd">
+<td>2022</td>
+<td>169.5316</td>
+<td>5:59</td>
+<td>█████████</td>
+<td>████████████████████████████▌</td>
+</tr>
+<tr class="even">
+<td>2023</td>
+<td>73.4308</td>
+<td>6:48</td>
+<td>████▎</td>
+<td>█████████████████████████████▉</td>
+</tr>
+<tr class="odd">
+<td>2024</td>
+<td>363.506</td>
+<td>6:31</td>
+<td>█████████████████████▎</td>
+<td>████████████████████████████▊</td>
+</tr>
+<tr class="even">
+<td>2025</td>
+<td>512.7066</td>
+<td>7:16</td>
+<td>████████████████████████████████</td>
+<td>██████████████████████████████▊</td>
+</tr>
+</tbody>
+</table>
+<p>I was at my fastest self in 2022 (though with much less kms). 2023 was the least I’ve ran across the years and 2025 (so far) has been the most I’ve ran (albeit with a much slower pace owing too Zone 2 training).</p>
+<p>Next, let’s look more deeply into the year so far and how the runs have been shaping up.</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">SELECT</span></span>
+<span id="cb2-2">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">EXTRACT</span>(<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">MONTH</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> start_date:<span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:DATE</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">month</span>,</span>
+<span id="cb2-3">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">COUNT</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> num_runs,</span>
+<span id="cb2-4">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ROUND</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(distance) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> total_distance_km,</span>
+<span id="cb2-5">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ROUND</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">AVG</span>(average_heartrate), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> avg_heartrate,</span>
+<span id="cb2-6">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- Calculate pace in min:sec per km from moving_time and distance</span></span>
+<span id="cb2-7">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">CONCAT</span>(</span>
+<span id="cb2-8">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">FLOOR</span>((<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(moving_time) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(distance) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>),  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- minutes</span></span>
+<span id="cb2-9">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">':'</span>, </span>
+<span id="cb2-10">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">LPAD</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">CAST</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">FLOOR</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">MOD</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(moving_time) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(distance) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>)) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">VARCHAR</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'0'</span>)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- seconds with leading zero</span></span>
+<span id="cb2-11">    ) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> avg_pace_min_per_km,</span>
+<span id="cb2-12">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ROUND</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">AVG</span>(distance) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> avg_distance_per_run_km,</span>
+<span id="cb2-13">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ROUND</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">AVG</span>(average_watts), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> avg_power</span>
+<span id="cb2-14"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> </span>
+<span id="cb2-15">    train</span>
+<span id="cb2-16"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">WHERE</span> </span>
+<span id="cb2-17">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">type</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Run'</span> </span>
+<span id="cb2-18">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AND</span> distance <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2000</span></span>
+<span id="cb2-19">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AND</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">EXTRACT</span>(<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">YEAR</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> start_date:<span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:DATE</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2025</span></span>
+<span id="cb2-20"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">GROUP</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">BY</span> </span>
+<span id="cb2-21">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">EXTRACT</span>(<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">MONTH</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> start_date:<span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:DATE</span>)</span>
+<span id="cb2-22"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">ORDER</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">BY</span> </span>
+<span id="cb2-23">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">month</span>;</span></code></pre></div>
+<p>Result:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 17%">
+<col style="width: 14%">
+<col style="width: 19%">
+<col style="width: 22%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>month</th>
+<th>num_runs</th>
+<th>total_distance_km</th>
+<th>avg_heartrate</th>
+<th>avg_pace_min_per_km</th>
+<th>avg_distance_per_run_km</th>
+<th>avg_power</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>8</td>
+<td>70.7</td>
+<td>161.6</td>
+<td>6:24</td>
+<td>8.84</td>
+<td>176.2</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>9</td>
+<td>52.2</td>
+<td>163.3</td>
+<td>6:27</td>
+<td>5.81</td>
+<td>184.4</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>8</td>
+<td>46.3</td>
+<td>153.9</td>
+<td>7:15</td>
+<td>5.78</td>
+<td>161.8</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>14</td>
+<td>82.7</td>
+<td>157.5</td>
+<td>6:46</td>
+<td>5.91</td>
+<td>178.7</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>15</td>
+<td>104.2</td>
+<td>152.7</td>
+<td>7:59</td>
+<td>6.94</td>
+<td>157.7</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>16</td>
+<td>119.1</td>
+<td>154.5</td>
+<td>7:51</td>
+<td>7.44</td>
+<td>162.7</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>4</td>
+<td>34.0</td>
+<td>152.0</td>
+<td>7:19</td>
+<td>8.50</td>
+<td>160.6</td>
+</tr>
+</tbody>
+</table>
+<p>June was the month with the most kms so far. It’s nice to see Zone 2 progression a bit from May -&gt; July (7:59 to 7:19 min/ km). As someone with the aerobic base of a potato it’s quite nice to see some progress.</p>
+<p>Alright, let’s delve a bit more deeper into how my Zone 2 running transformation is going</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">SELECT</span></span>
+<span id="cb3-2">    start_date:<span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:DATE</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">date</span>,</span>
+<span id="cb3-3">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ROUND</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(distance) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> total_distance_km,</span>
+<span id="cb3-4">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ROUND</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">AVG</span>(average_heartrate), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> avg_heartrate,</span>
+<span id="cb3-5">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- Properly formatted pace as MM:SS with leading zero for single-digit seconds</span></span>
+<span id="cb3-6">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">CONCAT</span>(</span>
+<span id="cb3-7">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">FLOOR</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(moving_time) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(distance) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>):<span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:INTEGER</span>,  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- minutes</span></span>
+<span id="cb3-8">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">':'</span>,</span>
+<span id="cb3-9">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">LPAD</span>(</span>
+<span id="cb3-10">            (<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ROUND</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(moving_time) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">SUM</span>(distance) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>) % <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>):<span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:INTEGER</span>:<span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:VARCHAR</span>,  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- seconds converted to integer first</span></span>
+<span id="cb3-11">            <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'0'</span></span>
+<span id="cb3-12">        )</span>
+<span id="cb3-13">    ) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> avg_pace_min_per_km,</span>
+<span id="cb3-14">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ROUND</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">AVG</span>(average_watts), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AS</span> avg_power</span>
+<span id="cb3-15"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> </span>
+<span id="cb3-16">    train</span>
+<span id="cb3-17"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">WHERE</span> </span>
+<span id="cb3-18">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">type</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Run'</span> </span>
+<span id="cb3-19">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AND</span> distance <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7500</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- Filter for runs greater than 7.5 km</span></span>
+<span id="cb3-20">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">AND</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">EXTRACT</span>(<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">YEAR</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> start_date:<span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:DATE</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">IN</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2024</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2025</span>)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- Only 2024 and 2025 runs</span></span>
+<span id="cb3-21"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">GROUP</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">BY</span> </span>
+<span id="cb3-22">    start_date:<span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">:DATE</span></span>
+<span id="cb3-23"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">ORDER</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">BY</span> </span>
+<span id="cb3-24">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">date</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">ASC</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- Order from oldest to latest</span></span></code></pre></div>
+<p>Results:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 26%">
+<col style="width: 20%">
+<col style="width: 29%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>date</th>
+<th>total_distance_km</th>
+<th>avg_heartrate</th>
+<th>avg_pace_min_per_km</th>
+<th>avg_power</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2025-01-18</td>
+<td>17.1</td>
+<td>164.3</td>
+<td>6:23</td>
+<td>177.5</td>
+</tr>
+<tr class="even">
+<td>2025-02-15</td>
+<td>10.0</td>
+<td>170.1</td>
+<td>6:30</td>
+<td>184.3</td>
+</tr>
+<tr class="odd">
+<td>2025-02-20</td>
+<td>7.5</td>
+<td>167.3</td>
+<td>6:29</td>
+<td>184.3</td>
+</tr>
+<tr class="even">
+<td>2025-04-12</td>
+<td>10.0</td>
+<td>170.0</td>
+<td>6:51</td>
+<td>181.0</td>
+</tr>
+<tr class="odd">
+<td>2025-04-17</td>
+<td>8.1</td>
+<td>156.8</td>
+<td>6:41</td>
+<td>181.3</td>
+</tr>
+<tr class="even">
+<td>2025-05-11</td>
+<td>9.2</td>
+<td>156.0</td>
+<td>8:06</td>
+<td>152.0</td>
+</tr>
+<tr class="odd">
+<td>2025-05-13</td>
+<td>7.5</td>
+<td>153.5</td>
+<td>8:50</td>
+<td>139.8</td>
+</tr>
+<tr class="even">
+<td>2025-05-15</td>
+<td>8.0</td>
+<td>153.3</td>
+<td>8:26</td>
+<td>149.9</td>
+</tr>
+<tr class="odd">
+<td>2025-05-17</td>
+<td>8.0</td>
+<td>150.1</td>
+<td>8:07</td>
+<td>157.0</td>
+</tr>
+<tr class="even">
+<td>2025-05-20</td>
+<td>9.1</td>
+<td>155.1</td>
+<td>8:26</td>
+<td>149.2</td>
+</tr>
+<tr class="odd">
+<td>2025-05-24</td>
+<td>7.8</td>
+<td>152.0</td>
+<td>7:58</td>
+<td>157.0</td>
+</tr>
+<tr class="even">
+<td>2025-05-27</td>
+<td>10.1</td>
+<td>161.7</td>
+<td>7:13</td>
+<td>171.4</td>
+</tr>
+<tr class="odd">
+<td>2025-06-03</td>
+<td>8.5</td>
+<td>153.0</td>
+<td>7:54</td>
+<td>159.2</td>
+</tr>
+<tr class="even">
+<td>2025-06-06</td>
+<td>8.0</td>
+<td>150.8</td>
+<td>8:17</td>
+<td>152.2</td>
+</tr>
+<tr class="odd">
+<td>2025-06-08</td>
+<td>10.5</td>
+<td>153.3</td>
+<td>8:15</td>
+<td>152.3</td>
+</tr>
+<tr class="even">
+<td>2025-06-14</td>
+<td>12.1</td>
+<td>150.4</td>
+<td>7:54</td>
+<td>164.3</td>
+</tr>
+<tr class="odd">
+<td>2025-06-21</td>
+<td>9.0</td>
+<td>161.0</td>
+<td>7:27</td>
+<td>167.3</td>
+</tr>
+<tr class="even">
+<td>2025-06-22</td>
+<td>11.0</td>
+<td>154.0</td>
+<td>7:08</td>
+<td>174.1</td>
+</tr>
+<tr class="odd">
+<td>2025-06-24</td>
+<td>8.0</td>
+<td>158.7</td>
+<td>7:09</td>
+<td>181.3</td>
+</tr>
+<tr class="even">
+<td>2025-06-28</td>
+<td>10.0</td>
+<td>152.9</td>
+<td>8:07</td>
+<td>153.9</td>
+</tr>
+<tr class="odd">
+<td>2025-07-01</td>
+<td>10.1</td>
+<td>154.0</td>
+<td>7:11</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td>2025-07-05</td>
+<td>13.2</td>
+<td>152.5</td>
+<td>7:37</td>
+<td>160.6</td>
+</tr>
+</tbody>
+</table>
+<p>Pretty dope to see the heart rate go down and the pace slightly improve, hoping to double down on this more as the year continues!</p>
+<p>These were just simple examples but you can really do a lot more with this, checkout segemnts, bike rides power comparisons based on elevation and more.</p>
+<p>P.S. You can save all of these queries in your Hugging Face Data Studio as well, so you can just refresh your dataset monthly/ weekly and analyse trends.</p>
+<p>Now go ahead and play with it and let me know how it goes. 🤙</p>
+
+
+
+ ]]></description>
+  <category>analytics</category>
+  <category>python</category>
+  <category>running</category>
+  <category>strava</category>
+  <category>marathon</category>
+  <category>hugging face</category>
+  <category>Data Studio</category>
+  <guid>https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/</guid>
+  <pubDate>Sat, 05 Jul 2025 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Run Phi-4 with ollama and Hugging Face</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac.</p>
+<section id="step-1-setup-ollama" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-setup-ollama">Step 1: Setup ollama</h2>
+<p>On a mac, you can install ollama using homebrew:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">brew</span> install ollama</span></code></pre></div>
+<p>On a Windows/ Linux device, you can follow the instructions on the <a href="https://ollama.com/download">Ollama Docs</a>)</p>
+</section>
+<section id="step-2-kickstart-ollama" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-kickstart-ollama">Step 2: Kickstart ollama</h2>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ollama</span> serve</span></code></pre></div>
+</section>
+<section id="step-3-run-inference-with-phi-4" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-run-inference-with-phi-4">Step 3: Run inference with Phi-4</h2>
+<p>After some research I found that the Phi-4 GGUFs from Unsloth are the most accurate. They ran bunch of evals and also converted the model to LLaMa format. You can find it here: <a href="https://huggingface.co/unsloth/phi-4-GGUF">unsloth/phi-4-GGUF</a>.</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></pre></div>
+<p>I’d also recommend reading the blogpost about the fixes for the Phi-4 model <a href="https://unsloth.ai/blog/phi4">here</a>.</p>
+</section>
+<section id="step-4-use-it-for-your-own-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-use-it-for-your-own-tasks">Step 4: Use it for your own tasks</h2>
+<p>That’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.</p>
+<p>Go on and try out some of your own prompts, and see how it works.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/example.png" class="img-fluid figure-img"></p>
+<figcaption>Chatting with Phi 4 on my Macbook with Ollama</figcaption>
+</figure>
+</div>
+<p>Bonus: Now go try other <a href="https://huggingface.co/models?library=gguf">GGUF models on the Hub</a> and compare their performance with Phi 4.</p>
+<p>and.. that’s it!</p>
+<p>Oh, sorry, one last thing, you can now even run private GGUFs from the Hugging Face Hub via ollama, <a href="https://huggingface.co/docs/hub/en/ollama">read here</a>.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>llm</category>
+  <category>ollama</category>
+  <category>mac</category>
+  <category>metal</category>
+  <category>cuda</category>
+  <category>phi4</category>
+  <category>phi</category>
+  <guid>https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/</guid>
+  <pubDate>Wed, 15 Jan 2025 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>All things running 🏃‍♂️</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/all-things-running/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>I love running, and have recently embarked on the journey to race a marathon in June 2025. In the past, I’ve reached half-marathon distances multiple times, but have never went higher than that.</p>
+<p>This page is a collection of resources and tips I’ve found online, that I either have found useful or would like to try out in the future.</p>
+<section id="training" class="level2">
+<h2 class="anchored" data-anchor-id="training">Training</h2>
+<ol type="1">
+<li>It’s recommended to follow a training plan, something that mixes speed work with longer runs. I’m using <a href="https://runna.com/">Runna</a> to generate and follow a plan (it’s a bit expensive ~20 EUR/month).</li>
+<li>Get a watch that at the very least tracks splits/ time elapsed. I recently upgraded to a Apple Watch Series 10 (~460 EUR) and it does it’s job. DC Rainmaker has a <a href="http://www.dcrainmaker.com">good review</a> of all.</li>
+<li>Comfy clothes that make you feel comfortable whilst running - decathalon has a very good selection (specially for winters), you don’t need to spend a lot on this - but get this right, specially for winters - <a href="https://www.reddit.com/r/running/wiki/faq/#wiki_clothing_.26amp.3B_shoes">good read</a>.</li>
+<li>Shoes - again this is quite vibe based, you cannot go wrong either way, this requires a bit of experimentation ofc - for ref I’ve been using 80 EUR Puma running shoes for past 1.5 years, and it’s pretty good - <a href="https://www.reddit.com/r/running/wiki/index/common_questions/#wiki_what_shoes_do_i_buy.3F">another worthwhile read</a>.</li>
+<li>Optional but recommended: create a Strava account, it’s a great way to keep yourself motivated and track your progress. Here’s <a href="https://www.strava.com/athletes/13731596">mine</a>.</li>
+<li>A fun way to keep yourself motivated is to run races leading up to the marathon, these could be 10Ks, half marathons or just fun runs (keeps the goal achievable).</li>
+</ol>
+</section>
+<section id="recovery" class="level2">
+<h2 class="anchored" data-anchor-id="recovery">Recovery</h2>
+<ol type="1">
+<li>It’s good to walk a KM or two after runs, it helps bring the heart rate down and helps “settle” the legs - <a href="https://www.reddit.com/r/running/comments/raej53/do_you_walk_at_all_pre_or_post_run/">good discussion</a>.</li>
+<li>Whilst the jury is out on the need of stretching, I’ve anecdotaly found static stretches to help feel quite a bit flexible the rest of the day - <a href="https://www.nike.com/a/stretches-after-running">here’s what I follow</a>.</li>
+<li>It’s a good idea to introduce one or two rest days in the week - a <a href="https://www.reddit.com/r/running/comments/mjtv3j/how_necessary_are_rest_days/">good reddit thread</a>.</li>
+<li>Magnesium helps with sore legs (I usually take 500mg after a long run) - <a href="https://www.runnersworld.com/uk/nutrition/diet/a35947990/magnesium-benefits-for-runners/">good read</a>.</li>
+<li>Take a nice long shower, you deserve it, and you probably stink a lot too ;)</li>
+</ol>
+</section>
+<section id="nutrition" class="level2">
+<h2 class="anchored" data-anchor-id="nutrition">Nutrition</h2>
+<p>Few basic things I’ve learned:</p>
+<ol type="1">
+<li>Make sure to drink enough water 30-45 minutes before the run, you can even take a bit of electrolytes (although not too much).</li>
+<li>Chase up the run with a protein shake and chocolate milk, and drink loads of water in the hours after the run. It’s almost critical to eat something within 30 minutes of your run.</li>
+<li>Avoid over caffeinating before the run (I’ve experimented a bit and I do well as long as I’ve had one coffee, more than that makes my heart race a bit too much).</li>
+<li>Don’t eat a big breakfast or anything that takes a long time to digests one hour before the run (avoid dairy, fiber and fruits).</li>
+<li>Having a carb rich meal before the run helps feeling overall more energetic throughout the run (I’ve just started experimenting with this).</li>
+</ol>
+<p>Up to 15 KMs</p>
+<ol type="1">
+<li>Carry on as you would for a normal run, but make sure to hydrate well after the run.</li>
+<li>Don’t run till you hit a wall, everyone has different energy consumption, learn your limits, running on fumes almost always causes injury/ cramps.</li>
+<li>It’s worth getting atleast two seperate running shoes, which you alternate between runs - this helps with overuse injuries.</li>
+<li>As long as it’s more than an hour, taking a gel is more than recommended.</li>
+</ol>
+<p>Up to 30KMs</p>
+<ol type="1">
+<li>Take up 1-2 isotonic + energy gels, the goal is to get 60-80g catbs per hour of your run. (As of the date of the post, I haven’t tried this yet)</li>
+</ol>
+</section>
+<section id="shin-splints" class="level2">
+<h2 class="anchored" data-anchor-id="shin-splints">Shin splints</h2>
+<p>Last week (week of 19 Jan), I ramped up my running to 45KMs a week AND this was after an intense week of skiing. It was a bit stupid and straight up delusional for me to subject myself to that - but, well, we live and learn.</p>
+<p>Here’s some stuff I’ve realised and learnt in the past week:</p>
+<ol type="1">
+<li>You just gotta wait it out, and do as little as possible for a few days (even avoid walking as much).</li>
+<li>Ice that bastard, even multiple times a day - I’d just use a frozen pack of peas for 15-20 minutes at a time.</li>
+<li>Do really guided and slow foam rolling, it takes some getting used to, but it’s a good way to release some knots and tension in the shins/ calves.</li>
+<li>The thing that worked the best is to massage around and directly at the shin splint area using both your thumbs, specially in the early days it can hurt a bit, but it gets better progressively.</li>
+<li>This is something reddit has recommended quite a bit, <a href="https://gizmodo.com/banish-shin-splints-forever-with-one-magical-exercise-5902699">here</a></li>
+</ol>
+<p>Lesson learnt: don’t go too hard too fast, and don’t be too stubborn to take it easy.</p>
+</section>
+<section id="plantar-fasciitis" class="level2">
+<h2 class="anchored" data-anchor-id="plantar-fasciitis">Plantar fasciitis</h2>
+<p>After recovering a bit from the shin splints I ended up getting a pretty bad case of PF.</p>
+<p>Here’s some stuff I’ve learnt about it:</p>
+<ol type="1">
+<li>Buy shoes after measuring your feet and the size of your upper box specifically, most cases stem from super tight shoes.</li>
+<li>Do not walk barefoot, for couple months - buy a pair of birkenstock and stick with them for couple months.</li>
+<li>Really load up your legs specifically your calves - squats, lunges, calf raises and one leg RDLs are your best friend.</li>
+<li>Don’t stop running, keep accumulating slow kms (even if it’s walking speed).</li>
+<li>It’s going to be awhile before you feel 100% again - but it’s okay, you’ll be fine!</li>
+</ol>
+</section>
+<section id="zone-2-running" class="level2">
+<h2 class="anchored" data-anchor-id="zone-2-running">Zone 2 Running</h2>
+<p>For the past 4-5 weeks (from 25th May) I’ve been experimenting doing a lot of volume at Easy pace, and I mean <em>really</em> easy pace. The real motivation was to reduce the number of times I got injured whilst trying to build volume.</p>
+<p>That said, it’s brutal and humbles you quite quickly. As someone who suffered from Asthma growing up and basically kept an arms length away from sports it’s been surreal trying to run slowly.</p>
+<p>Here’s some stuff I’ve learnt about it:</p>
+<ol type="1">
+<li>It’s going to be tough. Jogging is your best friend.</li>
+<li>Go slow but try to go long (even if it means that you walk for prolonged periods of time).</li>
+<li>Measure your heart rate, try to stay within the zone, ofc if you go uphill hte you might dip into Z3, it’s okay - don’t overthink it.</li>
+<li>Try to add some strides before cool down, they are a good way to keep the fun alive.</li>
+<li>Be prepared to be humbled, everyone and their mums will be faster than you on strava, remember, it’s all for you - fuck the rest.</li>
+<li>Try to focus on cadence, try to keep it above 165 (it’ll help you avoid injuries).</li>
+<li>It’s going to get better sooner than you think.</li>
+</ol>
+<p>atm I’m average from 07:00-08:30/ km in Zone 2, I started at 09:30/ km 5 weeks back, you build good posture and cadence back.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>things</category>
+  <category>running</category>
+  <category>nutrition</category>
+  <category>recovery</category>
+  <category>marathon</category>
+  <guid>https://vaibhavs10.github.io/posts/all-things-running/</guid>
+  <pubDate>Thu, 26 Dec 2024 23:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Run Phi-3.5 with llama.cpp</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>I’m a strong believer that as we continue to traverse the AI/ ASI/ AGI landscape, the net compute required for accessing it would decrease i.e.&nbsp;we’ll get smaller but stronger models.</p>
+<p>As these models continue to become smaller and stronger, it’s more likely that you can run inference directly on your device and replace your on-line/ API based LLM usage (like ChatGPT, Gemini, Claude, etc). Hence, I continue to keep an eye out for smaller models.</p>
+<p>The big question here, is what use-cases do you actually use these on-device models for?</p>
+<p>I use them for a few select task, like, rewriting, summarizing, quick syntax lookups, or just quick vibe checks on a topic (asking the model to critique what I’ve written) and creative explorations.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/examples.png" class="img-fluid figure-img"></p>
+<figcaption>Chatting with Phi 3.5 on my Macbook with llama.cpp</figcaption>
+</figure>
+</div>
+<p>This brings us to Phi 3.5. The other day, Microsoft released an update to their Phi series of small scale LLMs: Phi 3.5.</p>
+<p>The highlight: Phi 3.5 mini, MoE and vision with 128K context, multilingual &amp; MIT license! 🔥</p>
+<p>The MoE beats Gemini flash and the Vision model is competitive with GPT4o.</p>
+<p>Some quick notes on the models and they atleast look good on benchmarks:</p>
+<p><a href="https://huggingface.co/microsoft/Phi-3.5-mini-instruct">Mini with 3.8B parameters</a></p>
+<ul>
+<li>Beats Llama3.1 8B and Mistral 7B and competitive with Mistral NeMo 12B</li>
+<li>Multilingual model and Tokenizer with 32K vocab</li>
+<li>Trained on 3.4T tokens</li>
+<li>Used 512 H100s to train (10 days)</li>
+</ul>
+<p><a href="https://huggingface.co/microsoft/Phi-3.5-moe-instruct">MoE with 16x3.8B (6.6B active - 2 experts)</a></p>
+<ul>
+<li>Beats Gemini flash</li>
+<li>128K context, Multilingual and same tokenizer (32K vocab)</li>
+<li>Trained on 4.9T tokens -Used 512H100s to train (23 days)</li>
+</ul>
+<p><a href="https://huggingface.co/microsoft/Phi-3.5-vision-instruct">Ph3.5 Vision with 4.2B params</a></p>
+<ul>
+<li>Beats GPT4o on averaged benchmarks</li>
+<li>Trained on 500B tokens</li>
+<li>Used 256 A100 to train (6 days) -Specialised in TextVQA + ScienceVQA</li>
+</ul>
+<p>The star of the show for me atleast is the Phi-3.5 Mini, it looks like decently sized model which would make it easy to fine-tune for specific tasks.</p>
+<p>Alright, enough of about the models, let’s try to see if we can run this model on your Mac/Windows/Linux device.</p>
+<p>There are multiple ways to run a model on-device - you can use, transformers, llama.cpp, MLC, ONNXRuntime and bunch others. One of the easiest ways however is to use llama.cpp, once setup - it just works across pretty much all well-known model architectures.</p>
+<section id="step-1-setup-llama.cpp" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-setup-llama.cpp">Step 1: Setup llama.cpp</h2>
+<p>On a mac, you can install llama.cpp using homebrew:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">brew</span> install llama.cpp</span></code></pre></div>
+<p>On a Windows/ Linux device, you can follow the instructions on the <a href="https://github.com/ggerganov/llama.cpp/blob/master/docs/build.md">llama.cpp Docs</a>)</p>
+<p>For example, a typical build command for CUDA enabled device looks like this:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> clone https://github.com/ggerganov/llama.cpp <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">&amp;&amp;</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> llama.cpp <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">&amp;&amp;</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">make</span> GGML_CUDA=1 LLAMA_CURL=1</span></code></pre></div>
+<p>There are plenty other permutations and combinations so feel free to look at those on the linked docs above.</p>
+</section>
+<section id="step-2-run-inference-with-phi3.5" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-run-inference-with-phi3.5">Step 2: Run inference with Phi3.5</h2>
+<p>To be able to run a LLM on-device all you need is to find the model on the hub and simply point the llama.cpp’s built binaries to it. There are over <a href="https://huggingface.co/models?library=gguf">30,000 quantized llama.cpp models</a> on the Hub. For our use-case we’ll use the <a href="https://huggingface.co/lmstudio-community/Phi-3.5-mini-instruct-GGUF">lmstudio-community/Phi-3.5-mini-instruct-GGUF</a> repo by the good folks at lm-studio.</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">llama-cli</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-repo</span> lmstudio-community/Phi-3.5-mini-instruct-GGUF <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-2">--hf-file Phi-3.5-mini-instruct-Q6_K.gguf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-3">-p <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"The meaning to life and the universe is"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> 8192</span></code></pre></div>
+</section>
+<section id="step-3-use-it-for-your-own-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-use-it-for-your-own-tasks">Step 3: Use it for your own tasks</h2>
+<p>That’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.</p>
+<p>Go on and try out some of your own prompts, and see how it works. There’s myriads of options you can use whilst playing with the model, check out the <a href="https://github.com/ggerganov/llama.cpp/tree/master/examples/main">llama.cpp docs</a> for more details.</p>
+<p>Here’s some of the options I use quite a bit:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">llama-cli</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-repo</span> bartowski/Phi-3.5-mini-instruct-GGUF <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-2">--hf-file Phi-3.5-mini-instruct-Q8_0.gguf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-3">-p <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Hey my name is Sof, what are you upto?"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> 8192 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-cnv</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--color</span></span></code></pre></div>
+<p><code>-c</code> is the context window size, <code>-cnv</code> is to use the conversation/ chat mode and <code>--color</code> is to colorize the output.</p>
+<p>Bonus: Now go try other <a href="https://huggingface.co/models?library=gguf">GGUF models on the Hub</a> and compare their performance with Phi 3.5.</p>
+<p>and.. that’s it!</p>
+
+
+</section>
+
+ ]]></description>
+  <category>llm</category>
+  <category>llama.cpp</category>
+  <category>mac</category>
+  <category>metal</category>
+  <category>cuda</category>
+  <category>phi3.5</category>
+  <category>phi</category>
+  <guid>https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/</guid>
+  <pubDate>Wed, 21 Aug 2024 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>List of random things I keep forgetting</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>I often end up looking for certain commands/ code snippets so here is a list.</p>
+<ol type="1">
+<li>Change the server language to English: <code>export LC_ALL=C</code></li>
+<li>Look at the username for of who is running a process on a multi-user server: <code>ps -u -p &lt;PROCESS_ID&gt;</code></li>
+<li>Re-authenticate with github after your PAT has expired: <code>gh auth login -h [github.com](http://github.com/)</code></li>
+<li>Pip install without clogging the cache dir, add a <code>--no-cache-dir</code> flag to your <code>pip install</code> commands.</li>
+<li>Create a virtual environment with <code>python -m venv &lt;path_to_the_environment&gt;</code> command.</li>
+<li>Run a python script with nohup and pipe the output to a file. <code>nohup python my_script_is_the_best.py &amp;&gt; my_scripts_output.out 2&gt;&amp;1 &amp;</code></li>
+<li>Batch convert <code>wav</code> files to <code>mp3</code> files with <code>ffmpeg</code> - <code>for f in *.{wav,WAV}; do ffmpeg -i "$f" -c:a libmp3lame -q:a 2 "${f%.*}.mp3"; done</code></li>
+<li>Append a prefix to specific files in a directory - <code>for f in {0,1,2,3,4,5}.mp3; do mv "$f" "GAN_$f"; done</code></li>
+</ol>
+
+
+
+ ]]></description>
+  <category>things</category>
+  <guid>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</guid>
+  <pubDate>Sun, 28 Jul 2024 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Live async, live happy</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/live-async/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Why I don’t take calls and take ages to respond?</p>
+<p>I often get my butt kicked for not responding to acquaintances and colleagues on time. I also get the stink eye for refusing to do meetings, phone/ zoom calls, and everything that comes with them.</p>
+<p>To be honest, a one-hour physical meeting can be a 30-minute virtual meeting, a 30-minute virtual meeting can be a 10-minute phone call, and a 10-minute phone call can be a 2-minute email.</p>
+<p>I prefer written communication. It’s documented, clear, and doesn’t require me to break my focus.</p>
+<p><strong>But why avoid meetings in the first place? Isn’t face-to-face interaction better?</strong></p>
+<p>I have the attention span of a peanut. It often takes me ages to find inspiration. Once I find that inspiration, I like capitalising on it as much as possible. Given how fickle my mind is I tend to aggressively preserve my “inspired time”.</p>
+<p>While face-to-face interactions “may” be better. They do result in an absurd amount of cognitive load.</p>
+<p>So why make life difficult for both you and me? Async rules!</p>
+<p><strong>What about virtual meetings? They are a good proxy for in-person meetings and don’t often require as much time.</strong></p>
+<p>True-ish, but if I know I have a meeting on a particular day, I’d constantly be stressing out about it. Irrespective of the contents of the meeting, I’d be consumed by it and have a sub-optimal experience.</p>
+<p><strong>How do I reach you?</strong></p>
+<p>Email me at Vaibhavs10[at]gmail[dot]com or drop a line on twitter <a href="https://twitter.com/reach_vb"><span class="citation" data-cites="reach_vb">@reach_vb</span></a> 🤗</p>
+<p><em>Live async, live happy!</em></p>
+
+
+
+ ]]></description>
+  <category>async</category>
+  <guid>https://vaibhavs10.github.io/posts/live-async/</guid>
+  <pubDate>Sun, 28 Jul 2024 22:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>What is home?</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/what-is-home/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><em>Written on 26th December 2023, from Gurgaon, India.</em></p>
+<p>I’m currently in India, and as someone who doesn’t actively live in the country anymore, it is always a bittersweet experience whenever I travel between countries.</p>
+<p><strong>Travelling to India</strong> 🛬 - Is a joyride; it evokes the feeling of belongingness paired with the anticipation of meeting my loved ones, eating some good food (not butter chicken), and most of all, being in a place of comfort. It’s a place where I’ve messed up umpteen numbers of times and gotten back up.</p>
+<p><strong>Travelling out of India 🛫</strong>&nbsp;- Is an emotional rollercoaster; not knowing when I will see my loved ones again evokes a feeling of emptiness, and <a href="https://paulgraham.com/vb.html">the short life</a> doesn’t make the departure easy. At the same time, the knowledge that I’ll return to another country that I call home, living the life I chose, makes me feel elated.</p>
+<p>All of this begs to answer the question: <strong>what is home? ☺️</strong></p>
+<p>I went to the mountains recently, which involved a lot of sitting in the car and a lot of time to ponder this topic.</p>
+<p>Here are some unkempt thoughts:</p>
+<ol type="1">
+<li>It is a place where you can be yourself. A place where you can express yourself without the fear of being judged.</li>
+<li>A place where you can be vulnerable.</li>
+<li>It is a person who tells you you’ve messed up and helps you while you fix it.</li>
+<li>Where you feel motivated to get better (financially/ physically/ mentally) for your home.</li>
+<li>It is a safe place where you can exist.</li>
+</ol>
+<p>In the recent past (half a decade), I’ve been quite lucky and privileged to build a few:</p>
+<ol type="1">
+<li><em>My best friend turned partner, Sofdog</em> - My life wouldn’t be as worthwhile and fruitful as it is now if it weren’t for her watching out for me. Having tough conversations where we can be vulnerable and express ourselves without feeling judged, all whilst sharing the passion of exploring the world one city at a time.</li>
+<li><em>Mum, Dad &amp; my sister</em> - Even though we’re often a couple of thousand kilometres apart, I’ve never felt lonely all because these three have ensured I’ve always been at ease. They’ve always been there through thick and thin. I am lucky to have grown with such inclusive and progressive thoughts.</li>
+<li><em>Friends</em> - Raquel, Patrick, Emils, Sven, and Zeina - Have played an important role in my life. They’ve helped me max out life whilst being around me when I was hurting or guiding me when I was clueless.</li>
+<li><em>Stuttgart</em> - I spent my best life so far in Stuttgart. I got the time and space to dive deep into my research, all whilst making connections I’ll cherish until the end. However, I’ve moved away from Stuttgart recently. It will continue to be a place that I’ll think fondly of.</li>
+</ol>
+<p>So, in the end, <strong>what is home</strong>? 😊</p>
+<p>As this year (2023) dawns to an end, I’m quite bullish on the next few. I can’t wait to build new homes.</p>
+<p>I’d love to know what makes you feel at home. Send me a DM on Twitter or drop me a ping at reachvaibhavs10[at]gmail[dot]com</p>
+<p>Cheers! 🍻 VB</p>
+<p><strong>Appendix - FAQ</strong></p>
+<ol type="1">
+<li><em>You’ve changed in recent times.</em> That’s correct; I am a bit snobbier now (always a delhite); I take things way more lightly now. I’m more direct (don’t mince my words). I’m sorry if my words hurt you.</li>
+<li><em>Do I still have a tolerance for Spice?</em> No.&nbsp;It causes me intense pain in the belly. And no, I do not want to build it back up.</li>
+<li><em>Do I intend to come back to India to live long-term?</em> Not in the immediate future (&lt; 2 years), and I do not plan life more than two years in advance. I’ll continue to visit, albeit a bit more frequently now.</li>
+<li><em>What do you not like about India?</em> First, I love Delhi, and it’ll forever be my home. That said, I don’t like the political climate in India. I despise the pollution. The traffic is nightmare fuel. And no, this is not up for discussion. I find conversations like those to be not worth your or my time.</li>
+<li><em>People in tech get paid much more in India than in Europe.</em> That’s great, and I’m quite happy for the tech scene in India.</li>
+<li><em>Do I make good money?</em> I make enough to have food on the table and some occasional trips here and there. That’s more than sufficient for me. But, deffo something I will improve in ’24.</li>
+</ol>
+
+
+
+ ]]></description>
+  <category>home</category>
+  <guid>https://vaibhavs10.github.io/posts/what-is-home/</guid>
+  <pubDate>Mon, 25 Dec 2023 23:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
