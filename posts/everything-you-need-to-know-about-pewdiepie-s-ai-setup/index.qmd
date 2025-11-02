@@ -14,7 +14,72 @@ Felix “PewDiePie” Kjellberg just showed off his 10‑GPU monster and the DIY
 - [openai/gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b) – the newly released 120B open model he runs through vLLM for fast chat. Community quantizations like [bartowski/GPT-OSS-120B-GGUF](https://huggingface.co/bartowski/GPT-OSS-120B-GGUF) make it llama.cpp-friendly.
 - [Qwen/Qwen3-235B-A22B-Instruct-2507](https://huggingface.co/Qwen/Qwen3-235B-A22B-Instruct-2507) – the “Chinese AI strikes again” giant he stretched to 100k tokens. If you’re on smaller gear, drop to [Qwen/Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) or its [GGUF shelf](https://huggingface.co/models?search=Qwen2.5+GGUF) for the same toolchain with realistic VRAM demands.
 
-## 1. Apple Silicon path: MLX
+- For day-to-day tinkering you can downshift to [bartowski/GPT-OSS-20B-GGUF](https://huggingface.co/bartowski/GPT-OSS-20B-GGUF) and [Qwen/Qwen2.5-7B-Instruct-GGUF](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF); those are the examples below because they fit on almost any modern laptop when quantized.
+
+| Model (Quant) | Minimum unified memory (Mac) | Minimum GPU VRAM (PC/Linux) | Notes |
+| --- | --- | --- | --- |
+| Qwen2.5-7B Q4 (chat) | 12 GB | 8 GB | Runs comfortably on M2/M3 with 16 GB RAM or a 3060/4060 laptop GPU. |
+| GPT-OSS-20B Q4_K | 24 GB | 12 GB | Expect ~8 tokens/s on M3 Pro 18 GB or a desktop 4070. |
+| Llama‑3.1‑70B Q4_K | 64 GB | 48 GB | Needs M3 Ultra 64 GB or dual 3090/4090s split with tensor-split. |
+| GPT-OSS-120B Q4_K_M | 96 GB | 64 GB | Felix runs this on vLLM with four 4090s; single-node inference is tight otherwise. |
+| Qwen3-235B Q4_K_M | 128 GB+ | 96 GB+ | Practical only with 6–8 GPUs or Apple’s 192 GB Mac Pro; great demo, not daily driver. |
+
+> These numbers assume 4-bit quantization and include ~25 % headroom for KV cache, runtime buffers, and system processes. Higher precision (Q5/Q8 or FP16) multiplies the requirement.
+
+## 1. llama.cpp everywhere (CLI + WebUI)
+
+1. Install the runtime. Homebrew now ships both CLI and WebUI binaries; Windows/Linux users can download prebuilt archives or `make` from source:
+
+    ```bash
+    brew install llama.cpp
+    ```
+
+2. Launch the WebUI with GPT-OSS-20B (fast enough for CPU + GPU hybrids). The WebUI streams weights once and caches them under `~/.cache/llama.cpp`:
+
+    ```bash
+    llama-server --hf-repo bartowski/GPT-OSS-20B-GGUF \
+      --hf-file GPT-OSS-20B-Q4_K_M.gguf \
+      --port 8080 --ctx-size 4096 --threads 10
+    ```
+
+    Open `http://localhost:8080/?chat` for a clean chat UI, provide a system prompt, and pin your favorite sampling presets. `--no-browser` keeps it silent if you’re running headless.
+
+3. Add a second route for Qwen2.5-7B so you can flip between “council” members. Each `llama-server` instance can host multiple models—add a second `--model` block or run another process on a new port:
+
+    ```bash
+    llama-server --hf-repo Qwen/Qwen2.5-7B-Instruct-GGUF \
+      --hf-file qwen2.5-7b-instruct-q4_k_m.gguf \
+      --port 8081 --ctx-size 8192 --threads 10 \
+      --chat-template chatml
+    ```
+
+4. Prefer terminals? The CLI flows stay the same:
+
+    ```bash
+    llama-cli --hf-repo bartowski/GPT-OSS-20B-GGUF \
+      --hf-file GPT-OSS-20B-Q4_K_M.gguf \
+      --prompt "Summarize Felix's council experiment in 80 words." \
+      --temperature 0.7 --ctx-size 4096
+    ```
+
+    ```bash
+    llama-cli --hf-repo Qwen/Qwen2.5-7B-Instruct-GGUF \
+      --hf-file qwen2.5-7b-instruct-q4_k_m.gguf \
+      --chat --prompt "Create a persona for a skeptical council member." \
+      --ctx-size 6144 --top-p 0.9
+    ```
+
+5. Dual GPUs? Split tensors so each card shares the load—Felix’s “council” runs this way:
+
+    ```bash
+    llama-cli --hf-repo bartowski/GPT-OSS-20B-GGUF \
+      --hf-file GPT-OSS-20B-Q4_K_M.gguf \
+      --tensor-split 50,50 --ctx-size 4096 --chat
+    ```
+
+![Placeholder for llama.cpp WebUI screenshot](images/pewdiepie-ai-setup-webui.png){fig-alt="Placeholder image showing the llama.cpp WebUI with GPT-OSS-20B and Qwen2.5-7B loaded."}
+
+## 2. Apple Silicon path: MLX
 
 1. Install Apple’s MLX tooling:
 
@@ -22,55 +87,28 @@ Felix “PewDiePie” Kjellberg just showed off his 10‑GPU monster and the DIY
     python3 -m pip install -U mlx-lm
     ```
 
-2. Pull a quantized checkpoint (Q4 fits 48‑128 GB unified memory nicely):
+2. Pull Felix’s 70B checkpoint if you have the headroom, or convert GPT-OSS-20B/Qwen 7B directly:
 
     ```bash
-    mlx_lm.download --model mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx
+    mlx_lm.download --model openai/gpt-oss-20b --quantize q4
+    mlx_lm.download --model Qwen/Qwen2.5-7B-Instruct --quantize q4
     ```
 
 3. Chat or benchmark straight from the CLI:
 
     ```bash
-    mlx_lm.chat --model mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx \
+    mlx_lm.chat --model ./mlx_models/gpt-oss-20b-q4 \
       --prompt "Summarize PewDiePie’s council idea in 3 bullet points."
     ```
 
 4. For Qwen, use MLX’s built-in conversion to stay in Apple’s tensor formats:
 
     ```bash
-    mlx_lm.download --model Qwen/Qwen2.5-7B-Instruct --quantize q4
-    mlx_lm.chat --model ./mlx_models/Qwen2.5-7B-Instruct-q4
+    mlx_lm.chat --model ./mlx_models/Qwen2.5-7B-Instruct-q4 \
+      --prompt "List three privacy-first features Felix added to Chad OS."
     ```
 
 Tip: MLX auto-detects available CPU/GPU tiles. On an M3 Ultra you can bump `--max-tokens 2048` safely; older machines should keep generations shorter or drop to 8‑14 B models.
-
-## 2. Cross-platform CLI: llama.cpp
-
-1. Install the runtime (Homebrew example shown, Windows users can grab prebuilt binaries or build with CMake/CUDA):
-
-    ```bash
-    brew install llama.cpp
-    ```
-
-2. Stream quantized weights directly from Hugging Face:
-
-    ```bash
-    llama-cli --hf-repo bartowski/GPT-OSS-120B-GGUF \
-      --hf-file GPT-OSS-120B-Q4_K_M.gguf \
-      --prompt "How would Chad OS describe itself?" \
-      --ctx-size 32768 --threads 10
-    ```
-
-3. Split across multiple GPUs (Felix ran two 4090s; adjust for your cards):
-
-    ```bash
-    llama-cli --hf-repo Qwen/Qwen3-235B-A22B-GGUF \
-      --hf-file Qwen3-235B-A22B-Q5_1.gguf \
-      --tensor-split 20,20,20,20 \
-      -p "Draft a council vote of confidence." -c 8192
-    ```
-
-`--tensor-split` takes percentages per GPU, so `50,50` on dual cards or `34,33,33` on triples keeps memory balanced.
 
 ## 3. GUI workflow: LM Studio
 
@@ -79,11 +117,11 @@ Felix flashes LM Studio constantly in the video because it wraps model downloads
 1. Install LM Studio, then pull models either from the UI search or via the CLI helper:
 
     ```bash
-    lms get openai/gpt-oss-120b --quantize q4_k_m
-    lms get Qwen/Qwen3-235B-A22B-GGUF --file Qwen3-235B-A22B-Q4_0.gguf
+    lms get openai/gpt-oss-20b --quantize q4_k_m
+    lms get Qwen/Qwen2.5-7B-Instruct-GGUF --file qwen2.5-7b-instruct-q4_k_m.gguf
     ```
 
-2. In the desktop app, pick a template (`Generic Chat` works), set context length (Felix dialed up to 100k when vRAM allowed), and enable the built-in RAG connectors if you want the same “deep research” feel.
+2. In the desktop app, pick a template (`Generic Chat` works), set context length (Felix dialed up to 100k when VRAM allowed), and enable the built-in RAG connectors if you want the same “deep research” feel.
 
 3. Save prompt presets—Felix uses persona-driven slots for his “council” members and rotates models per persona to keep outputs diverse.
 
