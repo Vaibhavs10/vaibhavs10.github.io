@@ -32,6 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../images/favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -71,6 +72,19 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Live async, live happy – VB’s Notes and Ramblings">
+<meta property="og:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
+<meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<meta property="og:site_name" content="VB's Notes and Ramblings">
+<meta property="og:image:alt" content="VB's website social card">
+<meta name="twitter:title" content="Live async, live happy – VB’s Notes and Ramblings">
+<meta name="twitter:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
+<meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<meta name="twitter:creator" content="@reach_vb">
+<meta name="twitter:site" content="@reach_vb">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="VB's website social card">
+<link rel="canonical" href="https://vaibhavs10.github.io/posts/live-async/">
 </head>
 
 <body class="nav-fixed">
@@ -262,7 +276,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/vaibhavs10\.github\.io");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

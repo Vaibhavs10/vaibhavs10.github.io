@@ -1,5 +1,6 @@
 ---
 title: "About"
+description: "Background on Vaibhav Srivastav aka VB, Developer Experience Engineer focused on AI."
 about:
   template: solana
   links:
