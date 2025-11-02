@@ -1,0 +1,9 @@
+---
+title: "Everything you need to know about pewdiepie's AI setup"
+author: "VB"
+date: "2025-11-02"
+categories: []
+draft: true      # flip to false when ready
+---
+
+<!-- Start writing below this line -->
