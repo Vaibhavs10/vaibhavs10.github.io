@@ -4,10 +4,10 @@ project:
 
 website:
   title: "VB's Notes and Ramblings"
-  description: "Audio, NLP, and ML field notes, talks, and consulting learnings from Vaibhav Srinivasan."
+  description: "AI and ML field notes, talks, and learnings from Vaibhav/ VB"
   site-url: "https://vaibhavs10.github.io"
   image: "/images/social-card.jpg"
-  image-alt: "Vaibhav presenting on audio machine learning with a waveform overlay."
+  image-alt: "VB's website social card"
   favicon: images/favicon.png
   open-graph:
     site-name: "VB's Notes and Ramblings"
