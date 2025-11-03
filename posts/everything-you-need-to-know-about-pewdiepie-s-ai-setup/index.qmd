@@ -6,13 +6,29 @@ categories: []
 draft: true      # flip to false when ready
 ---
 
-Felix “PewDiePie” Kjellberg just showed off his 10‑GPU monster and the DIY “Chad OS” stack he’s been building around it. The fun bit: you don’t need dual 4090s to borrow his playbook. With the right runtime you can run the same models—scaled to your own hardware—on an Apple Silicon laptop, a single‑GPU Windows tower, or a multi‑GPU Linux box.
+Felix “PewDiePie” Kjellberg just showed off his 10‑GPU monster and the DIY “Chad OS” stack he’s been building around it. The fun bit: you don’t need dual 4090s to borrow his playbook. With the right runtime you can run the same models—scaled to your own hardware—on an Apple Silicon laptop, a single‑GPU Windows tower, or a multi‑GPU Linux box. He repeatedly says the goal is control (“I don’t want to API my way out of everything”) and privacy (“Delete. Delete. … Oh, so they collect your data and train on your data even if you deleted it”), so every section below pairs his commentary with a way to try it yourself.
 
-## Models Felix name‑dropped (and Hugging Face links)
+## Why this matters (even without a GPU)
+
+- Privacy: keep chats, docs, and creative experiments off third-party servers.
+- Speed: even a MacBook can answer faster than waiting for a web queue.
+- Play: Felix treats this like digital LEGO—swap models, personas, or tools until it fits how you think.
+
+Skim the sections that match your hardware, then follow the path that sounds fun.
+
+## Quick glossary
+
+- **Quant (quantization):** shrink a model so it fits in laptop memory—think of it as zipping weights.
+- **RAG (retrieval augmented generation):** let the model look up your files before it answers you.
+- **Tensor split:** share a big model across multiple GPUs so none of them overload.
+
+## Models Felix name‑dropped
 
 - [Meta-Llama-3.1-70B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-70B-Instruct) – his first “it just works” checkpoint before chasing bigger beasts. Grab [mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx](https://huggingface.co/mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx) for Apple Silicon or any 70B [GGUF](https://huggingface.co/models?search=Meta-Llama-3.1-70B-Instruct+gguf) build for llama.cpp.
 - [openai/gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b) – the newly released 120B open model he runs through vLLM for fast chat. Community quantizations like [bartowski/GPT-OSS-120B-GGUF](https://huggingface.co/bartowski/GPT-OSS-120B-GGUF) make it llama.cpp-friendly.
-- [Qwen/Qwen3-235B-A22B-Instruct-2507](https://huggingface.co/Qwen/Qwen3-235B-A22B-Instruct-2507) – the “Chinese AI strikes again” giant he stretched to 100k tokens. If you’re on smaller gear, drop to [Qwen/Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) or its [GGUF shelf](https://huggingface.co/models?search=Qwen2.5+GGUF) for the same toolchain with realistic VRAM demands.
+- [Qwen/Qwen3-235B-A22B-Instruct-2507](https://huggingface.co/Qwen/Qwen3-235B-A22B-Instruct-2507) – the “Chinese AI strikes again” giant he stretched to 100k tokens of context. If you’re on smaller gear, drop to [Qwen/Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) or its [GGUF shelf](https://huggingface.co/models?search=Qwen2.5+GGUF) for the same toolchain with realistic VRAM demands.
+
+> “Can a guy just max out? Is that too much to ask?” was his mantra while he hunted for the biggest checkpoint that would still run. Use the table below to pick the right ceiling for your own machine before you start chasing 200B+ bragging rights.
 
 - For day-to-day tinkering you can downshift to [bartowski/GPT-OSS-20B-GGUF](https://huggingface.co/bartowski/GPT-OSS-20B-GGUF) and [Qwen/Qwen2.5-7B-Instruct-GGUF](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF); those are the examples below because they fit on almost any modern laptop when quantized.
 
@@ -25,6 +41,7 @@ Felix “PewDiePie” Kjellberg just showed off his 10‑GPU monster and the DIY
 | Qwen3-235B Q4_K_M | 128 GB+ | 96 GB+ | Practical only with 6–8 GPUs or Apple’s 192 GB Mac Pro; great demo, not daily driver. |
 
 > These numbers assume 4-bit quantization and include ~25 % headroom for KV cache, runtime buffers, and system processes. Higher precision (Q5/Q8 or FP16) multiplies the requirement.
+> Prefer MLX-native weights? Search the [`mlx-community`](https://huggingface.co/mlx-community) org for ready conversions like `Meta-Llama-3.1-70B-Instruct-4bit-mlx` or `Qwen2.5-7B-Instruct-4bit-mlx` before rolling your own with `mlx_lm.download --quantize`.
 
 ## 1. llama.cpp everywhere (CLI + WebUI)
 
@@ -34,7 +51,7 @@ Felix “PewDiePie” Kjellberg just showed off his 10‑GPU monster and the DIY
     brew install llama.cpp
     ```
 
-2. Launch the WebUI with GPT-OSS-20B (fast enough for CPU + GPU hybrids). The WebUI streams weights once and caches them under `~/.cache/llama.cpp`:
+2. Launch the WebUI with GPT-OSS-20B (fast enough for CPU + GPU hybrids). The WebUI streams weights once and caches them under `~/.cache/llama.cpp`. Jump into the `Interface` pane and enable the collapsible sidebar + preset buttons to mimic Felix’s “toggle sidebar” flex:
 
     ```bash
     llama-server --hf-repo bartowski/GPT-OSS-20B-GGUF \
@@ -44,7 +61,7 @@ Felix “PewDiePie” Kjellberg just showed off his 10‑GPU monster and the DIY
 
     Open `http://localhost:8080/?chat` for a clean chat UI, provide a system prompt, and pin your favorite sampling presets. `--no-browser` keeps it silent if you’re running headless.
 
-3. Add a second route for Qwen2.5-7B so you can flip between “council” members. Each `llama-server` instance can host multiple models—add a second `--model` block or run another process on a new port:
+3. Add a second route for Qwen2.5-7B so you can flip between “council” members. Each `llama-server` instance can host multiple models—add a second `--model` block or run another process on a new port. Pair each endpoint with a different `--system-prompt` or saved preset to recreate his democracy-by-dialogue voting gimmick:
 
     ```bash
     llama-server --hf-repo Qwen/Qwen2.5-7B-Instruct-GGUF \
@@ -53,23 +70,29 @@ Felix “PewDiePie” Kjellberg just showed off his 10‑GPU monster and the DIY
       --chat-template chatml
     ```
 
-4. Prefer terminals? The CLI flows stay the same:
+4. Prefer terminals? The CLI flows stay the same—bump `--batch-size 256` and `--ctx-size` whenever you want to chase the “216 tokens per second” brag he drops in the video:
 
     ```bash
     llama-cli --hf-repo bartowski/GPT-OSS-20B-GGUF \
       --hf-file GPT-OSS-20B-Q4_K_M.gguf \
       --prompt "Summarize Felix's council experiment in 80 words." \
-      --temperature 0.7 --ctx-size 4096
+      --temperature 0.7 --ctx-size 4096 --batch-size 256
     ```
 
     ```bash
     llama-cli --hf-repo Qwen/Qwen2.5-7B-Instruct-GGUF \
       --hf-file qwen2.5-7b-instruct-q4_k_m.gguf \
       --chat --prompt "Create a persona for a skeptical council member." \
-      --ctx-size 6144 --top-p 0.9
+      --ctx-size 6144 --top-p 0.9 --batch-size 256
     ```
 
-5. Dual GPUs? Split tensors so each card shares the load—Felix’s “council” runs this way:
+### Starter prompts to copy
+
+- “Act as Council Member No.7: vote on whether we should add memory to Chad OS.”
+- “List three ways to make local AI feel less like a ‘robot fanfiction’ (Felix’s words).”
+- “Pretend you are Felix’s skeptical wife—how would you explain the point of the council?”
+
+5. Dual GPUs? Split tensors so each card shares the load—Felix’s “council” runs this way, then a supervisor script scores responses and “kills” the losers. Start with even splits and add a simple vote tally in Python to copy the bit:
 
     ```bash
     llama-cli --hf-repo bartowski/GPT-OSS-20B-GGUF \
@@ -94,6 +117,8 @@ Felix “PewDiePie” Kjellberg just showed off his 10‑GPU monster and the DIY
     mlx_lm.download --model Qwen/Qwen2.5-7B-Instruct --quantize q4
     ```
 
+    Prefer prebuilt files? Grab the MLX packs from Hugging Face, e.g. [`mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx`](https://huggingface.co/mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx) or [`mlx-community/Qwen2.5-7B-Instruct-4bit-mlx`](https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-4bit-mlx), then point `mlx_lm.chat` at the download directory.
+
 3. Chat or benchmark straight from the CLI:
 
     ```bash
@@ -107,6 +132,8 @@ Felix “PewDiePie” Kjellberg just showed off his 10‑GPU monster and the DIY
     mlx_lm.chat --model ./mlx_models/Qwen2.5-7B-Instruct-q4 \
       --prompt "List three privacy-first features Felix added to Chad OS."
     ```
+
+Felix keeps hammering the point that “smaller models are amazing” once you bolt search or RAG on top. On Apple Silicon that means using MLX for the core weights, then piping results through Spotlight, `mdfind`, or a local embeddings DB before handing the snippets back to the model.
 
 Tip: MLX auto-detects available CPU/GPU tiles. On an M3 Ultra you can bump `--max-tokens 2048` safely; older machines should keep generations shorter or drop to 8‑14 B models.
 
@@ -125,7 +152,13 @@ Felix flashes LM Studio constantly in the video because it wraps model downloads
 
 3. Save prompt presets—Felix uses persona-driven slots for his “council” members and rotates models per persona to keep outputs diverse.
 
-## 4. Multi-GPU servers: vLLM
+He also shows off LM Studio’s ability to bolt on search/memory quickly. Jump into the `Tools` tab, wire up a local folder or Notion export, and you’ll have the same “machine making the machine” vibe he gushes about—all in a point-and-click UI.
+
+## 4. No GPU? Use HuggingChat
+
+Felix jokes about being “allergic to cloud APIs,” but if you’re still kicking the tires—or waiting on your next hardware upgrade—you can poke the same models through [HuggingChat](https://huggingface.co/chat). Pick the `gpt-oss` or `Qwen2.5-72B` endpoints, drop in his council/automation prompts, and note the responses, then recreate your favorites locally once you have the compute. HuggingChat keeps a transcript history you can export as JSON, which pairs nicely with the RAG workflows above when you’re ready to go offline.
+
+## 5. Multi-GPU servers: vLLM
 
 If you have a workstation or cloud box with multiple GPUs, vLLM gives you the same rapid token throughput Felix gushes about.
 
@@ -152,11 +185,25 @@ vllm serve Qwen/Qwen3-235B-A22B-Instruct-2507 \
 
 Add `--served-model-name chad-os` to keep your OpenAI-compatible clients pointed at Felix-style endpoints. Pair with your own FastAPI or Next.js front-end to recreate his custom UI.
 
+He admits that the first time 235B came alive, “I wish I never ran this model. Too much power.” If you go this big, set conservative batch sizes (`--max-num-batches-in-flight 1`), add GPU memory monitors, and keep a smaller model on standby for day-to-day prompts so your workstation doesn’t melt.
+
 ## Glue the stack together
 
-- **Routing & memory:** Dump chat logs into SQLite or Chroma, then add a retrieval step before each vLLM call. That’s how Felix demoed instant recall of personal data while staying offline.
-- **Multi-agent council:** Spin up multiple runtimes (different quantizations or even 2B toy models) and federate responses. A simple orchestrator can collect four answers and score them before surfacing the winner.
-- **Safety valves:** Even Felix throttles tokens—watch temperature, repetition penalties, and max tokens so a 235B model doesn’t exhaust VRAM mid-stream.
-- **Automation:** Use `cron` or `launchd` to auto-refresh embeddings, scrape docs, and rotate API keys for web search proxies. His “deep research” button is just a scripted multi-pass RAG job.
+- **Routing & memory:** Dump chat logs into SQLite or Chroma, then add a retrieval step before each vLLM call. Felix hands the model his old Google Takeout so it can answer “Who am I?” in 0.37 s without touching the internet; you can do the same by chunking `~/Documents` and dropping a RAG middleware in front of llama.cpp.
+- **Multi-agent council:** Spin up multiple runtimes (different quantizations or even 2B toy models) and federate responses. A simple orchestrator can collect four answers, score them, and keep an SQLite leaderboard—when a persona underperforms, wipe it like Felix gleefully does.
+- **Deep research button:** His “stole some code from a Chinese laboratory” gag is really a multi-hop web search loop. Combine `llama-server`’s REST API with `serpapi` or `tavily`, feed snippets back in as context, and iterate until confidence crosses a threshold.
+- **Privacy hygiene:** Felix’s surprise at lingering cloud transcripts is your cue to add a one-click purge. Set up a daily task to vacuum embeddings, rotate indexes, or encrypt stale sessions so “Delete. Delete.” actually means delete.
+- **Safety valves:** Even Felix throttles tokens—watch temperature, repetition penalties, max tokens, and GPU temps so a 235B model doesn’t exhaust VRAM mid-stream. Script health checks and auto-restarts for long running jobs.
+- **Automation:** Use `cron` or `launchd` to auto-refresh embeddings, scrape docs, and rotate API keys for web search proxies. The Chad OS ethos is “no manual babysitting,” even if you aren’t renting out ten GPUs overnight.
+
+### Common snags (and quick fixes)
+
+- Model won’t load? Drop to a smaller quant (Q4 → Q3) or close browser tabs to free RAM.
+- Fans roaring? Cap `--max-tokens` and set Apple’s `LOW_POWER=1` or NVIDIA PowerMizer to “Adaptive.”
+- Weird answers? Clear the chat history and rerun with a lower temperature like `--temp 0.6`.
+
+Tackle these before you assume your hardware isn’t strong enough.
+
+> “I realized I like running AI more than using AI with this computer.” Build the parts that sound fun and keep the loop private, just like he does.
 
 That’s it. Swap in models your hardware can stomach, keep the tooling modular, and you’ll have Chad OS vibes running locally—no 10‑GPU foot warmer required.
