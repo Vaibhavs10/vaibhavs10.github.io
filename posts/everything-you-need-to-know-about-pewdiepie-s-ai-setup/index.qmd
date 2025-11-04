@@ -17,12 +17,6 @@ Felix keeps hammering two points in the video: “I don’t want to API my way o
 
 Skim the path that matches your hardware, dive deeper with the learn-more links, and don’t feel obligated to chase 8×4090 bragging rights.
 
-### Pointers for the curious
-
-- llama.cpp quickstart: <https://github.com/ggerganov/llama.cpp#readme>
-- MLX how-to for Apple Silicon: <https://github.com/ml-explore/mlx-examples>
-- vLLM deployment guide: <https://docs.vllm.ai/en/latest/>
-
 ## Quick glossary
 
 - Quant (quantization): shrink a model so it fits in laptop memory—think of it as zipping weights.
@@ -95,14 +89,14 @@ Prefer MLX-native weights or ready-made `.gguf` files whenever possible. “Conv
     llama-cli --hf-repo bartowski/GPT-OSS-20B-GGUF \
       --hf-file GPT-OSS-20B-Q4_K_M.gguf \
       --prompt "Summarize Felix's council experiment in 80 words." \
-      --temperature 0.7 --ctx-size 4096 --batch-size 1
+      --temperature 0.7 --ctx-size 4096
     ```
 
     ```bash
     llama-cli --hf-repo bartowski/Qwen2.5-7B-Instruct-GGUF \
       --hf-file qwen2.5-7b-instruct-q4_k_m.gguf \
       --chat --prompt "Create a persona for a skeptical council member." \
-      --ctx-size 6144 --top-p 0.9 --batch-size 1
+      --ctx-size 6144 --top-p 0.9
     ```
 
     Need more throughput? Raise `--batch-size` gradually (4 → 16 → 64) while watching latency and GPU memory. Interactive chats usually feel best between batch sizes 1 and 4.
@@ -166,8 +160,7 @@ vllm serve openai/gpt-oss-120b \
   --tensor-parallel-size 4 \
   --max-model-len 65536 \
   --swap-space 16 \
-  --dtype auto \
-  --api-key dummy
+  --dtype auto
 ```
 
 For Qwen3-235B on eight GPUs:
