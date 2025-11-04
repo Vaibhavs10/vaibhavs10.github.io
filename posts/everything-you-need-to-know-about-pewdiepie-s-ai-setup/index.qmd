@@ -122,10 +122,10 @@ The layout below mirrors Felix’s WebUI: pinned sidebar, quick preset buttons, 
 
 ## 2. Apple Silicon path: MLX
 
-1. Install Apple’s MLX tooling:
+1. Install Apple’s MLX tooling with `uv` (fast, no venv juggling):
 
     ```bash
-    python3 -m pip install -U mlx-lm
+    uv pip install --upgrade mlx-lm
     ```
 
 2. Point MLX straight at the Hugging Face repo IDs—the runtime will stream and cache the weights automatically. Swap the `--model` flag for any entry in the table above:
