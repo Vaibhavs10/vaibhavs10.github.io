@@ -1,9 +1,8 @@
 ---
 title: "Everything you need to know about PewDiePie's AI setup"
 author: "VB"
-date: "2025-11-02"
-categories: []
-draft: true      # flip to false when ready
+date: "2025-11-05"
+categories: [llm, llama.cpp, mlx, vllm, gpt-oss, qwen, local-ai, privacy, mac, metal]
 ---
 
 TL;DR
@@ -41,10 +40,6 @@ Use the tables below to pick models that fit your machine before you burn time d
 | Meta-Llama-3.1-70B Instruct Q4_K_M | [bartowski/Meta-Llama-3.1-70B-Instruct-GGUF](https://huggingface.co/bartowski/Meta-Llama-3.1-70B-Instruct-GGUF) | [mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx](https://huggingface.co/mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx) | 64 GB | 48 GB | Needs tensor splitting or M3 Ultra. |
 | GPT-OSS-120B Q4_K_M | [bartowski/GPT-OSS-120B-GGUF](https://huggingface.co/bartowski/GPT-OSS-120B-GGUF) | — | 96 GB | 64 GB | Chase this only if you have 4×4090 or better cooling. |
 | Qwen3-235B A22B Q4_K_M | [bartowski/Qwen3-235B-A22B-Instruct-GGUF](https://huggingface.co/bartowski/Qwen3-235B-A22B-Instruct-GGUF) | — | 128 GB+ | 96 GB+ | Demo piece; keep it offline unless you own a rack. |
-
-### Keep tensor splitting in perspective
-
-Most of Felix's workflow runs on consumer gear. The 8×4090 rack exists so he can benchmark GPT-OSS-120B and Qwen3-235B. If you stay ≤70B, tensor splitting across dual GPUs—or MLX on a Mac Studio/Ultra—is plenty.
 
 ### Day-to-day downshift
 
@@ -89,14 +84,14 @@ Prefer MLX-native weights or ready-made `.gguf` files whenever possible. “Conv
     llama-cli --hf-repo bartowski/GPT-OSS-20B-GGUF \
       --hf-file GPT-OSS-20B-Q4_K_M.gguf \
       --prompt "Summarize Felix's council experiment in 80 words." \
-      --temperature 0.7 --ctx-size 4096
+      --ctx-size 4096
     ```
 
     ```bash
     llama-cli --hf-repo bartowski/Qwen2.5-7B-Instruct-GGUF \
       --hf-file qwen2.5-7b-instruct-q4_k_m.gguf \
       --chat --prompt "Create a persona for a skeptical council member." \
-      --ctx-size 6144 --top-p 0.9
+      --ctx-size 6144
     ```
 
     Need more throughput? Raise `--batch-size` gradually (4 → 16 → 64) while watching latency and GPU memory. Interactive chats usually feel best between batch sizes 1 and 4.
