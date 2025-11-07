@@ -4,6 +4,9 @@ project:
   resources:
     - robots.txt
 
+extensions:
+  - now-shortcode
+
 website:
   title: "VB's Notes and Ramblings"
   description: "AI and ML field notes, talks, and learnings from Vaibhav/ VB"
