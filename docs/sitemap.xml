@@ -1,55 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://vaibhavs10.github.io/now.html</loc>
-    <lastmod>2025-11-02T19:05:46.973Z</lastmod>
-  </url>
-  <url>
     <loc>https://vaibhavs10.github.io/index.html</loc>
-    <lastmod>2025-11-02T19:05:46.973Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/mermaid-scratchpad/index.html</loc>
-    <lastmod>2025-11-02T19:05:46.974Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/index.html</loc>
-    <lastmod>2025-07-06T16:12:11.691Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/what-is-home/index.html</loc>
-    <lastmod>2024-12-20T17:03:14.124Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/index.html</loc>
-    <lastmod>2024-12-20T17:03:14.124Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/all-things-running/index.html</loc>
-    <lastmod>2025-06-29T16:33:47.587Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/index.html</loc>
-    <lastmod>2025-11-02T19:05:46.974Z</lastmod>
+    <lastmod>2025-11-07T00:03:46.054Z</lastmod>
   </url>
   <url>
     <loc>https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/index.html</loc>
-    <lastmod>2025-06-29T16:33:47.589Z</lastmod>
+    <lastmod>2025-11-07T00:03:46.070Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/index.html</loc>
+    <lastmod>2025-11-07T00:03:46.058Z</lastmod>
   </url>
   <url>
     <loc>https://vaibhavs10.github.io/posts/bragsheet/index.html</loc>
-    <lastmod>2025-08-30T14:05:29.709Z</lastmod>
+    <lastmod>2025-11-07T00:03:46.058Z</lastmod>
   </url>
   <url>
     <loc>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/index.html</loc>
-    <lastmod>2024-12-20T17:03:14.124Z</lastmod>
+    <lastmod>2025-11-07T00:03:46.070Z</lastmod>
   </url>
   <url>
-    <loc>https://vaibhavs10.github.io/posts/live-async/index.html</loc>
-    <lastmod>2024-12-20T17:03:14.121Z</lastmod>
+    <loc>https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/index.html</loc>
+    <lastmod>2025-11-07T00:03:46.058Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/now.html</loc>
+    <lastmod>2025-11-07T00:03:46.054Z</lastmod>
   </url>
   <url>
     <loc>https://vaibhavs10.github.io/about.html</loc>
-    <lastmod>2025-11-02T19:05:46.965Z</lastmod>
+    <lastmod>2025-11-07T00:03:46.018Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/index.html</loc>
+    <lastmod>2025-11-07T00:03:46.066Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/index.html</loc>
+    <lastmod>2025-11-07T00:03:46.058Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/mermaid-scratchpad/index.html</loc>
+    <lastmod>2025-11-07T00:03:46.058Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/all-things-running/index.html</loc>
+    <lastmod>2025-11-07T00:03:46.054Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/what-is-home/index.html</loc>
+    <lastmod>2025-11-07T00:03:46.070Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/live-async/index.html</loc>
+    <lastmod>2025-11-07T00:03:46.058Z</lastmod>
   </url>
 </urlset>

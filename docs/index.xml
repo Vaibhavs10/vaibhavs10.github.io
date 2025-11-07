@@ -14,8 +14,371 @@
 <title>VB&#39;s Notes and Ramblings</title>
 <link>https://vaibhavs10.github.io/</link>
 </image>
-<generator>quarto-1.6.39</generator>
-<lastBuildDate>Fri, 10 Oct 2025 22:00:00 GMT</lastBuildDate>
+<generator>quarto-1.5.57</generator>
+<lastBuildDate>Wed, 05 Nov 2025 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Everything you need to know about PewDiePie’s AI setup</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>TL;DR - Watch Felix Kjellberg’s “STOP. Using AI Right now.” (31 October 2025) to see his 10‑GPU setup and custom UI: <a href="https://www.youtube.com/watch?v=qw4fDU18RcU" class="uri">https://www.youtube.com/watch?v=qw4fDU18RcU</a>. - You can recreate the workflow with consumer gear—start with 7B–20B quantized models in llama.cpp or Apple’s MLX, then scale up if you add VRAM. - The real goal is autonomy: keep data off third-party APIs, wire in your own search/memory, and iterate until the tooling feels personal.</p>
+<p>Felix “PewDiePie” Kjellberg recently shared a video showing his $20K, 10‑GPU rack plus a custom UI he calls Chad OS. What’s interesting isn’t the hardware—it’s how much of his approach works on a single GPU tower or an Apple Silicon laptop. This guide breaks down his setup for people who want to run AI locally without being deep-learning engineers.</p>
+<p>Felix emphasizes two points in the video: “I don’t want to API my way out of everything,” and “Delete. Delete. … Oh, so they collect your data even if you deleted it.” Everything below follows that mindset—local-first, privacy-aware experiments you can scale up or down based on your hardware.</p>
+<p>Pick the path that matches your hardware, dive deeper with the links, and don’t feel obligated to chase 8×4090 setups.</p>
+<section id="quick-glossary" class="level2">
+<h2 class="anchored" data-anchor-id="quick-glossary">Quick glossary</h2>
+<ul>
+<li>Quant (quantization): shrink a model so it fits in laptop memory—think of it as zipping weights.</li>
+<li>RAG (retrieval augmented generation): let the model look up your files before it answers you.</li>
+<li>Tensor split: share a big model across multiple GPUs so none of them overload.</li>
+</ul>
+</section>
+<section id="models-felix-namedropped" class="level2">
+<h2 class="anchored" data-anchor-id="models-felix-namedropped">Models Felix name‑dropped</h2>
+<ul>
+<li><a href="https://huggingface.co/meta-llama/Meta-Llama-3.1-70B-Instruct">Meta-Llama-3.1-70B-Instruct</a> – his first “it just works” checkpoint before moving to larger models.</li>
+<li><a href="https://huggingface.co/openai/gpt-oss-120b">openai/gpt-oss-120b</a> – the 120B open model he serves through vLLM for speed.</li>
+<li><a href="https://huggingface.co/Qwen/Qwen3-235B-A22B-Instruct-2507">Qwen/Qwen3-235B-A22B-Instruct-2507</a> – the large model he stretched to 100k tokens of context.</li>
+<li><a href="https://huggingface.co/Qwen/Qwen2.5-7B-Instruct">Qwen/Qwen2.5-7B-Instruct</a> and <a href="https://huggingface.co/openai/gpt-oss-20b">openai/gpt-oss-20b</a> – the smaller stand-ins he rotates through daily.</li>
+</ul>
+<p>Use the tables below to pick models that fit your machine before you burn time downloading 200B+ checkpoints.</p>
+<section id="model-quick-picks-llama.cpp-mlx" class="level3">
+<h3 class="anchored" data-anchor-id="model-quick-picks-llama.cpp-mlx">Model quick picks (llama.cpp + MLX)</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model (quant)</th>
+<th>llama.cpp (bartowski GGUF)</th>
+<th>MLX (mlx-community)</th>
+<th>Unified memory (Mac)</th>
+<th>GPU VRAM (PC/Linux)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Qwen2.5-7B Instruct Q4_K_M</td>
+<td><a href="https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF">bartowski/Qwen2.5-7B-Instruct-GGUF</a></td>
+<td><a href="https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-4bit-mlx">mlx-community/Qwen2.5-7B-Instruct-4bit-mlx</a></td>
+<td>12 GB</td>
+<td>8 GB</td>
+<td>Fast, friendly council member; run this first.</td>
+</tr>
+<tr class="even">
+<td>GPT-OSS-20B Q4_K_M</td>
+<td><a href="https://huggingface.co/bartowski/GPT-OSS-20B-GGUF">bartowski/GPT-OSS-20B-GGUF</a></td>
+<td><a href="https://huggingface.co/mlx-community/GPT-OSS-20B-4bit-mlx">mlx-community/GPT-OSS-20B-4bit-mlx</a></td>
+<td>24 GB</td>
+<td>12 GB</td>
+<td>Keeps 20B quality on laptops with swap.</td>
+</tr>
+<tr class="odd">
+<td>Meta-Llama-3.1-70B Instruct Q4_K_M</td>
+<td><a href="https://huggingface.co/bartowski/Meta-Llama-3.1-70B-Instruct-GGUF">bartowski/Meta-Llama-3.1-70B-Instruct-GGUF</a></td>
+<td><a href="https://huggingface.co/mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx">mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx</a></td>
+<td>64 GB</td>
+<td>48 GB</td>
+<td>Needs tensor splitting or M3 Ultra.</td>
+</tr>
+<tr class="even">
+<td>GPT-OSS-120B Q4_K_M</td>
+<td><a href="https://huggingface.co/bartowski/GPT-OSS-120B-GGUF">bartowski/GPT-OSS-120B-GGUF</a></td>
+<td>—</td>
+<td>96 GB</td>
+<td>64 GB</td>
+<td>Chase this only if you have 4×4090 or better cooling.</td>
+</tr>
+<tr class="odd">
+<td>Qwen3-235B A22B Q4_K_M</td>
+<td><a href="https://huggingface.co/bartowski/Qwen3-235B-A22B-Instruct-GGUF">bartowski/Qwen3-235B-A22B-Instruct-GGUF</a></td>
+<td>—</td>
+<td>128 GB+</td>
+<td>96 GB+</td>
+<td>Demo piece; keep it offline unless you own a rack.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="day-to-day-downshift" class="level3">
+<h3 class="anchored" data-anchor-id="day-to-day-downshift">Day-to-day downshift</h3>
+<ul>
+<li>Spin up <a href="https://huggingface.co/bartowski/Qwen2.5-7B-Instruct-GGUF">bartowski/Qwen2.5-7B-Instruct-GGUF</a> or <a href="https://huggingface.co/bartowski/GPT-OSS-20B-GGUF">bartowski/GPT-OSS-20B-GGUF</a> for “council” voices while the big models stay idle.</li>
+<li>Use MLX or llama.cpp quantized 13B checkpoints (Mixtral, Llama-3.1-8B) as proxies when 70B/120B VRAM isn’t available.</li>
+<li>Stash a “high-octane” profile for vLLM remote runs, but default to 7B–20B locally so you can iterate quickly.</li>
+</ul>
+<blockquote class="blockquote">
+<p>These memory numbers assume 4-bit quantization with ~25 % headroom for KV cache, runtime buffers, and system processes. Higher precision (Q5/Q8 or FP16) multiplies the requirement.</p>
+</blockquote>
+<p>Prefer MLX-native weights or ready-made <code>.gguf</code> files whenever possible. “Converted weights,” in Felix’s terminology, means grabbing a pre-quantized artifact (like the links above) instead of running your own conversion step mid-setup.</p>
+</section>
+</section>
+<section id="llama.cpp-everywhere-cli-webui" class="level2">
+<h2 class="anchored" data-anchor-id="llama.cpp-everywhere-cli-webui">1. llama.cpp everywhere (CLI + WebUI)</h2>
+<ol type="1">
+<li><p>Install the runtime. Homebrew now ships both CLI and WebUI binaries; Windows/Linux users can download prebuilt archives or <code>make</code> from source:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">brew</span> install llama.cpp</span></code></pre></div></li>
+<li><p>Launch the WebUI with GPT-OSS-20B (fast enough for CPU + GPU hybrids). The WebUI streams weights once and caches them under <code>~/.cache/llama.cpp</code>. Jump into the <code>Interface</code> pane and enable the collapsible sidebar + preset buttons to match Felix’s setup:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">llama-server</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-repo</span> bartowski/GPT-OSS-20B-GGUF <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-2">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-file</span> GPT-OSS-20B-Q4_K_M.gguf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-3">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--port</span> 8080 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--ctx-size</span> 4096 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--threads</span> 10</span></code></pre></div>
+<p>Open <code>http://localhost:8080/?chat</code> for a clean chat UI, provide a system prompt, and pin your favorite sampling presets. <code>--no-browser</code> keeps it silent if you’re running headless.</p></li>
+<li><p>Add a second route for Qwen2.5-7B so you can flip between “council” members. Each <code>llama-server</code> instance can host multiple models—add a second <code>--model</code> block or run another process on a new port. Pair each endpoint with a different <code>--system-prompt</code> or saved preset to recreate his council voting approach:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">llama-server</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-repo</span> bartowski/Qwen2.5-7B-Instruct-GGUF <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-2">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-file</span> qwen2.5-7b-instruct-q4_k_m.gguf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-3">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--port</span> 8081 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--ctx-size</span> 8192 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--threads</span> 10 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--chat-template</span> chatml</span></code></pre></div></li>
+<li><p>Prefer terminals? The CLI flows stay the same—keep <code>--batch-size 1</code> for interactive chats, then scale toward 64+ only when you’re benchmarking or streaming to multiple clients. Match <code>--ctx-size</code> to the longest prompt you actually need:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">llama-cli</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-repo</span> bartowski/GPT-OSS-20B-GGUF <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-2">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-file</span> GPT-OSS-20B-Q4_K_M.gguf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-3">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--prompt</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Summarize Felix's council experiment in 80 words."</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--ctx-size</span> 4096</span></code></pre></div>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">llama-cli</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-repo</span> bartowski/Qwen2.5-7B-Instruct-GGUF <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-2">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-file</span> qwen2.5-7b-instruct-q4_k_m.gguf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-3">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--chat</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--prompt</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Create a persona for a skeptical council member."</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--ctx-size</span> 6144</span></code></pre></div>
+<p>Need more throughput? Raise <code>--batch-size</code> gradually (4 → 16 → 64) while watching latency and GPU memory. Interactive chats usually feel best between batch sizes 1 and 4.</p></li>
+<li><p>Dual GPUs? Split tensors so each card shares the load—Felix’s “council” runs this way, then a supervisor script scores responses and “kills” the losers. Start with even splits and add a simple vote tally in Python to replicate this:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">llama-cli</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-repo</span> bartowski/GPT-OSS-20B-GGUF <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-2">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--hf-file</span> GPT-OSS-20B-Q4_K_M.gguf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-3">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--tensor-split</span> 50,50 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--ctx-size</span> 4096 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--chat</span></span></code></pre></div></li>
+</ol>
+<p>The layout below mirrors Felix’s WebUI: pinned sidebar, quick preset buttons, and two council members ready to vote.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/images/chad-os-webui-reference.png" class="img-fluid figure-img" alt="Example llama.cpp WebUI layout with GPT-OSS-20B and Qwen2.5-7B loaded side-by-side, similar to Felix's setup."></p>
+<figcaption>Reference llama.cpp layout</figcaption>
+</figure>
+</div>
+</section>
+<section id="apple-silicon-path-mlx" class="level2">
+<h2 class="anchored" data-anchor-id="apple-silicon-path-mlx">2. Apple Silicon path: MLX</h2>
+<ol type="1">
+<li><p>Install Apple’s MLX tooling with <code>uv</code> (fast, no venv juggling):</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">uv</span> pip install <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--upgrade</span> mlx-lm</span></code></pre></div></li>
+<li><p>Point MLX straight at the Hugging Face repo IDs—the runtime will stream and cache the weights automatically. Swap the <code>--model</code> flag for any entry in the table above:</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">mlx_lm.chat</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--model</span> mlx-community/GPT-OSS-20B-4bit-mlx <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-2">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--prompt</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Summarize PewDiePie’s council idea in 3 bullet points."</span></span>
+<span id="cb8-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">mlx_lm.chat</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--model</span> mlx-community/Qwen2.5-7B-Instruct-4bit-mlx <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--prompt</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"List three privacy-first features Felix added to his setup."</span></span></code></pre></div>
+<p>First run pulls the weights into your Hugging Face cache (usually <code>~/.cache/huggingface/hub</code>). Swap in larger packs like <code>mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx</code> when you have the VRAM.</p></li>
+</ol>
+<p>Felix emphasizes that “smaller models are amazing” once you bolt search or RAG on top. On Apple Silicon that means using MLX for the core weights, then piping results through Spotlight, <code>mdfind</code>, or a local embeddings DB before handing the snippets back to the model.</p>
+<p>Tip: MLX auto-detects available CPU/GPU tiles. On an M3 Ultra you can bump <code>--max-tokens 2048</code> safely; older machines should keep generations shorter or drop to 8‑14 B models.</p>
+</section>
+<section id="no-gpu-use-huggingchat" class="level2">
+<h2 class="anchored" data-anchor-id="no-gpu-use-huggingchat">3. No GPU? Use HuggingChat</h2>
+<p>Felix mentions being “allergic to cloud APIs,” but if you’re still experimenting—or waiting on your next hardware upgrade—you can try the same models through <a href="https://huggingface.co/chat">HuggingChat</a>. Pick the <code>gpt-oss</code> or <code>Qwen2.5-72B</code> endpoints, drop in his council/automation prompts, and note the responses, then recreate your favorites locally once you have the compute. HuggingChat keeps a transcript history you can export as JSON, which pairs nicely with the RAG workflows above when you’re ready to go offline.</p>
+</section>
+<section id="multi-gpu-servers-vllm" class="level2">
+<h2 class="anchored" data-anchor-id="multi-gpu-servers-vllm">4. Multi-GPU servers: vLLM</h2>
+<p>If you have a workstation or cloud box with multiple GPUs, vLLM gives you the same rapid token throughput Felix uses.</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pip</span> install <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-U</span> vllm</span>
+<span id="cb9-2"></span>
+<span id="cb9-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">vllm</span> serve openai/gpt-oss-120b <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--tensor-parallel-size</span> 4 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-5">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--max-model-len</span> 65536 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-6">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--swap-space</span> 16 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-7">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--dtype</span> auto</span></code></pre></div>
+<p>For Qwen3-235B on eight GPUs:</p>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">vllm</span> serve Qwen/Qwen3-235B-A22B-Instruct-2507 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb10-2">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--tensor-parallel-size</span> 8 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb10-3">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--pipeline-parallel-size</span> 2 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb10-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--max-model-len</span> 100000 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb10-5">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--enforce-eager</span></span></code></pre></div>
+<p>Add <code>--served-model-name chad-os</code> to keep your OpenAI-compatible clients pointed at custom endpoints. Pair with your own FastAPI or Next.js front-end to recreate his custom UI.</p>
+<p>He admits that the first time 235B came alive, “I wish I never ran this model. Too much power.” If you go this big, set conservative batch sizes (<code>--max-num-batches-in-flight 1</code>), add GPU memory monitors, and keep a smaller model on standby for day-to-day prompts so your workstation doesn’t melt.</p>
+<section id="common-snags-and-quick-fixes" class="level3">
+<h3 class="anchored" data-anchor-id="common-snags-and-quick-fixes">Common snags (and quick fixes)</h3>
+<ul>
+<li>Model won’t load? Drop to a smaller quant (Q4 → Q3) or close browser tabs to free RAM.</li>
+<li>Fans roaring? Cap <code>--max-tokens</code> and set Apple’s <code>LOW_POWER=1</code> or NVIDIA PowerMizer to “Adaptive.”</li>
+<li>Weird answers? Clear the chat history and rerun with a lower temperature like <code>--temp 0.6</code>.</li>
+</ul>
+<p>Tackle these before you assume your hardware isn’t strong enough.</p>
+<blockquote class="blockquote">
+<p>“I realized I like running AI more than using AI with this computer.” Build the parts that sound fun and keep the loop private, just like he does.</p>
+</blockquote>
+<p>That’s it. Swap in models your hardware can handle, keep the tooling modular, and you’ll have a similar setup running locally without needing 10 GPUs.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>llm</category>
+  <category>llama.cpp</category>
+  <category>mlx</category>
+  <category>vllm</category>
+  <category>gpt-oss</category>
+  <category>qwen</category>
+  <category>local-ai</category>
+  <category>privacy</category>
+  <category>mac</category>
+  <category>metal</category>
+  <guid>https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/</guid>
+  <pubDate>Wed, 05 Nov 2025 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Mermaid Scratchpad</title>
   <link>https://vaibhavs10.github.io/posts/mermaid-scratchpad/</link>
@@ -287,7 +650,7 @@
  ]]></description>
   <category>tools</category>
   <guid>https://vaibhavs10.github.io/posts/mermaid-scratchpad/</guid>
-  <pubDate>Fri, 10 Oct 2025 22:00:00 GMT</pubDate>
+  <pubDate>Sat, 11 Oct 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Brag Sheet</title>
@@ -347,7 +710,7 @@
   <category>Research</category>
   <category>Career</category>
   <guid>https://vaibhavs10.github.io/posts/bragsheet/</guid>
-  <pubDate>Fri, 29 Aug 2025 22:00:00 GMT</pubDate>
+  <pubDate>Sat, 30 Aug 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Building Smart Agents with MCP and OpenAI gpt-oss</title>
@@ -677,7 +1040,7 @@ font-style: inherit;">npx</span> @huggingface/tiny-agents run ./hf-mcp-server</s
   <category>huggingface-mcp</category>
   <category>browser-automation</category>
   <guid>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/</guid>
-  <pubDate>Tue, 12 Aug 2025 22:00:00 GMT</pubDate>
+  <pubDate>Wed, 13 Aug 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Export and play with your Strava data on Hugging Face</title>
@@ -1655,7 +2018,7 @@ font-style: inherit;">-- Order from oldest to latest</span></span></code></pre><
   <category>hugging face</category>
   <category>Data Studio</category>
   <guid>https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/</guid>
-  <pubDate>Sat, 05 Jul 2025 22:00:00 GMT</pubDate>
+  <pubDate>Sun, 06 Jul 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Run Phi-4 with ollama and Hugging Face</title>
@@ -1716,7 +2079,7 @@ font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></
   <category>phi4</category>
   <category>phi</category>
   <guid>https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/</guid>
-  <pubDate>Wed, 15 Jan 2025 23:00:00 GMT</pubDate>
+  <pubDate>Thu, 16 Jan 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>All things running 🏃‍♂️</title>
@@ -1824,7 +2187,7 @@ font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></
   <category>recovery</category>
   <category>marathon</category>
   <guid>https://vaibhavs10.github.io/posts/all-things-running/</guid>
-  <pubDate>Thu, 26 Dec 2024 23:00:00 GMT</pubDate>
+  <pubDate>Fri, 27 Dec 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Run Phi-3.5 with llama.cpp</title>
@@ -1960,7 +2323,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
   <category>phi3.5</category>
   <category>phi</category>
   <guid>https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/</guid>
-  <pubDate>Wed, 21 Aug 2024 22:00:00 GMT</pubDate>
+  <pubDate>Thu, 22 Aug 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>List of random things I keep forgetting</title>
@@ -1989,7 +2352,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
  ]]></description>
   <category>things</category>
   <guid>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</guid>
-  <pubDate>Sun, 28 Jul 2024 22:00:00 GMT</pubDate>
+  <pubDate>Mon, 29 Jul 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Live async, live happy</title>
@@ -2020,7 +2383,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
  ]]></description>
   <category>async</category>
   <guid>https://vaibhavs10.github.io/posts/live-async/</guid>
-  <pubDate>Sun, 28 Jul 2024 22:00:00 GMT</pubDate>
+  <pubDate>Mon, 29 Jul 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>What is home?</title>
@@ -2072,7 +2435,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
  ]]></description>
   <category>home</category>
   <guid>https://vaibhavs10.github.io/posts/what-is-home/</guid>
-  <pubDate>Mon, 25 Dec 2023 23:00:00 GMT</pubDate>
+  <pubDate>Tue, 26 Dec 2023 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

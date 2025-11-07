@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -72,10 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-39775da1b720616d4be2aac3cd5f0ca2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -103,23 +103,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
+<meta name="bingbot" content="index, follow">
+<meta name="yandex" content="index, follow">
+<link rel="alternate" type="application/rss+xml" title="VB's Notes and Ramblings" href="https://vaibhavs10.github.io/index.xml">
 
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Run Phi-3.5 with llama.cpp – VB’s Notes and Ramblings">
 <meta property="og:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
-<meta property="og:image" content="https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/examples.png">
+<meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta property="og:site_name" content="VB's Notes and Ramblings">
-<meta property="og:image:height" content="1760">
-<meta property="og:image:width" content="2922">
 <meta name="twitter:title" content="Run Phi-3.5 with llama.cpp – VB’s Notes and Ramblings">
 <meta name="twitter:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
-<meta name="twitter:image" content="https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/examples.png">
+<meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta name="twitter:creator" content="@reach_vb">
 <meta name="twitter:site" content="@reach_vb">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image-height" content="1760">
-<meta name="twitter:image-width" content="2922">
 <link rel="canonical" href="https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/">
 </head>
 
@@ -371,6 +372,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -481,6 +484,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
