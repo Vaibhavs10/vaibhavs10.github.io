@@ -4,6 +4,9 @@ project:
   resources:
     - robots.txt
 
+extensions:
+  - now-shortcode
+
 website:
   title: "VB's Notes and Ramblings"
   description: "AI and ML field notes, talks, and learnings from Vaibhav/ VB"
@@ -17,6 +20,8 @@ website:
     card-style: summary_large_image
     site: "@reach_vb"
     creator: "@reach_vb"
+  page-footer:
+    left: "© {{< now format='YYYY' >}} Vaibhav (VB) Srivastav"
   navbar:
     background: none
     right:
@@ -24,6 +29,26 @@ website:
       - now.qmd
       - icon: twitter
         href: https://twitter.com/reach_vb
+metadata:
+  author:
+    name: "Vaibhav (VB) Srivastav"
+    url: "https://vaibhavs10.github.io"
+  site-title: "VB's Notes and Ramblings"
+  site-url: "https://vaibhavs10.github.io"
+  site-description: "AI and ML field notes, talks, and learnings from Vaibhav/ VB"
+  keywords:
+    - Artificial Intelligence
+    - Machine Learning
+    - Data Science
+    - Personal Blog
+    - Research Notes
+  social-image: "/images/social-card.jpg"
+  social-image-alt: "VB's website social card"
+  twitter-site: "@reach_vb"
+  twitter-creator: "@reach_vb"
+  same-as:
+    - https://twitter.com/reach_vb
+    - https://www.linkedin.com/in/vaibhavs10
 format:
   html:
     theme:
@@ -35,6 +60,8 @@ format:
     page-layout: article
     toc: true
     canonical-url: true
+    filters:
+      - filters/seo.lua
     html-math-method: katex
     include-in-header:
       - includes/seo-meta.html
