@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - robots.txt
 
 website:
   title: "VB's Notes and Ramblings"
@@ -34,3 +36,5 @@ format:
     toc: true
     canonical-url: true
     html-math-method: katex
+    include-in-header:
+      - includes/seo-meta.html
