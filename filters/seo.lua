@@ -115,11 +115,38 @@ local function compute_canonical(site_url)
   local output_file = quarto.doc.output_file
   local project_dir = quarto.project and quarto.project.directory or "."
   local rel = path.make_relative(output_file, project_dir):gsub("\\\\", "/")
+  rel = rel:gsub("^%./", "")
   local out_dir = quarto.project and quarto.project.output_directory
+  if out_dir and out_dir ~= "" then
+    out_dir = out_dir:gsub("\\\\", "/")
+    if project_dir and project_dir ~= "" then
+      local normalized_project = project_dir:gsub("\\\\", "/")
+      if out_dir:sub(1, #normalized_project + 1) == normalized_project .. "/" then
+        out_dir = out_dir:sub(#normalized_project + 2)
+      end
+    end
+    out_dir = out_dir:gsub("^%./", "")
+    if out_dir:sub(1, 1) == "/" then
+      out_dir = out_dir:sub(2)
+    end
+  end
+  if (not out_dir or out_dir == "") and quarto.project and quarto.project.config then
+    local project = quarto.project.config.project
+    if project then
+      out_dir = project["output-dir"] or project["output_dir"]
+    end
+  end
   if out_dir and out_dir ~= "" then
     if rel:sub(1, #out_dir + 1) == out_dir .. "/" then
       rel = rel:sub(#out_dir + 2)
     elseif rel == out_dir then
+      rel = ""
+    end
+  else
+    local first_segment, remainder = rel:match("^([^/]+)/(.*)$")
+    if first_segment and (first_segment == "docs" or first_segment == "_site" or first_segment == "site") then
+      rel = remainder
+    elseif rel == "docs" or rel == "_site" or rel == "site" then
       rel = ""
     end
   end
@@ -204,7 +231,7 @@ function Pandoc(doc)
   local image_alt = meta_string(meta["image-alt"]) or meta_string(meta["social-image-alt"]) or "VB's website social card"
   ensure_meta_string(meta, "social-image-alt", image_alt)
 
-  local canonical = meta_string(meta["canonical-url"]) or compute_canonical(site_url)
+  local canonical = compute_canonical(site_url) or meta_string(meta["canonical-url"])
   ensure_meta_string(meta, "canonical-url", canonical)
 
   local twitter_site = meta_string(meta["twitter-site"]) or meta_string(meta["twitter"]) or "@reach_vb"

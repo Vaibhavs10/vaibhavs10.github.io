@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://vaibhavs10.github.io/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.515Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/mermaid-scratchpad/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.519Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/live-async/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.519Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.535Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/all-things-running/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.519Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/bragsheet/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.519Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/what-is-home/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.535Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/now.html</loc>
-    <lastmod>2025-11-07T09:11:05.519Z</lastmod>
+    <loc>https://vaibhavs10.github.io/about.html</loc>
+    <lastmod>2025-11-07T14:23:35.996Z</lastmod>
   </url>
   <url>
     <loc>https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.519Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.535Z</lastmod>
+    <lastmod>2025-11-07T14:23:36.016Z</lastmod>
   </url>
   <url>
     <loc>https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.519Z</lastmod>
+    <lastmod>2025-11-07T14:23:36.016Z</lastmod>
   </url>
   <url>
-    <loc>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.519Z</lastmod>
+    <loc>https://vaibhavs10.github.io/posts/all-things-running/index.html</loc>
+    <lastmod>2025-11-07T14:23:36.016Z</lastmod>
   </url>
   <url>
     <loc>https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/index.html</loc>
-    <lastmod>2025-11-07T09:11:05.527Z</lastmod>
+    <lastmod>2025-11-07T14:23:36.024Z</lastmod>
   </url>
   <url>
-    <loc>https://vaibhavs10.github.io/about.html</loc>
-    <lastmod>2025-11-07T09:11:05.475Z</lastmod>
+    <loc>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/index.html</loc>
+    <lastmod>2025-11-07T14:23:36.024Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/bragsheet/index.html</loc>
+    <lastmod>2025-11-07T14:23:36.016Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/now.html</loc>
+    <lastmod>2025-11-07T14:23:36.016Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/live-async/index.html</loc>
+    <lastmod>2025-11-07T14:23:36.016Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/index.html</loc>
+    <lastmod>2025-11-07T14:23:36.024Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/mermaid-scratchpad/index.html</loc>
+    <lastmod>2025-11-07T14:23:36.016Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/index.html</loc>
+    <lastmod>2025-11-07T14:23:36.016Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/what-is-home/index.html</loc>
+    <lastmod>2025-11-07T14:23:36.024Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/index.html</loc>
+    <lastmod>2025-11-07T14:23:36.016Z</lastmod>
   </url>
 </urlset>
