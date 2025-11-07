@@ -1,0 +1,7 @@
+title: Project Shortcodes
+version: 1.0.0
+quarto-required: ">=1.5.0"
+contributes:
+  shortcodes:
+    - now.lua
+

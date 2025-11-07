@@ -8,6 +8,8 @@
 
 <meta name="author" content="VB">
 <meta name="dcterms.date" content="2025-07-06">
+<meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, analytics, python, running, strava, marathon, hugging face, Data Studio">
+<meta name="description" content="A fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.">
 
 <title>Export and play with your Strava data on Hugging Face – VB’s Notes and Ramblings</title>
 <style>
@@ -107,16 +109,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="googlebot" content="index, follow">
 <meta name="bingbot" content="index, follow">
 <meta name="yandex" content="index, follow">
-<link rel="alternate" type="application/rss+xml" title="VB's Notes and Ramblings" href="https://vaibhavs10.github.io/index.xml">
+<link rel="alternate" type="application/rss+xml" title="VB’s Notes and Ramblings" href="https://vaibhavs10.github.io/index.xml">
+<meta name="description" content="A fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.">
+<meta name="author" content="VB">
+<meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, analytics, python, running, strava, marathon, hugging face, Data Studio">
+<meta property="og:title" content="Export and play with your Strava data on Hugging Face – VB’s Notes and Ramblings">
+<meta property="og:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/">
+<meta property="og:site_name" content="VB’s Notes and Ramblings">
+<meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<meta property="og:image:alt" content="VB’s website social card">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@reach_vb">
+<meta name="twitter:creator" content="@reach_vb">
+<meta name="twitter:title" content="Export and play with your Strava data on Hugging Face – VB’s Notes and Ramblings">
+<meta name="twitter:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
+<meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<link rel="me" href="https://twitter.com/reach_vb">
+<link rel="me" href="https://www.linkedin.com/in/vaibhavs10">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://vaibhavs10.github.io/#website",
+      "url": "https://vaibhavs10.github.io",
+      "name": "VB’s Notes and Ramblings",
+      "description": "AI and ML field notes, talks, and learnings from Vaibhav/ VB",
+      "publisher": {
+        "@id": "https://vaibhavs10.github.io/#person"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://vaibhavs10.github.io/#person",
+      "name": "Vaibhav (VB) Srivastav",
+      "url": "https://vaibhavs10.github.io",
+      "description": "AI and ML field notes, talks, and learnings from Vaibhav/ VB",
+      "image": "https://vaibhavs10.github.io/images/social-card.jpg",
+      "sameAs": ["https://twitter.com/reach_vb", "https://www.linkedin.com/in/vaibhavs10"]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/",
+      "url": "https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/",
+      "name": "Export and play with your Strava data on Hugging Face – VB’s Notes and Ramblings",
+      "description": "A fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://vaibhavs10.github.io/#person"
+      },
+      "image": "https://vaibhavs10.github.io/images/social-card.jpg"
+    }
+  ]
+}
+</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Export and play with your Strava data on Hugging Face – VB’s Notes and Ramblings">
-<meta property="og:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
+<meta property="og:title" content="Export and play with your Strava data on Hugging Face – VB's Notes and Ramblings">
+<meta property="og:description" content="A fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.">
 <meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta property="og:site_name" content="VB's Notes and Ramblings">
-<meta name="twitter:title" content="Export and play with your Strava data on Hugging Face – VB’s Notes and Ramblings">
-<meta name="twitter:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
+<meta name="twitter:title" content="Export and play with your Strava data on Hugging Face – VB's Notes and Ramblings">
+<meta name="twitter:description" content="A fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.">
 <meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta name="twitter:creator" content="@reach_vb">
 <meta name="twitter:site" content="@reach_vb">
@@ -166,7 +224,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Export and play with your Strava data on Hugging Face</h1>
-                                <div class="quarto-categories">
+                  <div>
+        <div class="description">
+          A fun exercise to export all the data from Strava over to a dataset so that I can create fun views and charts on top.
+        </div>
+      </div>
+                          <div class="quarto-categories">
                 <div class="quarto-category">analytics</div>
                 <div class="quarto-category">python</div>
                 <div class="quarto-category">running</div>
@@ -198,6 +261,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       
     </div>
     
+
+  <div>
+    <div class="keywords">
+      <div class="block-title">Keywords</div>
+      <p>Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, analytics, python, running, strava, marathon, hugging face, Data Studio</p>
+    </div>
+  </div>
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
@@ -1079,6 +1149,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 Vaibhav (VB) Srivastav</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 
