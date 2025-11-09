@@ -1,6 +1,7 @@
 ---
 title: "VB's thoughts, comments and musings"
-description: "Fresh writing on machine learning, research notes, life and musings from Vaibhav Srivastav aka VB."
+description: ""
+author: ""
 listing:
   contents: posts
   sort: "date desc"
