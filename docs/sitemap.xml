@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vaibhavs10.github.io/index.html</loc>
-    <lastmod>2025-11-09T12:17:22.164Z</lastmod>
+    <lastmod>2025-11-09T12:36:56.388Z</lastmod>
   </url>
   <url>
     <loc>https://vaibhavs10.github.io/about.html</loc>
@@ -55,5 +55,9 @@
   <url>
     <loc>https://vaibhavs10.github.io/now.html</loc>
     <lastmod>2025-11-09T07:26:34.134Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/30/index.html</loc>
+    <lastmod>2025-11-09T22:14:56.581Z</lastmod>
   </url>
 </urlset>
