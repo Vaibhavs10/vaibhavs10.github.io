@@ -5,7 +5,8 @@ date: "2024-08-05"
 categories: [life, reflections]
 ---
 
-- Some beliefs that shaped the last decade:
+Some beliefs that shaped the last decade:
+
 - you’re capable of much more than you can imagine, every now and then set an immeasurable goal
 - your only competition is you, everyone else is a distraction - you’ve only got a lifetime to get better
 - strive deliver value in good faith, when in doubt, walk away
