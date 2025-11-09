@@ -166,3 +166,21 @@ input, textarea, select {
   outline: 1px dotted var(--fg);
   outline-offset: 2px;
 }
+
+/* About page layout adjustments */
+.quarto-about-solana .about-entity,
+.quarto-about-solana .entity-contents,
+.quarto-about-solana .about-contents {
+  text-align: left;
+  align-items: flex-start;
+}
+
+.quarto-about-solana .about-links {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+/* Hide keyword block on rendered pages */
+.quarto-title-block .keywords {
+  display: none;
+}
