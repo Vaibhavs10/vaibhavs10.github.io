@@ -2,62 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vaibhavs10.github.io/index.html</loc>
-    <lastmod>2025-11-09T12:36:56.388Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/about.html</loc>
-    <lastmod>2025-11-09T07:26:34.094Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/index.html</loc>
-    <lastmod>2025-11-09T07:26:34.146Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/index.html</loc>
-    <lastmod>2025-11-09T07:26:34.138Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/mermaid-scratchpad/index.html</loc>
-    <lastmod>2025-11-09T07:26:34.138Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/what-is-home/index.html</loc>
-    <lastmod>2025-11-09T07:26:34.154Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/index.html</loc>
-    <lastmod>2025-11-09T07:26:34.154Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/index.html</loc>
-    <lastmod>2025-11-09T07:26:34.138Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/index.html</loc>
-    <lastmod>2025-11-09T07:26:34.138Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/bragsheet/index.html</loc>
-    <lastmod>2025-11-09T07:26:34.134Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/all-things-running/index.html</loc>
-    <lastmod>2025-11-09T07:26:34.134Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/index.html</loc>
-    <lastmod>2025-11-09T07:26:34.154Z</lastmod>
+    <lastmod>2025-11-09T18:38:25.678Z</lastmod>
   </url>
   <url>
     <loc>https://vaibhavs10.github.io/posts/live-async/index.html</loc>
-    <lastmod>2025-11-09T07:26:34.138Z</lastmod>
+    <lastmod>2025-11-09T18:38:25.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/index.html</loc>
+    <lastmod>2025-11-09T18:38:25.690Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/bragsheet/index.html</loc>
+    <lastmod>2025-11-09T18:38:25.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/index.html</loc>
+    <lastmod>2025-11-09T18:38:25.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/all-things-running/index.html</loc>
+    <lastmod>2025-11-09T18:38:25.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/mermaid-scratchpad/index.html</loc>
+    <lastmod>2025-11-09T18:38:25.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/about.html</loc>
+    <lastmod>2025-11-09T18:38:25.658Z</lastmod>
   </url>
   <url>
     <loc>https://vaibhavs10.github.io/now.html</loc>
-    <lastmod>2025-11-09T07:26:34.134Z</lastmod>
+    <lastmod>2025-11-09T18:38:25.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/index.html</loc>
+    <lastmod>2025-11-09T18:38:25.678Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/what-is-home/index.html</loc>
+    <lastmod>2025-11-09T18:38:25.690Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/index.html</loc>
+    <lastmod>2025-11-09T18:38:25.690Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/index.html</loc>
+    <lastmod>2025-11-09T18:38:25.686Z</lastmod>
   </url>
   <url>
     <loc>https://vaibhavs10.github.io/posts/30/index.html</loc>
-    <lastmod>2025-11-09T22:14:56.581Z</lastmod>
+    <lastmod>2025-11-09T22:56:43.605Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/index.html</loc>
+    <lastmod>2025-11-09T18:38:25.678Z</lastmod>
   </url>
 </urlset>
