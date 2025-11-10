@@ -96,10 +96,13 @@ local function json_escape(value)
   if not value then
     return ""
   end
+  -- Only escape control characters (0x00-0x1F), backslash, and double quote
+  -- UTF-8 characters should pass through as-is since JSON natively supports UTF-8
   local escaped = value
     :gsub("\\", "\\\\")
     :gsub('"', '\\"')
-    :gsub("%c", function(c)
+    :gsub("[\0-\31]", function(c)
+      -- Only escape actual control characters (0x00-0x1F)
       return string.format("\\u%04x", c:byte())
     end)
   return escaped
