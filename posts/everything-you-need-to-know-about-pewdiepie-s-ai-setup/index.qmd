@@ -2,6 +2,7 @@
 title: "Everything you need to know about PewDiePie's AI setup"
 author: "VB"
 date: "2025-11-05"
+description: "Recreate PewDiePie's $20K AI setup on your laptop. Local-first, privacy-aware, and surprisingly achievable."
 categories: [llm, llama.cpp, mlx, vllm, gpt-oss, qwen, local-ai, privacy, mac, metal]
 ---
 

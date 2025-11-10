@@ -2,6 +2,7 @@
 title: "Live async, live happy"
 author: "VB"
 date: "2024-07-29"
+description: "Why I skip meetings, ignore calls, and prefer written communication. Async is the way."
 categories: [async]
 ---
 

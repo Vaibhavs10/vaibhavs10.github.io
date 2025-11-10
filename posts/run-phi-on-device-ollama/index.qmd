@@ -2,6 +2,7 @@
 title: "Run Phi-4 with ollama and Hugging Face"
 author: "VB"
 date: "2025-01-16"
+description: "Get Microsoft's most accurate Phi-4 running locally on your Mac in minutes. No GPU required."
 categories: [llm, ollama, mac, metal, cuda, phi4, phi]
 ---
 

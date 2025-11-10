@@ -2,6 +2,7 @@
 title: "Building Smart Agents with MCP and OpenAI gpt-oss"
 author: "VB"
 date: "2025-08-13"
+description: "Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration."
 categories: [mcp, openai, gpt-oss, tiny-agents, playwright, huggingface, huggingface-mcp, browser-automation]
 ---
 
