@@ -37,3 +37,8 @@
   margin: 0;
   color: #555555;
 }
+
+// Hide description in post title block (only show in listing preview)
+.quarto-title-block .description {
+  display: none;
+}

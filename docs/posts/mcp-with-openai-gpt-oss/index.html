@@ -9,7 +9,7 @@
 <meta name="author" content="VB">
 <meta name="dcterms.date" content="2025-08-13">
 <meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, mcp, openai, gpt-oss, tiny-agents, playwright, huggingface, huggingface-mcp, browser-automation">
-<meta name="description" content="In this guide, we’ll explore using MCP and demonstrate how to build AI agents using gpt-oss as the LLM backbone. We’ll use Hugging Face’s lightweight MCP clients:">
+<meta name="description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
 
 <title>Building Smart Agents with MCP and OpenAI gpt-oss – VB’s Notes and Ramblings</title>
 <style>
@@ -77,7 +77,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-2497383d9be46ff26033aa2423d268f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-b343602de94be3daa7c3c5a07cb51a77.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -110,11 +110,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="bingbot" content="index, follow">
 <meta name="yandex" content="index, follow">
 <link rel="alternate" type="application/rss+xml" title="VB’s Notes and Ramblings" href="https://vaibhavs10.github.io/index.xml">
-<meta name="description" content="In this guide, we’ll explore using MCP and demonstrate how to build AI agents using gpt-oss as the LLM backbone. We’ll use Hugging Face’s lightweight MCP clients:">
+<meta name="description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
 <meta name="author" content="VB">
 <meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, mcp, openai, gpt-oss, tiny-agents, playwright, huggingface, huggingface-mcp, browser-automation">
 <meta property="og:title" content="Building Smart Agents with MCP and OpenAI gpt-oss – VB’s Notes and Ramblings">
-<meta property="og:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
+<meta property="og:description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/">
 <meta property="og:site_name" content="VB’s Notes and Ramblings">
@@ -124,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="twitter:site" content="@reach_vb">
 <meta name="twitter:creator" content="@reach_vb">
 <meta name="twitter:title" content="Building Smart Agents with MCP and OpenAI gpt-oss – VB’s Notes and Ramblings">
-<meta name="twitter:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
+<meta name="twitter:description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
 <meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <link rel="me" href="https://twitter.com/reach_vb">
 <link rel="me" href="https://www.linkedin.com/in/vaibhavs10">
@@ -136,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       "@type": "WebSite",
       "@id": "https://vaibhavs10.github.io/#website",
       "url": "https://vaibhavs10.github.io",
-      "name": "VB’s Notes and Ramblings",
+      "name": "VB�\u0080\u0099s Notes and Ramblings",
       "description": "AI and ML field notes, talks, and learnings from Vaibhav/ VB",
       "publisher": {
         "@id": "https://vaibhavs10.github.io/#person"
@@ -155,8 +155,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       "@type": "BlogPosting",
       "@id": "https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/",
       "url": "https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/",
-      "name": "Building Smart Agents with MCP and OpenAI gpt-oss – VB’s Notes and Ramblings",
-      "description": "In this guide, we’ll explore using MCP and demonstrate how to build AI agents using gpt-oss as the LLM backbone. We’ll use Hugging Face’s lightweight MCP clients:",
+      "name": "Building Smart Agents with MCP and OpenAI gpt-oss �\u0080\u0093 VB�\u0080\u0099s Notes and Ramblings",
+      "description": "Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.",
       "inLanguage": "en",
       "author": {
         "@id": "https://vaibhavs10.github.io/#person"
@@ -170,12 +170,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Building Smart Agents with MCP and OpenAI gpt-oss – VB's Notes and Ramblings">
-<meta property="og:description" content="In this guide, we’ll explore using MCP and demonstrate how to build AI agents using gpt-oss as the LLM backbone. We’ll use Hugging Face’s lightweight MCP clients:">
+<meta property="og:description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
 <meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta property="og:site_name" content="VB's Notes and Ramblings">
 <meta property="og:image:alt" content="VB's website social card">
 <meta name="twitter:title" content="Building Smart Agents with MCP and OpenAI gpt-oss – VB's Notes and Ramblings">
-<meta name="twitter:description" content="In this guide, we’ll explore using MCP and demonstrate how to build AI agents using gpt-oss as the LLM backbone. We’ll use Hugging Face’s lightweight MCP clients:">
+<meta name="twitter:description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
 <meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta name="twitter:creator" content="@reach_vb">
 <meta name="twitter:site" content="@reach_vb">
@@ -228,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">Building Smart Agents with MCP and OpenAI gpt-oss</h1>
                   <div>
         <div class="description">
-          In this guide, we’ll explore using MCP and demonstrate how to build AI agents using gpt-oss as the LLM backbone. We’ll use Hugging Face’s lightweight MCP clients:
+          Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.
         </div>
       </div>
                           <div class="quarto-categories">

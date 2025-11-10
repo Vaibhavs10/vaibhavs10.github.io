@@ -9,7 +9,7 @@
 <meta name="author" content="VB">
 <meta name="dcterms.date" content="2025-11-05">
 <meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, llm, llama.cpp, mlx, vllm, gpt-oss, qwen, local-ai, privacy, mac, metal">
-<meta name="description" content="TL;DR - Watch Felix Kjellberg’s “STOP. Using AI Right now.” (31 October 2025) to see his 10‑GPU setup and custom UI: https://www.youtube.com/watch?v=qw4fDU18RcU. - You can recreate the workflow with consumer gear—start with 7B–20B quantized models in llama.cpp or Apple’s MLX, then scale up if you add VRAM. - The real goal is autonomy: keep data off third-party APIs, wire in your own search/memory, and iterate until the tooling feels personal.">
+<meta name="description" content="Recreate PewDiePie’s $20K AI setup on your laptop. Local-first, privacy-aware, and surprisingly achievable.">
 
 <title>Everything you need to know about PewDiePie’s AI setup – VB's Notes and Ramblings</title>
 <style>
@@ -77,7 +77,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-2497383d9be46ff26033aa2423d268f5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-b343602de94be3daa7c3c5a07cb51a77.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -110,11 +110,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="bingbot" content="index, follow">
 <meta name="yandex" content="index, follow">
 <link rel="alternate" type="application/rss+xml" title="VB’s Notes and Ramblings" href="https://vaibhavs10.github.io/index.xml">
-<meta name="description" content="TL;DR - Watch Felix Kjellberg’s “STOP. Using AI Right now.” (31 October 2025) to see his 10‑GPU setup and custom UI: https://www.youtube.com/watch?v=qw4fDU18RcU. - You can recreate the workflow with consumer gear—start with 7B–20B quantized models in llama.cpp or Apple’s MLX, then scale up if you add VRAM. - The real goal is autonomy: keep data off third-party APIs, wire in your own search/memory, and iterate until the tooling feels personal.">
+<meta name="description" content="Recreate PewDiePie’s $20K AI setup on your laptop. Local-first, privacy-aware, and surprisingly achievable.">
 <meta name="author" content="VB">
 <meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, llm, llama.cpp, mlx, vllm, gpt-oss, qwen, local-ai, privacy, mac, metal">
 <meta property="og:title" content="Everything you need to know about PewDiePie’s AI setup – VB’s Notes and Ramblings">
-<meta property="og:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
+<meta property="og:description" content="Recreate PewDiePie’s $20K AI setup on your laptop. Local-first, privacy-aware, and surprisingly achievable.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/">
 <meta property="og:site_name" content="VB’s Notes and Ramblings">
@@ -124,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="twitter:site" content="@reach_vb">
 <meta name="twitter:creator" content="@reach_vb">
 <meta name="twitter:title" content="Everything you need to know about PewDiePie’s AI setup – VB’s Notes and Ramblings">
-<meta name="twitter:description" content="AI and ML field notes, talks, and learnings from Vaibhav/ VB">
+<meta name="twitter:description" content="Recreate PewDiePie’s $20K AI setup on your laptop. Local-first, privacy-aware, and surprisingly achievable.">
 <meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <link rel="me" href="https://twitter.com/reach_vb">
 <link rel="me" href="https://www.linkedin.com/in/vaibhavs10">
@@ -136,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       "@type": "WebSite",
       "@id": "https://vaibhavs10.github.io/#website",
       "url": "https://vaibhavs10.github.io",
-      "name": "VB’s Notes and Ramblings",
+      "name": "VB�\u0080\u0099s Notes and Ramblings",
       "description": "AI and ML field notes, talks, and learnings from Vaibhav/ VB",
       "publisher": {
         "@id": "https://vaibhavs10.github.io/#person"
@@ -155,8 +155,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       "@type": "BlogPosting",
       "@id": "https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/",
       "url": "https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/",
-      "name": "Everything you need to know about PewDiePie’s AI setup – VB’s Notes and Ramblings",
-      "description": "TL;DR - Watch Felix Kjellberg’s “STOP. Using AI Right now.” (31 October 2025) to see his 10‑GPU setup and custom UI: https://www.youtube.com/watch?v=qw4fDU18RcU. - You can recreate the workflow with consumer gear—start with 7B–20B quantized models in llama.cpp or Apple’s MLX, then scale up if you add VRAM. - The real goal is autonomy: keep data off third-party APIs, wire in your own search/memory, and iterate until the tooling feels personal.",
+      "name": "Everything you need to know about PewDiePie�\u0080\u0099s AI setup �\u0080\u0093 VB�\u0080\u0099s Notes and Ramblings",
+      "description": "Recreate PewDiePie�\u0080\u0099s $20K AI setup on your laptop. Local-first, privacy-aware, and surprisingly achievable.",
       "inLanguage": "en",
       "author": {
         "@id": "https://vaibhavs10.github.io/#person"
@@ -170,12 +170,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="Everything you need to know about PewDiePie's AI setup – VB's Notes and Ramblings">
-<meta property="og:description" content="TL;DR - Watch Felix Kjellberg’s “STOP. Using AI Right now.” (31 October 2025) to see his 10‑GPU setup and custom UI: https://www.youtube.com/watch?v=qw4fDU18RcU.">
+<meta property="og:description" content="Recreate PewDiePie's $20K AI setup on your laptop. Local-first, privacy-aware, and surprisingly achievable.">
 <meta property="og:image" content="https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/images/chad-os-webui-reference.png">
 <meta property="og:site_name" content="VB's Notes and Ramblings">
 <meta property="og:image:alt" content="Example llama.cpp WebUI layout with GPT-OSS-20B and Qwen2.5-7B loaded side-by-side, similar to Felix's setup.">
 <meta name="twitter:title" content="Everything you need to know about PewDiePie's AI setup – VB's Notes and Ramblings">
-<meta name="twitter:description" content="TL;DR - Watch Felix Kjellberg’s “STOP. Using AI Right now.” (31 October 2025) to see his 10‑GPU setup and custom UI: https://www.youtube.com/watch?v=qw4fDU18RcU.">
+<meta name="twitter:description" content="Recreate PewDiePie's $20K AI setup on your laptop. Local-first, privacy-aware, and surprisingly achievable.">
 <meta name="twitter:image" content="https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/images/chad-os-webui-reference.png">
 <meta name="twitter:creator" content="@reach_vb">
 <meta name="twitter:site" content="@reach_vb">
@@ -228,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">Everything you need to know about PewDiePie’s AI setup</h1>
                   <div>
         <div class="description">
-          TL;DR - Watch Felix Kjellberg’s “STOP. Using AI Right now.” (31 October 2025) to see his 10‑GPU setup and custom UI: https://www.youtube.com/watch?v=qw4fDU18RcU. - You can recreate the workflow with consumer gear—start with 7B–20B quantized models in llama.cpp or Apple’s MLX, then scale up if you add VRAM. - The real goal is autonomy: keep data off third-party APIs, wire in your own search/memory, and iterate until the tooling feels personal.
+          Recreate PewDiePie’s $20K AI setup on your laptop. Local-first, privacy-aware, and surprisingly achievable.
         </div>
       </div>
                           <div class="quarto-categories">

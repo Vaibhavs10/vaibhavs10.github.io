@@ -2,6 +2,7 @@
 title: "All things running 🏃‍♂️"
 author: "VB"
 date: "2024-12-27"
+description: "Training plans, recovery tips, nutrition hacks, and injury management for marathon prep—all in one place."
 categories: [things, running, nutrition, recovery, marathon]
 ---
 

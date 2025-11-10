@@ -2,6 +2,7 @@
 title: "30"
 author: "VB"
 date: "2025-11-10"
+description: "Eleven beliefs that shaped a decade — from competition to curiosity, health to humility."
 categories: [life, reflections]
 ---
 
@@ -19,4 +20,4 @@ Some beliefs that shaped the last decade:
 - health is wealth; this is a fact - internalise it, practice it, make it a big part of your life
 - when in doubt, simplify things; repeat until the next step is clear
 
-Above all else - don’t be a fucking a dick!
+Above all else - create more value than you consume and don’t be a fucking a dick!

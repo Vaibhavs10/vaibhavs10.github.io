@@ -2,6 +2,7 @@
 title: "What is home?"
 author: "VB"
 date: "2023-12-26"
+description: "A personal reflection on belonging, vulnerability, and the places and people that make us feel at home."
 categories: [home]
 ---
 

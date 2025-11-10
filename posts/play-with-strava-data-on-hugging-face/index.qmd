@@ -2,6 +2,7 @@
 title: "Export and play with your Strava data on Hugging Face"
 author: "VB"
 date: "2025-07-06"
+description: "Export your Strava runs, analyze trends with SQL, and discover insights about your running journey."
 categories: [analytics, python, running, strava, marathon, hugging face, Data Studio]
 ---
 

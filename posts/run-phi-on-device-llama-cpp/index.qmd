@@ -2,6 +2,7 @@
 title: "Run Phi-3.5 with llama.cpp"
 author: "VB"
 date: "2024-08-22"
+description: "Run Microsoft's Phi-3.5 locally on any device. Small models, big performance, zero API calls."
 categories: [llm, llama.cpp, mac, metal, cuda, phi3.5, phi]
 ---
 

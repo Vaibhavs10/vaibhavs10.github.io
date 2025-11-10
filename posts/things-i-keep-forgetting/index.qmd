@@ -2,6 +2,7 @@
 title: "List of random things I keep forgetting"
 author: "VB"
 date: "2024-07-29"
+description: "Quick reference for commands and snippets I always need but can never remember—now saved forever."
 categories: [things]
 ---
 

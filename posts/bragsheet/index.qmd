@@ -2,6 +2,7 @@
 title: "Brag Sheet"
 author: "VB"
 date: "2025-08-30"
+description: "A chronological showcase of work I'm proud of—from Hugging Face releases to research breakthroughs."
 categories: [Brag Sheet, Work, Research, Career]
 ---
 
