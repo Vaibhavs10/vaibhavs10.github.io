@@ -14,8 +14,8 @@
 <title>VB&#39;s Notes and Ramblings</title>
 <link>https://vaibhavs10.github.io/</link>
 </image>
-<generator>quarto-1.6.39</generator>
-<lastBuildDate>Sun, 09 Nov 2025 23:00:00 GMT</lastBuildDate>
+<generator>quarto-1.8.26</generator>
+<lastBuildDate>Mon, 10 Nov 2025 00:00:00 GMT</lastBuildDate>
 <item>
   <title>30</title>
   <dc:creator>VB </dc:creator>
@@ -28,19 +28,19 @@
 
 <p>Some beliefs that shaped the last decade:</p>
 <ul>
-<li>you’re capable of more than you can imagine, every now and then set an immeasurable goal</li>
-<li>your only competition is you, everyone else is a distraction - you’ve only got a lifetime to get better</li>
-<li>strive to deliver value in good faith, when in doubt, walk away</li>
-<li>don’t treat money as a taboo, money attracts money, it is never obvious in the moment; but in hindsight</li>
-<li>your choice in partner is the most important, spend time on it; make sure there’s alignment - this is not something you can “wing it”</li>
-<li>people are not inherently bad, but some can still cause more harm than good - mute/ block repeat</li>
-<li>keep the curiosity alive, it’s the only true antidote to boredom</li>
-<li>higher high would certainly lead to lower lows; you never recognise either before they hit you</li>
-<li>be receptive to feedback, specially critical; be wary of “good” feedback - it’s sneaky</li>
-<li>health is wealth; this is a fact - internalise it, practice it, make it a big part of your life</li>
+<li>you’re capable of more than you can imagine; every now and then, set an immeasurable goal</li>
+<li>your only competition is you—everyone else is a distraction; you’ve only got a lifetime to get better</li>
+<li>strive to deliver value in good faith; when in doubt, walk away</li>
+<li>don’t treat money as a taboo. Money attracts money—it is never obvious in the moment, but in hindsight it is</li>
+<li>your choice in partner is the most important; spend time on it, make sure there’s alignment—this is not something you can “wing”</li>
+<li>people are not inherently bad, but some can still cause more harm than good—mute/block repeat offenders</li>
+<li>keep the curiosity alive; it’s the only true antidote to boredom</li>
+<li>higher highs will certainly lead to lower lows; you never recognise either before they hit you</li>
+<li>be receptive to feedback, especially critical; be wary of “good” feedback—it’s sneaky</li>
+<li>health is wealth; this is a fact—internalise it, practice it, make it a big part of your life</li>
 <li>when in doubt, simplify things; repeat until the next step is clear</li>
 </ul>
-<p>Above all else - create more value than you consume and don’t be a fucking a dick!</p>
+<p>Above all else—create more value than you consume, and don’t be a fucking dick!</p>
 
 
 
@@ -48,7 +48,7 @@
   <category>life</category>
   <category>reflections</category>
   <guid>https://vaibhavs10.github.io/posts/30/</guid>
-  <pubDate>Sun, 09 Nov 2025 23:00:00 GMT</pubDate>
+  <pubDate>Mon, 10 Nov 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Everything you need to know about PewDiePie’s AI setup</title>
@@ -411,7 +411,7 @@ font-style: inherit;">--enforce-eager</span></span></code></pre></div>
   <category>mac</category>
   <category>metal</category>
   <guid>https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/</guid>
-  <pubDate>Tue, 04 Nov 2025 23:00:00 GMT</pubDate>
+  <pubDate>Wed, 05 Nov 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Mermaid Scratchpad</title>
@@ -685,7 +685,7 @@ font-style: inherit;">--enforce-eager</span></span></code></pre></div>
  ]]></description>
   <category>tools</category>
   <guid>https://vaibhavs10.github.io/posts/mermaid-scratchpad/</guid>
-  <pubDate>Fri, 10 Oct 2025 22:00:00 GMT</pubDate>
+  <pubDate>Sat, 11 Oct 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Brag Sheet</title>
@@ -745,7 +745,7 @@ font-style: inherit;">--enforce-eager</span></span></code></pre></div>
   <category>Research</category>
   <category>Career</category>
   <guid>https://vaibhavs10.github.io/posts/bragsheet/</guid>
-  <pubDate>Fri, 29 Aug 2025 22:00:00 GMT</pubDate>
+  <pubDate>Sat, 30 Aug 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Building Smart Agents with MCP and OpenAI gpt-oss</title>
@@ -1075,7 +1075,7 @@ font-style: inherit;">npx</span> @huggingface/tiny-agents run ./hf-mcp-server</s
   <category>huggingface-mcp</category>
   <category>browser-automation</category>
   <guid>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/</guid>
-  <pubDate>Tue, 12 Aug 2025 22:00:00 GMT</pubDate>
+  <pubDate>Wed, 13 Aug 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Export and play with your Strava data on Hugging Face</title>
@@ -2053,7 +2053,7 @@ font-style: inherit;">-- Order from oldest to latest</span></span></code></pre><
   <category>hugging face</category>
   <category>Data Studio</category>
   <guid>https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/</guid>
-  <pubDate>Sat, 05 Jul 2025 22:00:00 GMT</pubDate>
+  <pubDate>Sun, 06 Jul 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Run Phi-4 with ollama and Hugging Face</title>
@@ -2114,7 +2114,7 @@ font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></
   <category>phi4</category>
   <category>phi</category>
   <guid>https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/</guid>
-  <pubDate>Wed, 15 Jan 2025 23:00:00 GMT</pubDate>
+  <pubDate>Thu, 16 Jan 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>All things running 🏃‍♂️</title>
@@ -2222,7 +2222,7 @@ font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></
   <category>recovery</category>
   <category>marathon</category>
   <guid>https://vaibhavs10.github.io/posts/all-things-running/</guid>
-  <pubDate>Thu, 26 Dec 2024 23:00:00 GMT</pubDate>
+  <pubDate>Fri, 27 Dec 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Run Phi-3.5 with llama.cpp</title>
@@ -2358,36 +2358,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
   <category>phi3.5</category>
   <category>phi</category>
   <guid>https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/</guid>
-  <pubDate>Wed, 21 Aug 2024 22:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>List of random things I keep forgetting</title>
-  <dc:creator>VB </dc:creator>
-  <link>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>I often end up looking for certain commands/ code snippets so here is a list.</p>
-<ol type="1">
-<li>Change the server language to English: <code>export LC_ALL=C</code></li>
-<li>Look at the username for of who is running a process on a multi-user server: <code>ps -u -p &lt;PROCESS_ID&gt;</code></li>
-<li>Re-authenticate with github after your PAT has expired: <code>gh auth login -h [github.com](http://github.com/)</code></li>
-<li>Pip install without clogging the cache dir, add a <code>--no-cache-dir</code> flag to your <code>pip install</code> commands.</li>
-<li>Create a virtual environment with <code>python -m venv &lt;path_to_the_environment&gt;</code> command.</li>
-<li>Run a python script with nohup and pipe the output to a file. <code>nohup python my_script_is_the_best.py &amp;&gt; my_scripts_output.out 2&gt;&amp;1 &amp;</code></li>
-<li>Batch convert <code>wav</code> files to <code>mp3</code> files with <code>ffmpeg</code> - <code>for f in *.{wav,WAV}; do ffmpeg -i "$f" -c:a libmp3lame -q:a 2 "${f%.*}.mp3"; done</code></li>
-<li>Append a prefix to specific files in a directory - <code>for f in {0,1,2,3,4,5}.mp3; do mv "$f" "GAN_$f"; done</code></li>
-</ol>
-
-
-
- ]]></description>
-  <category>things</category>
-  <guid>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</guid>
-  <pubDate>Sun, 28 Jul 2024 22:00:00 GMT</pubDate>
+  <pubDate>Thu, 22 Aug 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Live async, live happy</title>
@@ -2418,7 +2389,36 @@ font-style: inherit;">--color</span></span></code></pre></div>
  ]]></description>
   <category>async</category>
   <guid>https://vaibhavs10.github.io/posts/live-async/</guid>
-  <pubDate>Sun, 28 Jul 2024 22:00:00 GMT</pubDate>
+  <pubDate>Mon, 29 Jul 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>List of random things I keep forgetting</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>I often end up looking for certain commands/ code snippets so here is a list.</p>
+<ol type="1">
+<li>Change the server language to English: <code>export LC_ALL=C</code></li>
+<li>Look at the username for of who is running a process on a multi-user server: <code>ps -u -p &lt;PROCESS_ID&gt;</code></li>
+<li>Re-authenticate with github after your PAT has expired: <code>gh auth login -h [github.com](http://github.com/)</code></li>
+<li>Pip install without clogging the cache dir, add a <code>--no-cache-dir</code> flag to your <code>pip install</code> commands.</li>
+<li>Create a virtual environment with <code>python -m venv &lt;path_to_the_environment&gt;</code> command.</li>
+<li>Run a python script with nohup and pipe the output to a file. <code>nohup python my_script_is_the_best.py &amp;&gt; my_scripts_output.out 2&gt;&amp;1 &amp;</code></li>
+<li>Batch convert <code>wav</code> files to <code>mp3</code> files with <code>ffmpeg</code> - <code>for f in *.{wav,WAV}; do ffmpeg -i "$f" -c:a libmp3lame -q:a 2 "${f%.*}.mp3"; done</code></li>
+<li>Append a prefix to specific files in a directory - <code>for f in {0,1,2,3,4,5}.mp3; do mv "$f" "GAN_$f"; done</code></li>
+</ol>
+
+
+
+ ]]></description>
+  <category>things</category>
+  <guid>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</guid>
+  <pubDate>Mon, 29 Jul 2024 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>What is home?</title>
@@ -2470,7 +2470,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
  ]]></description>
   <category>home</category>
   <guid>https://vaibhavs10.github.io/posts/what-is-home/</guid>
-  <pubDate>Mon, 25 Dec 2023 23:00:00 GMT</pubDate>
+  <pubDate>Tue, 26 Dec 2023 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
