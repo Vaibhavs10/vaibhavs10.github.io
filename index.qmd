@@ -14,3 +14,29 @@ page-layout: full
 title-block-banner: true
 ---
 
+::: {.hero-intro}
+<span class="hero-pill">Field notes & experiments</span>
+
+# VB's thoughts, comments and musings
+
+I write about production ML ergonomics, humane tooling, and the human stories behind research breakthroughs. Expect generous spacing, annotated side notes, and interactive flourishes inspired by distill.pub.
+:::
+
+::: {.callout-card data-label="Focus" data-tone="accent"}
+**Working on.** Reliable on-device assistants, audio-first LLM evals, and playful community demos for Hugging Face friends.
+
+**Learning.** How to translate messy research diaries into narratives that are delightful to read and easy to remix.
+:::
+
+::: {.side-note .floating}
+These notes are refreshed every few weeks so you can treat the homepage as a living lab book rather than a static blog roll.
+:::
+
+## Current explorations
+
+- Aligning long-form technical writing with the design grammar of distill.pub.
+- Capturing running, travel, and mental models as structured sections so you can skim with purpose.
+- Releasing small, remixable projects (like local Phi-4 setups) that encourage readers to tinker.
+
+## Latest writing
+

@@ -5,7 +5,9 @@ description: "Current focuses, research, travel, and personal updates from Vaibh
 
 What am I focused on at this point in life?
 
-Updated 13th April 2025, from Paris, FR.
+::: {.callout-card data-label="Status" data-tone="accent"}
+Updated 13th April 2025, from Paris, FR. I keep this page current so friends and collaborators know where my energy is pointed.
+:::
 
 # 📚 Research & Work
 ---
@@ -21,12 +23,23 @@ Fun tid-bit: I've understood that I'm good for nothing in the mornings and usual
 
 Lesson from last couple months - you/ your team is as good as the incentives they are provided with, change the incentives, you can change the outcomes!
 
+::: {.side-note}
+I’m writing more lab-style memos so my teammates can follow along even when we’re spread across time zones.
+:::
+
 # 🙌 Volunteering
 ---
 
 Still haven't found the calm or the energy to get back to volunteering. More than the volunteering I do miss the friends I made along the way. I'm hoping I get a chance to meet some of these lovelies soon.
 
 On the brightside, I'm moving on nicely from last years dramatic EuroPython :)
+
+# 🗂️ Systems
+---
+
+::: {.callout-card data-label="Systems" data-tone="warm"}
+Learning to build spacious weeks by batching calls, reserving deep-work mornings for research, and treating travel as a mini writing retreat. When everything is in hyperdrive, these rituals keep me grounded.
+:::
 
 # 🧠 Mental health
 ---
@@ -44,6 +57,8 @@ Oof, loads of thinking about this one, whilst I really love where I live current
 It's a chicken and egg problem, you need to put in the time to feel at home but at the same time because you don't feel at home you put in time in mindless pursuits.
 
 Hoping to figure out long term plans soon and put them in motion ^^'
+
+<hr class="section-divider" />
 
 # ✈️ Travel & Public speaking
 ---

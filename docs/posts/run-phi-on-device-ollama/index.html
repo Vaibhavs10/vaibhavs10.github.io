@@ -77,7 +77,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-b343602de94be3daa7c3c5a07cb51a77.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d0869322bf0d472268256e84c939667f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -105,13 +105,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <meta name="robots" content="index, follow">
 <meta name="googlebot" content="index, follow">
 <meta name="bingbot" content="index, follow">
 <meta name="yandex" content="index, follow">
 <link rel="alternate" type="application/rss+xml" title="VB’s Notes and Ramblings" href="https://vaibhavs10.github.io/index.xml">
 <meta name="description" content="Get Microsoft’s most accurate Phi-4 running locally on your Mac in minutes. No GPU required.">
-<meta name="author" content="VB">
+<meta name="author" content="Vaibhav (VB) Srivastav">
 <meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, llm, ollama, mac, metal, cuda, phi4, phi">
 <meta property="og:title" content="Run Phi-4 with ollama and Hugging Face – VB’s Notes and Ramblings">
 <meta property="og:description" content="Get Microsoft’s most accurate Phi-4 running locally on your Mac in minutes. No GPU required.">
@@ -296,6 +297,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac.</p>
+<div class="callout-card" data-label="Why Phi-4" data-tone="accent">
+<p>Phi-4 is surprisingly strong at reasoning and code for its size. With Ollama and Hugging Face you can treat this post as a lab notebook—copy the commands, tweak a flag, rerun, observe.</p>
+</div>
 <section id="step-1-setup-ollama" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-setup-ollama">Step 1: Setup ollama</h2>
 <p>On a mac, you can install ollama using homebrew:</p>
@@ -311,6 +315,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>After some research I found that the Phi-4 GGUFs from Unsloth are the most accurate. They ran bunch of evals and also converted the model to LLaMa format. You can find it here: <a href="https://huggingface.co/unsloth/phi-4-GGUF">unsloth/phi-4-GGUF</a>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>I’d also recommend reading the blogpost about the fixes for the Phi-4 model <a href="https://unsloth.ai/blog/phi4">here</a>.</p>
+<div class="side-note">
+<p>Tip: use <code>ollama run hf.co/unsloth/phi-4-GGUF:Q4</code> if you’d like a lighter quantisation on smaller laptops.</p>
+</div>
 </section>
 <section id="step-4-use-it-for-your-own-tasks" class="level2">
 <h2 class="anchored" data-anchor-id="step-4-use-it-for-your-own-tasks">Step 4: Use it for your own tasks</h2>
@@ -325,6 +332,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Bonus: Now go try other <a href="https://huggingface.co/models?library=gguf">GGUF models on the Hub</a> and compare their performance with Phi 4.</p>
 <p>and.. that’s it!</p>
 <p>Oh, sorry, one last thing, you can now even run private GGUFs from the Hugging Face Hub via ollama, <a href="https://huggingface.co/docs/hub/en/ollama">read here</a>.</p>
+<div class="callout-card" data-label="What next" data-tone="warm">
+<ul>
+<li>Wire the Ollama HTTP server into your favorite TUI client and script prompts from a notes app.</li>
+<li>Capture prompts/responses into a local SQLite db so you can diff quantisation quality across experiments.</li>
+</ul>
+</div>
 
 
 </section>
@@ -765,4 +778,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

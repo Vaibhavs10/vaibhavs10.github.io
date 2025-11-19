@@ -14,7 +14,7 @@
 <title>VB&#39;s Notes and Ramblings</title>
 <link>https://vaibhavs10.github.io/</link>
 </image>
-<generator>quarto-1.8.26</generator>
+<generator>quarto-1.6.39</generator>
 <lastBuildDate>Mon, 10 Nov 2025 00:00:00 GMT</lastBuildDate>
 <item>
   <title>30</title>
@@ -2066,6 +2066,9 @@ font-style: inherit;">-- Order from oldest to latest</span></span></code></pre><
 
 
 <p>This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac.</p>
+<div class="callout-card" data-label="Why Phi-4" data-tone="accent">
+<p>Phi-4 is surprisingly strong at reasoning and code for its size. With Ollama and Hugging Face you can treat this post as a lab notebook—copy the commands, tweak a flag, rerun, observe.</p>
+</div>
 <section id="step-1-setup-ollama" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-setup-ollama">Step 1: Setup ollama</h2>
 <p>On a mac, you can install ollama using homebrew:</p>
@@ -2087,6 +2090,9 @@ font-style: inherit;">ollama</span> serve</span></code></pre></div>
 background-color: null;
 font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></pre></div>
 <p>I’d also recommend reading the blogpost about the fixes for the Phi-4 model <a href="https://unsloth.ai/blog/phi4">here</a>.</p>
+<div class="side-note">
+<p>Tip: use <code>ollama run hf.co/unsloth/phi-4-GGUF:Q4</code> if you’d like a lighter quantisation on smaller laptops.</p>
+</div>
 </section>
 <section id="step-4-use-it-for-your-own-tasks" class="level2">
 <h2 class="anchored" data-anchor-id="step-4-use-it-for-your-own-tasks">Step 4: Use it for your own tasks</h2>
@@ -2101,6 +2107,12 @@ font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></
 <p>Bonus: Now go try other <a href="https://huggingface.co/models?library=gguf">GGUF models on the Hub</a> and compare their performance with Phi 4.</p>
 <p>and.. that’s it!</p>
 <p>Oh, sorry, one last thing, you can now even run private GGUFs from the Hugging Face Hub via ollama, <a href="https://huggingface.co/docs/hub/en/ollama">read here</a>.</p>
+<div class="callout-card" data-label="What next" data-tone="warm">
+<ul>
+<li>Wire the Ollama HTTP server into your favorite TUI client and script prompts from a notes app.</li>
+<li>Capture prompts/responses into a local SQLite db so you can diff quantisation quality across experiments.</li>
+</ul>
+</div>
 
 
 </section>

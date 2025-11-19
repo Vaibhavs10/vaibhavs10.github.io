@@ -4,9 +4,14 @@ author: "VB"
 date: "2025-01-16"
 description: "Get Microsoft's most accurate Phi-4 running locally on your Mac in minutes. No GPU required."
 categories: [llm, ollama, mac, metal, cuda, phi4, phi]
+toc: true
 ---
 
 This is going to be a short post or rather a testlog for how to run the most accurate version of Microsoft Phi-4 on your Mac.
+
+::: {.callout-card data-label="Why Phi-4" data-tone="accent"}
+Phi-4 is surprisingly strong at reasoning and code for its size. With Ollama and Hugging Face you can treat this post as a lab notebook—copy the commands, tweak a flag, rerun, observe.
+:::
 
 ## Step 1: Setup ollama
 
@@ -35,6 +40,10 @@ ollama run hf.co/unsloth/phi-4-GGUF
 
 I'd also recommend reading the blogpost about the fixes for the Phi-4 model [here](https://unsloth.ai/blog/phi4).
 
+::: {.side-note}
+Tip: use `ollama run hf.co/unsloth/phi-4-GGUF:Q4` if you’d like a lighter quantisation on smaller laptops.
+:::
+
 ## Step 4: Use it for your own tasks
 
 That's the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.
@@ -48,3 +57,8 @@ Bonus: Now go try other [GGUF models on the Hub](https://huggingface.co/models?l
 and.. that's it!
 
 Oh, sorry, one last thing, you can now even run private GGUFs from the Hugging Face Hub via ollama, [read here](https://huggingface.co/docs/hub/en/ollama).
+
+::: {.callout-card data-label="What next" data-tone="warm"}
+- Wire the Ollama HTTP server into your favorite TUI client and script prompts from a notes app.
+- Capture prompts/responses into a local SQLite db so you can diff quantisation quality across experiments.
+:::

@@ -33,6 +33,7 @@ metadata:
   author:
     name: "Vaibhav (VB) Srivastav"
     url: "https://vaibhavs10.github.io"
+  author-name: "Vaibhav (VB) Srivastav"
   site-title: "VB's Notes and Ramblings"
   site-url: "https://vaibhavs10.github.io"
   site-description: "AI and ML field notes, talks, and learnings from Vaibhav/ VB"
@@ -54,12 +55,16 @@ format:
     theme:
       light: [default, custom.scss]
     css: styles.css
-    mainfont: "Courier New"
-    fontsize: 1em
+    mainfont: "Source Sans 3"
+    headingfont: "Libre Baskerville"
+    monofont: "Space Mono"
+    fontsize: 1.05em
     linestretch: 1.7
     page-layout: article
     toc: true
+    toc-title: "On this page"
     canonical-url: true
+    smooth-scroll: true
     filters:
       - filters/seo.lua
     html-math-method: katex
