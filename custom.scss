@@ -1,44 +1,50 @@
 /*-- scss:defaults --*/
 
 /*-- scss:rules --*/
-// Monochrome listing styles to match terminal theme
+
+$ink: #0f172a;
+$muted: #5c6174;
+$accent: #1f8ded;
+$border: rgba(15, 23, 42, 0.08);
+
+// Listing cards resemble distill.pub issue index
 .listing-category article h3 a,
 .quarto-listing article h3 a {
-  font-size: 1.3em;
-  font-weight: 700;
-  color: #111111;
+  font-size: 1.35em;
+  font-weight: 600;
+  color: $ink;
   text-decoration: none;
   display: block;
-  margin: 0.5em 0 0.3em 0;
+  margin: 0.25em 0 0.2em 0;
+  letter-spacing: -0.01em;
 
   &:hover {
+    color: $accent;
     text-decoration: underline;
   }
 }
 
-// More compact spacing between post entries
 .quarto-listing article {
-  margin-bottom: 1.2em;
-  padding-bottom: 0.8em;
-  border-bottom: 1px solid #000000;
+  margin-bottom: 1.4em;
+  padding-bottom: 1.2em;
+  border-bottom: 1px solid $border;
 }
 
-// Make description text more compact
 .quarto-listing article .listing-description {
-  margin: 0.3em 0;
-  line-height: 1.4;
-  font-size: 0.95em;
-  color: #444444;
+  margin: 0.15em 0;
+  line-height: 1.5;
+  font-size: 0.98em;
+  color: $muted;
 }
 
-// Compress metadata/date information
 .quarto-listing article .listing-date {
   font-size: 0.9em;
   margin: 0;
-  color: #555555;
+  color: $muted;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-// Hide description in post title block (only show in listing preview)
 .quarto-title-block .description {
   display: none;
 }
