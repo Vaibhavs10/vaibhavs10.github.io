@@ -54,9 +54,9 @@ format:
     theme:
       light: [default, custom.scss]
     css: styles.css
-    mainfont: "Courier New"
-    fontsize: 1em
-    linestretch: 1.7
+    mainfont: "Inter"
+    fontsize: 1.05em
+    linestretch: 1.75
     page-layout: article
     toc: true
     canonical-url: true

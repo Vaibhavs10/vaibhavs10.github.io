@@ -1,41 +1,52 @@
 /*-- scss:defaults --*/
 
 /*-- scss:rules --*/
-// Monochrome listing styles to match terminal theme
+// Distill-inspired listing styles
+$list-border: #e0e7ef;
+$list-muted: #4a5568;
+$list-heading: #1b1b1b;
+$list-link: #0b6bcb;
+
 .listing-category article h3 a,
 .quarto-listing article h3 a {
-  font-size: 1.3em;
+  font-size: 1.35em;
   font-weight: 700;
-  color: #111111;
+  color: $list-heading;
   text-decoration: none;
   display: block;
-  margin: 0.5em 0 0.3em 0;
+  margin: 0.4em 0 0.25em 0;
+  letter-spacing: -0.01em;
 
   &:hover {
-    text-decoration: underline;
+    color: $list-link;
   }
 }
 
-// More compact spacing between post entries
 .quarto-listing article {
+  margin-bottom: 1.4em;
+  padding-bottom: 1.1em;
+  border-bottom: 1px solid $list-border;
+}
+
+.listing-category article {
   margin-bottom: 1.2em;
-  padding-bottom: 0.8em;
-  border-bottom: 1px solid #000000;
+  padding-bottom: 1em;
+  border-bottom: 1px solid $list-border;
 }
 
-// Make description text more compact
-.quarto-listing article .listing-description {
-  margin: 0.3em 0;
-  line-height: 1.4;
+.quarto-listing article .listing-description,
+.listing-category article .listing-description {
+  margin: 0.25em 0;
+  line-height: 1.5;
+  font-size: 1em;
+  color: $list-muted;
+}
+
+.quarto-listing article .listing-date,
+.listing-category article .listing-date {
   font-size: 0.95em;
-  color: #444444;
-}
-
-// Compress metadata/date information
-.quarto-listing article .listing-date {
-  font-size: 0.9em;
   margin: 0;
-  color: #555555;
+  color: darken($list-muted, 5%);
 }
 
 // Hide description in post title block (only show in listing preview)
