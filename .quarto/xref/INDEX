@@ -61,5 +61,8 @@
   },
   "notes/pr-21-feedback.md": {
     "pr-21-feedback.html": "1b6d79c5"
+  },
+  "posts/whisper-scratchpad/index.qmd": {
+    "index.html": "93e8ccd3"
   }
 }

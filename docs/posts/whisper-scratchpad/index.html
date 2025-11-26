@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="VB">
+<meta name="dcterms.date" content="2025-11-26">
+<meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, tools, audio">
+<meta name="description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
+
+<title>Whisper Scratchpad – VB’s Notes and Ramblings</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-b343602de94be3daa7c3c5a07cb51a77.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
+<meta name="bingbot" content="index, follow">
+<meta name="yandex" content="index, follow">
+<link rel="alternate" type="application/rss+xml" title="VB’s Notes and Ramblings" href="https://vaibhavs10.github.io/index.xml">
+<meta name="description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
+<meta name="author" content="VB">
+<meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, tools, audio">
+<meta property="og:title" content="Whisper Scratchpad – VB’s Notes and Ramblings">
+<meta property="og:description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://vaibhavs10.github.io/posts/whisper-scratchpad/">
+<meta property="og:site_name" content="VB’s Notes and Ramblings">
+<meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<meta property="og:image:alt" content="VB’s website social card">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@reach_vb">
+<meta name="twitter:creator" content="@reach_vb">
+<meta name="twitter:title" content="Whisper Scratchpad – VB’s Notes and Ramblings">
+<meta name="twitter:description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
+<meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<link rel="me" href="https://twitter.com/reach_vb">
+<link rel="me" href="https://www.linkedin.com/in/vaibhavs10">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://vaibhavs10.github.io/#website",
+      "url": "https://vaibhavs10.github.io",
+      "name": "VB’s Notes and Ramblings",
+      "description": "AI and ML field notes, talks, and learnings from Vaibhav/ VB",
+      "publisher": {
+        "@id": "https://vaibhavs10.github.io/#person"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://vaibhavs10.github.io/#person",
+      "name": "Vaibhav (VB) Srivastav",
+      "url": "https://vaibhavs10.github.io",
+      "description": "AI and ML field notes, talks, and learnings from Vaibhav/ VB",
+      "image": "https://vaibhavs10.github.io/images/social-card.jpg",
+      "sameAs": ["https://twitter.com/reach_vb", "https://www.linkedin.com/in/vaibhavs10"]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://vaibhavs10.github.io/posts/whisper-scratchpad/",
+      "url": "https://vaibhavs10.github.io/posts/whisper-scratchpad/",
+      "name": "Whisper Scratchpad – VB’s Notes and Ramblings",
+      "description": "Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://vaibhavs10.github.io/#person"
+      },
+      "image": "https://vaibhavs10.github.io/images/social-card.jpg"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Whisper Scratchpad – VB's Notes and Ramblings">
+<meta property="og:description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
+<meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<meta property="og:site_name" content="VB's Notes and Ramblings">
+<meta property="og:image:alt" content="VB's website social card">
+<meta name="twitter:title" content="Whisper Scratchpad – VB's Notes and Ramblings">
+<meta name="twitter:description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
+<meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<meta name="twitter:creator" content="@reach_vb">
+<meta name="twitter:site" content="@reach_vb">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="VB's website social card">
+<link rel="canonical" href="https://vaibhavs10.github.io/posts/whisper-scratchpad/">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg border-bottom" data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">VB’s Notes and Ramblings</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../now.html"> 
+<span class="menu-text">Now</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/reach_vb"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page">
+      <h1 class="title">Whisper Scratchpad</h1>
+                  <div>
+        <div class="description">
+          Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">tools</div>
+                <div class="quarto-category">audio</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>VB </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 26, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+
+  <div>
+    <div class="keywords">
+      <div class="block-title">Keywords</div>
+      <p>Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, tools, audio</p>
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+
+
+
+
+
+<p>Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page.</p>
+<section class="whisper-pad" aria-live="polite">
+  <div class="whisper-pad__panel">
+    <header class="whisper-pad__header">
+      <div>
+        <p class="whisper-pad__kicker">Backend</p>
+        <select id="backend-select" aria-label="Choose backend">
+          <option value="webgpu">WebGPU (fastest, if supported)</option>
+          <option value="wasm">WASM fallback</option>
+        </select>
+      </div>
+      <button id="load-model" type="button">Load Whisper</button>
+    </header>
+
+    <div class="whisper-pad__status">
+      <div class="whisper-pad__status-dot" aria-hidden="true"></div>
+      <p id="status-text">Model not loaded yet.</p>
+    </div>
+
+    <div class="whisper-pad__controls">
+      <button id="record-btn" type="button" disabled="">Record</button>
+      <p class="whisper-pad__hint">We’ll ask for microphone access. Audio stays local.</p>
+      <p class="whisper-pad__hint" id="support-note"></p>
+    </div>
+  </div>
+
+  <div class="whisper-pad__output">
+    <div class="whisper-pad__toolbar">
+      <span id="backend-pill" class="pill">Backend: –</span>
+      <span id="timer" class="timer">00:00</span>
+      <div class="whisper-pad__actions">
+        <button id="copy-btn" type="button" disabled="">Copy transcript</button>
+        <button id="clear-btn" type="button" disabled="">Clear</button>
+      </div>
+    </div>
+    <textarea id="transcript" rows="12" spellcheck="true" placeholder="Hit Record, speak, and the transcript will appear here." readonly=""></textarea>
+  </div>
+</section>
+<script type="module">
+  const backendSelect = document.getElementById('backend-select');
+  const loadButton = document.getElementById('load-model');
+  const recordButton = document.getElementById('record-btn');
+  const copyButton = document.getElementById('copy-btn');
+  const clearButton = document.getElementById('clear-btn');
+  const statusText = document.getElementById('status-text');
+  const supportNote = document.getElementById('support-note');
+  const transcriptField = document.getElementById('transcript');
+  const backendPill = document.getElementById('backend-pill');
+  const timerEl = document.getElementById('timer');
+
+  const supportsWebGPU = typeof navigator !== 'undefined' && 'gpu' in navigator;
+  let transcriber = null;
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let timerId = null;
+  let recordingStartedAt = null;
+
+  initSupportNote();
+
+  loadButton?.addEventListener('click', loadModel);
+  recordButton?.addEventListener('click', toggleRecording);
+  copyButton?.addEventListener('click', copyTranscript);
+  clearButton?.addEventListener('click', () => {
+    transcriptField.value = '';
+    copyButton.disabled = true;
+    clearButton.disabled = true;
+  });
+
+  function initSupportNote() {
+    if (!supportsWebGPU) {
+      backendSelect.value = 'wasm';
+      backendSelect.querySelector('option[value="webgpu"]').textContent = 'WebGPU (not detected)';
+      backendSelect.querySelector('option[value="webgpu"]').disabled = true;
+      supportNote.textContent = 'WebGPU not detected; using WASM. Try Chrome/Edge on desktop for GPU speed.';
+    } else {
+      supportNote.textContent = 'WebGPU detected. Leave backend on WebGPU unless it fails to load.';
+    }
+  }
+
+  async function ensureTransformers() {
+    if (window.transformers) return;
+    setStatus('Loading transformers.js…');
+    await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.0/dist/transformers.min.js');
+  }
+
+  async function loadModel() {
+    await ensureTransformers();
+    const backend = backendSelect.value === 'webgpu' && supportsWebGPU ? 'webgpu' : 'wasm';
+    setStatus(backend === 'webgpu' ? 'Loading Whisper on WebGPU…' : 'Loading Whisper (WASM)…');
+    toggleBusy(true);
+    backendPill.textContent = `Backend: ${backend.toUpperCase()}`;
+
+    try {
+      const { pipeline } = window.transformers;
+      transcriber = await pipeline('automatic-speech-recognition', 'onnx-community/whisper-tiny.en', {
+        device: backend,
+        // WebGPU + q8 decoders are unstable, so only quantize on WASM.
+        dtype: backend === 'webgpu' ? undefined : 'q8',
+      });
+      setStatus('Ready. Hit Record and start speaking.');
+      recordButton.disabled = false;
+    } catch (error) {
+      console.error(error);
+      setStatus(`Model load failed: ${error.message}`);
+    } finally {
+      toggleBusy(false);
+    }
+  }
+
+  async function toggleRecording() {
+    if (recordButton.classList.contains('is-recording')) {
+      stopRecording();
+      return;
+    }
+
+    if (!transcriber) {
+      await loadModel();
+      if (!transcriber) return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      recordedChunks = [];
+      mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      mediaRecorder.ondataavailable = (e) => recordedChunks.push(e.data);
+      mediaRecorder.onstop = async () => {
+        stream.getTracks().forEach((t) => t.stop());
+        await transcribeAudio(new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'audio/webm' }));
+      };
+
+      mediaRecorder.start();
+      setStatus('Recording…');
+      recordButton.textContent = 'Stop & transcribe';
+      recordButton.classList.add('is-recording');
+      startTimer();
+    } catch (error) {
+      console.error(error);
+      setStatus(`Microphone error: ${error.message}`);
+    }
+  }
+
+  function stopRecording() {
+    if (!mediaRecorder) return;
+    setStatus('Stopping and transcribing…');
+    recordButton.disabled = true;
+    mediaRecorder.stop();
+    stopTimer();
+  }
+
+  async function transcribeAudio(blob) {
+    try {
+      toggleBusy(true);
+      const audioBuffer = await blob.arrayBuffer();
+      const result = await transcriber(audioBuffer, { return_timestamps: false });
+      transcriptField.value = (result?.text || '').trim();
+      copyButton.disabled = !transcriptField.value;
+      clearButton.disabled = !transcriptField.value;
+      setStatus('Transcription finished.');
+    } catch (error) {
+      console.error(error);
+      setStatus(`Transcription failed: ${error.message}`);
+    } finally {
+      recordButton.disabled = false;
+      recordButton.textContent = 'Record again';
+      recordButton.classList.remove('is-recording');
+      toggleBusy(false);
+    }
+  }
+
+  async function copyTranscript() {
+    try {
+      await navigator.clipboard.writeText(transcriptField.value);
+      copyButton.textContent = 'Copied!';
+      setTimeout(() => (copyButton.textContent = 'Copy transcript'), 1000);
+    } catch (error) {
+      setStatus('Clipboard blocked. Select text manually to copy.');
+    }
+  }
+
+  function setStatus(message) {
+    statusText.textContent = message;
+  }
+
+  function toggleBusy(isBusy) {
+    loadButton.disabled = isBusy;
+    recordButton.disabled = isBusy || !transcriber;
+    backendSelect.disabled = isBusy;
+  }
+
+  function startTimer() {
+    recordingStartedAt = Date.now();
+    updateTimer();
+    timerId = setInterval(updateTimer, 200);
+  }
+
+  function stopTimer() {
+    clearInterval(timerId);
+    timerId = null;
+    timerEl.textContent = '00:00';
+    recordingStartedAt = null;
+  }
+
+  function updateTimer() {
+    if (!recordingStartedAt) return;
+    const elapsedMs = Date.now() - recordingStartedAt;
+    const seconds = Math.floor(elapsedMs / 1000) % 60;
+    const minutes = Math.floor(elapsedMs / 60000);
+    timerEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }
+</script>
+<style>
+  .whisper-pad {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+    width: min(100%, 72rem);
+    margin-inline: auto;
+  }
+
+  @media (min-width: 768px) {
+    .whisper-pad {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .whisper-pad__panel,
+  .whisper-pad__output {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .whisper-pad__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .whisper-pad__kicker {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--bs-secondary-color, #555);
+    margin: 0;
+  }
+
+  select#backend-select {
+    margin-top: 0.35rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.65rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #111);
+    min-width: 16rem;
+  }
+
+  #load-model {
+    padding: 0.55rem 1.15rem;
+    border-radius: 999px;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: linear-gradient(120deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02));
+    cursor: pointer;
+  }
+
+  #load-model:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  .whisper-pad__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.9rem;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px dashed var(--bs-border-color, #c5c5c5);
+  }
+
+  .whisper-pad__status-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 999px;
+    background: radial-gradient(circle at 50% 50%, #2ecc71, #16a085);
+    box-shadow: 0 0 0.4rem rgba(46, 204, 113, 0.6);
+  }
+
+  .whisper-pad__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  #record-btn {
+    padding: 0.8rem 1.4rem;
+    font-size: 1rem;
+    border-radius: 0.9rem;
+    border: none;
+    color: #fff;
+    background: linear-gradient(120deg, #111, #333);
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+  }
+
+  #record-btn.is-recording {
+    background: linear-gradient(120deg, #b20024, #ff4d4d);
+    box-shadow: 0 0.7rem 1.5rem rgba(255, 77, 77, 0.25);
+  }
+
+  #record-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .whisper-pad__hint {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--bs-secondary-color, #555);
+  }
+
+  .whisper-pad__output {
+    gap: 0.75rem;
+  }
+
+  .whisper-pad__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .whisper-pad__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    font-size: 0.9rem;
+  }
+
+  .timer {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+
+  #transcript {
+    width: 100%;
+    min-height: 16rem;
+    padding: 0.85rem 1rem;
+    border-radius: 0.9rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #111);
+    font-family: "Courier New", monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    resize: vertical;
+  }
+
+  .whisper-pad__actions button,
+  #copy-btn,
+  #clear-btn {
+    padding: 0.45rem 0.9rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .whisper-pad__actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 600px) {
+    .whisper-pad {
+      grid-template-columns: 1fr;
+    }
+
+    #transcript {
+      min-height: 14rem;
+    }
+  }
+</style>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/vaibhavs10\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 Vaibhav (VB) Srivastav</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

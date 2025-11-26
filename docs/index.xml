@@ -14,8 +14,421 @@
 <title>VB&#39;s Notes and Ramblings</title>
 <link>https://vaibhavs10.github.io/</link>
 </image>
-<generator>quarto-1.8.26</generator>
-<lastBuildDate>Mon, 10 Nov 2025 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.6.39</generator>
+<lastBuildDate>Tue, 25 Nov 2025 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>Whisper Scratchpad</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/whisper-scratchpad/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page.</p>
+<section class="whisper-pad" aria-live="polite">
+  <div class="whisper-pad__panel">
+    <header class="whisper-pad__header">
+      <div>
+        <p class="whisper-pad__kicker">Backend</p>
+        <select id="backend-select" aria-label="Choose backend">
+          <option value="webgpu">WebGPU (fastest, if supported)</option>
+          <option value="wasm">WASM fallback</option>
+        </select>
+      </div>
+      <button id="load-model" type="button">Load Whisper</button>
+    </header>
+
+    <div class="whisper-pad__status">
+      
+      <p id="status-text">Model not loaded yet.</p>
+    </div>
+
+    <div class="whisper-pad__controls">
+      <button id="record-btn" type="button" disabled="">Record</button>
+      <p class="whisper-pad__hint">We’ll ask for microphone access. Audio stays local.</p>
+      <p class="whisper-pad__hint" id="support-note"></p>
+    </div>
+  </div>
+
+  <div class="whisper-pad__output">
+    <div class="whisper-pad__toolbar">
+      <span id="backend-pill" class="pill">Backend: –</span>
+      <span id="timer" class="timer">00:00</span>
+      <div class="whisper-pad__actions">
+        <button id="copy-btn" type="button" disabled="">Copy transcript</button>
+        <button id="clear-btn" type="button" disabled="">Clear</button>
+      </div>
+    </div>
+    <textarea id="transcript" rows="12" spellcheck="true" placeholder="Hit Record, speak, and the transcript will appear here." readonly=""></textarea>
+  </div>
+</section>
+<script type="module">
+  const backendSelect = document.getElementById('backend-select');
+  const loadButton = document.getElementById('load-model');
+  const recordButton = document.getElementById('record-btn');
+  const copyButton = document.getElementById('copy-btn');
+  const clearButton = document.getElementById('clear-btn');
+  const statusText = document.getElementById('status-text');
+  const supportNote = document.getElementById('support-note');
+  const transcriptField = document.getElementById('transcript');
+  const backendPill = document.getElementById('backend-pill');
+  const timerEl = document.getElementById('timer');
+
+  const supportsWebGPU = typeof navigator !== 'undefined' && 'gpu' in navigator;
+  let transcriber = null;
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let timerId = null;
+  let recordingStartedAt = null;
+
+  initSupportNote();
+
+  loadButton?.addEventListener('click', loadModel);
+  recordButton?.addEventListener('click', toggleRecording);
+  copyButton?.addEventListener('click', copyTranscript);
+  clearButton?.addEventListener('click', () => {
+    transcriptField.value = '';
+    copyButton.disabled = true;
+    clearButton.disabled = true;
+  });
+
+  function initSupportNote() {
+    if (!supportsWebGPU) {
+      backendSelect.value = 'wasm';
+      backendSelect.querySelector('option[value="webgpu"]').textContent = 'WebGPU (not detected)';
+      backendSelect.querySelector('option[value="webgpu"]').disabled = true;
+      supportNote.textContent = 'WebGPU not detected; using WASM. Try Chrome/Edge on desktop for GPU speed.';
+    } else {
+      supportNote.textContent = 'WebGPU detected. Leave backend on WebGPU unless it fails to load.';
+    }
+  }
+
+  async function ensureTransformers() {
+    if (window.transformers) return;
+    setStatus('Loading transformers.js…');
+    await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.0/dist/transformers.min.js');
+  }
+
+  async function loadModel() {
+    await ensureTransformers();
+    const backend = backendSelect.value === 'webgpu' && supportsWebGPU ? 'webgpu' : 'wasm';
+    setStatus(backend === 'webgpu' ? 'Loading Whisper on WebGPU…' : 'Loading Whisper (WASM)…');
+    toggleBusy(true);
+    backendPill.textContent = `Backend: ${backend.toUpperCase()}`;
+
+    try {
+      const { pipeline } = window.transformers;
+      transcriber = await pipeline('automatic-speech-recognition', 'onnx-community/whisper-tiny.en', {
+        device: backend,
+        // WebGPU + q8 decoders are unstable, so only quantize on WASM.
+        dtype: backend === 'webgpu' ? undefined : 'q8',
+      });
+      setStatus('Ready. Hit Record and start speaking.');
+      recordButton.disabled = false;
+    } catch (error) {
+      console.error(error);
+      setStatus(`Model load failed: ${error.message}`);
+    } finally {
+      toggleBusy(false);
+    }
+  }
+
+  async function toggleRecording() {
+    if (recordButton.classList.contains('is-recording')) {
+      stopRecording();
+      return;
+    }
+
+    if (!transcriber) {
+      await loadModel();
+      if (!transcriber) return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      recordedChunks = [];
+      mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      mediaRecorder.ondataavailable = (e) => recordedChunks.push(e.data);
+      mediaRecorder.onstop = async () => {
+        stream.getTracks().forEach((t) => t.stop());
+        await transcribeAudio(new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'audio/webm' }));
+      };
+
+      mediaRecorder.start();
+      setStatus('Recording…');
+      recordButton.textContent = 'Stop & transcribe';
+      recordButton.classList.add('is-recording');
+      startTimer();
+    } catch (error) {
+      console.error(error);
+      setStatus(`Microphone error: ${error.message}`);
+    }
+  }
+
+  function stopRecording() {
+    if (!mediaRecorder) return;
+    setStatus('Stopping and transcribing…');
+    recordButton.disabled = true;
+    mediaRecorder.stop();
+    stopTimer();
+  }
+
+  async function transcribeAudio(blob) {
+    try {
+      toggleBusy(true);
+      const audioBuffer = await blob.arrayBuffer();
+      const result = await transcriber(audioBuffer, { return_timestamps: false });
+      transcriptField.value = (result?.text || '').trim();
+      copyButton.disabled = !transcriptField.value;
+      clearButton.disabled = !transcriptField.value;
+      setStatus('Transcription finished.');
+    } catch (error) {
+      console.error(error);
+      setStatus(`Transcription failed: ${error.message}`);
+    } finally {
+      recordButton.disabled = false;
+      recordButton.textContent = 'Record again';
+      recordButton.classList.remove('is-recording');
+      toggleBusy(false);
+    }
+  }
+
+  async function copyTranscript() {
+    try {
+      await navigator.clipboard.writeText(transcriptField.value);
+      copyButton.textContent = 'Copied!';
+      setTimeout(() => (copyButton.textContent = 'Copy transcript'), 1000);
+    } catch (error) {
+      setStatus('Clipboard blocked. Select text manually to copy.');
+    }
+  }
+
+  function setStatus(message) {
+    statusText.textContent = message;
+  }
+
+  function toggleBusy(isBusy) {
+    loadButton.disabled = isBusy;
+    recordButton.disabled = isBusy || !transcriber;
+    backendSelect.disabled = isBusy;
+  }
+
+  function startTimer() {
+    recordingStartedAt = Date.now();
+    updateTimer();
+    timerId = setInterval(updateTimer, 200);
+  }
+
+  function stopTimer() {
+    clearInterval(timerId);
+    timerId = null;
+    timerEl.textContent = '00:00';
+    recordingStartedAt = null;
+  }
+
+  function updateTimer() {
+    if (!recordingStartedAt) return;
+    const elapsedMs = Date.now() - recordingStartedAt;
+    const seconds = Math.floor(elapsedMs / 1000) % 60;
+    const minutes = Math.floor(elapsedMs / 60000);
+    timerEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }
+</script>
+<style>
+  .whisper-pad {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+    width: min(100%, 72rem);
+    margin-inline: auto;
+  }
+
+  @media (min-width: 768px) {
+    .whisper-pad {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .whisper-pad__panel,
+  .whisper-pad__output {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .whisper-pad__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .whisper-pad__kicker {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--bs-secondary-color, #555);
+    margin: 0;
+  }
+
+  select#backend-select {
+    margin-top: 0.35rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.65rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #111);
+    min-width: 16rem;
+  }
+
+  #load-model {
+    padding: 0.55rem 1.15rem;
+    border-radius: 999px;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: linear-gradient(120deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02));
+    cursor: pointer;
+  }
+
+  #load-model:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  .whisper-pad__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.9rem;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px dashed var(--bs-border-color, #c5c5c5);
+  }
+
+  .whisper-pad__status-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 999px;
+    background: radial-gradient(circle at 50% 50%, #2ecc71, #16a085);
+    box-shadow: 0 0 0.4rem rgba(46, 204, 113, 0.6);
+  }
+
+  .whisper-pad__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  #record-btn {
+    padding: 0.8rem 1.4rem;
+    font-size: 1rem;
+    border-radius: 0.9rem;
+    border: none;
+    color: #fff;
+    background: linear-gradient(120deg, #111, #333);
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+  }
+
+  #record-btn.is-recording {
+    background: linear-gradient(120deg, #b20024, #ff4d4d);
+    box-shadow: 0 0.7rem 1.5rem rgba(255, 77, 77, 0.25);
+  }
+
+  #record-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .whisper-pad__hint {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--bs-secondary-color, #555);
+  }
+
+  .whisper-pad__output {
+    gap: 0.75rem;
+  }
+
+  .whisper-pad__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .whisper-pad__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    font-size: 0.9rem;
+  }
+
+  .timer {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+
+  #transcript {
+    width: 100%;
+    min-height: 16rem;
+    padding: 0.85rem 1rem;
+    border-radius: 0.9rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #111);
+    font-family: "Courier New", monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    resize: vertical;
+  }
+
+  .whisper-pad__actions button,
+  #copy-btn,
+  #clear-btn {
+    padding: 0.45rem 0.9rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .whisper-pad__actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 600px) {
+    .whisper-pad {
+      grid-template-columns: 1fr;
+    }
+
+    #transcript {
+      min-height: 14rem;
+    }
+  }
+</style>
+
+
+
+ ]]></description>
+  <category>tools</category>
+  <category>audio</category>
+  <guid>https://vaibhavs10.github.io/posts/whisper-scratchpad/</guid>
+  <pubDate>Tue, 25 Nov 2025 18:30:00 GMT</pubDate>
+</item>
 <item>
   <title>30</title>
   <dc:creator>VB </dc:creator>
@@ -48,7 +461,7 @@
   <category>life</category>
   <category>reflections</category>
   <guid>https://vaibhavs10.github.io/posts/30/</guid>
-  <pubDate>Mon, 10 Nov 2025 00:00:00 GMT</pubDate>
+  <pubDate>Sun, 09 Nov 2025 18:30:00 GMT</pubDate>
 </item>
 <item>
   <title>Everything you need to know about PewDiePie’s AI setup</title>
@@ -411,7 +824,7 @@ font-style: inherit;">--enforce-eager</span></span></code></pre></div>
   <category>mac</category>
   <category>metal</category>
   <guid>https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/</guid>
-  <pubDate>Wed, 05 Nov 2025 00:00:00 GMT</pubDate>
+  <pubDate>Tue, 04 Nov 2025 18:30:00 GMT</pubDate>
 </item>
 <item>
   <title>Mermaid Scratchpad</title>
@@ -685,7 +1098,7 @@ font-style: inherit;">--enforce-eager</span></span></code></pre></div>
  ]]></description>
   <category>tools</category>
   <guid>https://vaibhavs10.github.io/posts/mermaid-scratchpad/</guid>
-  <pubDate>Sat, 11 Oct 2025 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 10 Oct 2025 18:30:00 GMT</pubDate>
 </item>
 <item>
   <title>Brag Sheet</title>
@@ -745,7 +1158,7 @@ font-style: inherit;">--enforce-eager</span></span></code></pre></div>
   <category>Research</category>
   <category>Career</category>
   <guid>https://vaibhavs10.github.io/posts/bragsheet/</guid>
-  <pubDate>Sat, 30 Aug 2025 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 29 Aug 2025 18:30:00 GMT</pubDate>
 </item>
 <item>
   <title>Building Smart Agents with MCP and OpenAI gpt-oss</title>
@@ -1075,7 +1488,7 @@ font-style: inherit;">npx</span> @huggingface/tiny-agents run ./hf-mcp-server</s
   <category>huggingface-mcp</category>
   <category>browser-automation</category>
   <guid>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/</guid>
-  <pubDate>Wed, 13 Aug 2025 00:00:00 GMT</pubDate>
+  <pubDate>Tue, 12 Aug 2025 18:30:00 GMT</pubDate>
 </item>
 <item>
   <title>Export and play with your Strava data on Hugging Face</title>
@@ -2053,7 +2466,7 @@ font-style: inherit;">-- Order from oldest to latest</span></span></code></pre><
   <category>hugging face</category>
   <category>Data Studio</category>
   <guid>https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/</guid>
-  <pubDate>Sun, 06 Jul 2025 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 05 Jul 2025 18:30:00 GMT</pubDate>
 </item>
 <item>
   <title>Run Phi-4 with ollama and Hugging Face</title>
@@ -2114,7 +2527,7 @@ font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></
   <category>phi4</category>
   <category>phi</category>
   <guid>https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/</guid>
-  <pubDate>Thu, 16 Jan 2025 00:00:00 GMT</pubDate>
+  <pubDate>Wed, 15 Jan 2025 18:30:00 GMT</pubDate>
 </item>
 <item>
   <title>All things running 🏃‍♂️</title>
@@ -2222,7 +2635,7 @@ font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></
   <category>recovery</category>
   <category>marathon</category>
   <guid>https://vaibhavs10.github.io/posts/all-things-running/</guid>
-  <pubDate>Fri, 27 Dec 2024 00:00:00 GMT</pubDate>
+  <pubDate>Thu, 26 Dec 2024 18:30:00 GMT</pubDate>
 </item>
 <item>
   <title>Run Phi-3.5 with llama.cpp</title>
@@ -2358,7 +2771,36 @@ font-style: inherit;">--color</span></span></code></pre></div>
   <category>phi3.5</category>
   <category>phi</category>
   <guid>https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/</guid>
-  <pubDate>Thu, 22 Aug 2024 00:00:00 GMT</pubDate>
+  <pubDate>Wed, 21 Aug 2024 18:30:00 GMT</pubDate>
+</item>
+<item>
+  <title>List of random things I keep forgetting</title>
+  <dc:creator>VB </dc:creator>
+  <link>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>I often end up looking for certain commands/ code snippets so here is a list.</p>
+<ol type="1">
+<li>Change the server language to English: <code>export LC_ALL=C</code></li>
+<li>Look at the username for of who is running a process on a multi-user server: <code>ps -u -p &lt;PROCESS_ID&gt;</code></li>
+<li>Re-authenticate with github after your PAT has expired: <code>gh auth login -h [github.com](http://github.com/)</code></li>
+<li>Pip install without clogging the cache dir, add a <code>--no-cache-dir</code> flag to your <code>pip install</code> commands.</li>
+<li>Create a virtual environment with <code>python -m venv &lt;path_to_the_environment&gt;</code> command.</li>
+<li>Run a python script with nohup and pipe the output to a file. <code>nohup python my_script_is_the_best.py &amp;&gt; my_scripts_output.out 2&gt;&amp;1 &amp;</code></li>
+<li>Batch convert <code>wav</code> files to <code>mp3</code> files with <code>ffmpeg</code> - <code>for f in *.{wav,WAV}; do ffmpeg -i "$f" -c:a libmp3lame -q:a 2 "${f%.*}.mp3"; done</code></li>
+<li>Append a prefix to specific files in a directory - <code>for f in {0,1,2,3,4,5}.mp3; do mv "$f" "GAN_$f"; done</code></li>
+</ol>
+
+
+
+ ]]></description>
+  <category>things</category>
+  <guid>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</guid>
+  <pubDate>Sun, 28 Jul 2024 18:30:00 GMT</pubDate>
 </item>
 <item>
   <title>Live async, live happy</title>
@@ -2389,36 +2831,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
  ]]></description>
   <category>async</category>
   <guid>https://vaibhavs10.github.io/posts/live-async/</guid>
-  <pubDate>Mon, 29 Jul 2024 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>List of random things I keep forgetting</title>
-  <dc:creator>VB </dc:creator>
-  <link>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>I often end up looking for certain commands/ code snippets so here is a list.</p>
-<ol type="1">
-<li>Change the server language to English: <code>export LC_ALL=C</code></li>
-<li>Look at the username for of who is running a process on a multi-user server: <code>ps -u -p &lt;PROCESS_ID&gt;</code></li>
-<li>Re-authenticate with github after your PAT has expired: <code>gh auth login -h [github.com](http://github.com/)</code></li>
-<li>Pip install without clogging the cache dir, add a <code>--no-cache-dir</code> flag to your <code>pip install</code> commands.</li>
-<li>Create a virtual environment with <code>python -m venv &lt;path_to_the_environment&gt;</code> command.</li>
-<li>Run a python script with nohup and pipe the output to a file. <code>nohup python my_script_is_the_best.py &amp;&gt; my_scripts_output.out 2&gt;&amp;1 &amp;</code></li>
-<li>Batch convert <code>wav</code> files to <code>mp3</code> files with <code>ffmpeg</code> - <code>for f in *.{wav,WAV}; do ffmpeg -i "$f" -c:a libmp3lame -q:a 2 "${f%.*}.mp3"; done</code></li>
-<li>Append a prefix to specific files in a directory - <code>for f in {0,1,2,3,4,5}.mp3; do mv "$f" "GAN_$f"; done</code></li>
-</ol>
-
-
-
- ]]></description>
-  <category>things</category>
-  <guid>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</guid>
-  <pubDate>Mon, 29 Jul 2024 00:00:00 GMT</pubDate>
+  <pubDate>Sun, 28 Jul 2024 18:30:00 GMT</pubDate>
 </item>
 <item>
   <title>What is home?</title>
@@ -2470,7 +2883,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
  ]]></description>
   <category>home</category>
   <guid>https://vaibhavs10.github.io/posts/what-is-home/</guid>
-  <pubDate>Tue, 26 Dec 2023 00:00:00 GMT</pubDate>
+  <pubDate>Mon, 25 Dec 2023 18:30:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
