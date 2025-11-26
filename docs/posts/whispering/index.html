@@ -260,6 +260,7 @@ ul.task-list li input[type="checkbox"] {
           <option value="onnx-community/whisper-tiny.en">whisper-tiny.en (fastest)</option>
           <option value="onnx-community/whisper-base.en">whisper-base.en (better)</option>
           <option value="onnx-community/whisper-small.en">whisper-small.en (best, slowest)</option>
+          <option value="onnx-community/whisper-large-v3">whisper-large-v3 (very high quality, heavy)</option>
         </select>
       </div>
       <button id="load-model" type="button" class="ghost-btn">Load</button>
@@ -274,7 +275,7 @@ ul.task-list li input[type="checkbox"] {
       <button id="record-btn" type="button" disabled="">Record</button>
       <p class="whisper-pad__hint">We’ll ask for microphone access. Audio stays local.</p>
       <p class="whisper-pad__hint" id="support-note"></p>
-      <p class="whisper-pad__hint">Tip: tiny ≈ fastest; small is higher quality but heavier.</p>
+      <p class="whisper-pad__hint">Tip: tiny ≈ fastest; small is higher quality; large-v3 is best but may be slow and need WebGPU.</p>
     </div>
   </div>
 
