@@ -17,9 +17,9 @@
 <generator>quarto-1.6.39</generator>
 <lastBuildDate>Tue, 25 Nov 2025 18:30:00 GMT</lastBuildDate>
 <item>
-  <title>Whisper Scratchpad</title>
+  <title>Whispering</title>
   <dc:creator>VB </dc:creator>
-  <link>https://vaibhavs10.github.io/posts/whisper-scratchpad/</link>
+  <link>https://vaibhavs10.github.io/posts/whispering/</link>
   <description><![CDATA[ 
 
 
@@ -28,45 +28,58 @@
 
 <p>Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page.</p>
 <section class="whisper-pad" aria-live="polite">
-  <div class="whisper-pad__panel">
+  <div class="whisper-card">
     <header class="whisper-pad__header">
-      <div>
+      <div class="stack">
         <p class="whisper-pad__kicker">Backend</p>
         <select id="backend-select" aria-label="Choose backend">
           <option value="webgpu">WebGPU (fastest, if supported)</option>
           <option value="wasm">WASM fallback</option>
         </select>
       </div>
-      <button id="load-model" type="button">Load Whisper</button>
+      <div class="stack">
+        <p class="whisper-pad__kicker">Model</p>
+        <select id="model-select" aria-label="Choose model">
+          <option value="onnx-community/whisper-tiny.en">whisper-tiny.en (fastest)</option>
+          <option value="onnx-community/whisper-base.en">whisper-base.en (better)</option>
+          <option value="onnx-community/whisper-small.en">whisper-small.en (best, slowest)</option>
+        </select>
+      </div>
+      <button id="load-model" type="button" class="ghost-btn">Load</button>
     </header>
 
     <div class="whisper-pad__status">
       
-      <p id="status-text">Model not loaded yet.</p>
+      <p id="status-text">Pick a backend and model, then load.</p>
     </div>
 
     <div class="whisper-pad__controls">
       <button id="record-btn" type="button" disabled="">Record</button>
       <p class="whisper-pad__hint">We’ll ask for microphone access. Audio stays local.</p>
       <p class="whisper-pad__hint" id="support-note"></p>
+      <p class="whisper-pad__hint">Tip: tiny ≈ fastest; small is higher quality but heavier.</p>
     </div>
   </div>
 
-  <div class="whisper-pad__output">
+  <div class="whisper-card">
     <div class="whisper-pad__toolbar">
-      <span id="backend-pill" class="pill">Backend: –</span>
+      <div class="pill-row">
+        <span id="backend-pill" class="pill">Backend: –</span>
+        <span id="model-pill" class="pill">Model: –</span>
+      </div>
       <span id="timer" class="timer">00:00</span>
       <div class="whisper-pad__actions">
         <button id="copy-btn" type="button" disabled="">Copy transcript</button>
         <button id="clear-btn" type="button" disabled="">Clear</button>
       </div>
     </div>
-    <textarea id="transcript" rows="12" spellcheck="true" placeholder="Hit Record, speak, and the transcript will appear here." readonly=""></textarea>
+    <textarea id="transcript" rows="14" spellcheck="true" placeholder="Hit Record, speak, and the transcript will appear here." readonly=""></textarea>
   </div>
 </section>
 <script type="module">
   const backendSelect = document.getElementById('backend-select');
   const loadButton = document.getElementById('load-model');
+  const modelSelect = document.getElementById('model-select');
   const recordButton = document.getElementById('record-btn');
   const copyButton = document.getElementById('copy-btn');
   const clearButton = document.getElementById('clear-btn');
@@ -74,6 +87,7 @@
   const supportNote = document.getElementById('support-note');
   const transcriptField = document.getElementById('transcript');
   const backendPill = document.getElementById('backend-pill');
+  const modelPill = document.getElementById('model-pill');
   const timerEl = document.getElementById('timer');
 
   const supportsWebGPU = typeof navigator !== 'undefined' && 'gpu' in navigator;
@@ -120,17 +134,19 @@
   async function loadModel() {
     const { pipeline } = await ensureTransformers();
     const backend = backendSelect.value === 'webgpu' && supportsWebGPU ? 'webgpu' : 'wasm';
-    setStatus(backend === 'webgpu' ? 'Loading Whisper on WebGPU…' : 'Loading Whisper (WASM)…');
+    const modelId = modelSelect.value;
+    setStatus(`${backend === 'webgpu' ? 'Loading on WebGPU…' : 'Loading (WASM)…'} (${modelId.split('/').pop()})`);
     toggleBusy(true);
     backendPill.textContent = `Backend: ${backend.toUpperCase()}`;
+    modelPill.textContent = `Model: ${modelId.split('/').pop()}`;
 
     try {
-      transcriber = await pipeline('automatic-speech-recognition', 'onnx-community/whisper-tiny.en', {
+      transcriber = await pipeline('automatic-speech-recognition', modelId, {
         device: backend,
         // WebGPU + q8 decoders are unstable, so only quantize on WASM.
         dtype: backend === 'webgpu' ? undefined : 'q8',
       });
-      setStatus('Ready. Hit Record and start speaking.');
+      setStatus(`Ready (${modelId.split('/').pop()}). Hit Record and start speaking.`);
       recordButton.disabled = false;
     } catch (error) {
       console.error(error);
@@ -281,6 +297,7 @@
     align-items: start;
     width: min(100%, 72rem);
     margin-inline: auto;
+    padding: 0.5rem;
   }
 
   @media (min-width: 768px) {
@@ -289,11 +306,15 @@
     }
   }
 
-  .whisper-pad__panel,
-  .whisper-pad__output {
+  .whisper-card {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: var(--bs-body-bg, #fff);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   }
 
   .whisper-pad__header {
@@ -301,6 +322,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    flex-wrap: wrap;
   }
 
   .whisper-pad__kicker {
@@ -309,6 +331,13 @@
     letter-spacing: 0.05em;
     color: var(--bs-secondary-color, #555);
     margin: 0;
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 14rem;
   }
 
   select#backend-select {
@@ -321,15 +350,24 @@
     min-width: 16rem;
   }
 
-  #load-model {
-    padding: 0.55rem 1.15rem;
-    border-radius: 999px;
+  select#model-select {
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.65rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #111);
+    min-width: 16rem;
+  }
+
+  .ghost-btn {
+    padding: 0.65rem 1.3rem;
+    border-radius: 0.9rem;
     border: 1px solid var(--bs-border-color, #c5c5c5);
     background: linear-gradient(120deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02));
     cursor: pointer;
   }
 
-  #load-model:disabled {
+  .ghost-btn:disabled {
     opacity: 0.6;
     cursor: wait;
   }
@@ -395,6 +433,12 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .pill-row {
+    display: flex;
+    gap: 0.5rem;
     flex-wrap: wrap;
   }
 
@@ -464,7 +508,7 @@
  ]]></description>
   <category>tools</category>
   <category>audio</category>
-  <guid>https://vaibhavs10.github.io/posts/whisper-scratchpad/</guid>
+  <guid>https://vaibhavs10.github.io/posts/whispering/</guid>
   <pubDate>Tue, 25 Nov 2025 18:30:00 GMT</pubDate>
 </item>
 <item>
