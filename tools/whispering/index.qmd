@@ -6,6 +6,7 @@ categories: [tools, audio]
 page-layout: full
 toc: false
 freeze: false
+aliases: ["/posts/whispering/"]
 ---
 
 Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page.

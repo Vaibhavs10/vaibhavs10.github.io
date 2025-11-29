@@ -2,10 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/whispering/index.html",
       "/posts/30/index.html",
       "/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/index.html",
-      "/posts/mermaid-scratchpad/index.html",
       "/posts/bragsheet/index.html",
       "/posts/mcp-with-openai-gpt-oss/index.html",
       "/posts/play-with-strava-data-on-hugging-face/index.html",
@@ -15,6 +13,13 @@
       "/posts/things-i-keep-forgetting/index.html",
       "/posts/live-async/index.html",
       "/posts/what-is-home/index.html"
+    ]
+  },
+  {
+    "listing": "/tools.html",
+    "items": [
+      "/tools/whispering/index.html",
+      "/tools/mermaid-scratchpad/index.html"
     ]
   }
 ]

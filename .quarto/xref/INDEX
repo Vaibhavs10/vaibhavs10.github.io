@@ -67,5 +67,14 @@
   },
   "posts/whispering/index.qmd": {
     "index.html": "11f4f9a6"
+  },
+  "tools/whispering/index.qmd": {
+    "index.html": "5b2fc8da"
+  },
+  "tools/mermaid-scratchpad/index.qmd": {
+    "index.html": "f2acb29c"
+  },
+  "tools.qmd": {
+    "tools.html": "d4541d0c"
   }
 }
