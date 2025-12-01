@@ -8,9 +8,9 @@
 
 <meta name="author" content="Vaibhav (VB) Srivastav">
 <meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes">
-<meta name="description" content="Current focuses, research, travel, and personal updates from Vaibhav Srivastav aka VB.">
+<meta name="description" content="Browser-native utilities and demos that run locally.">
 
-<title>Now – VB’s Notes and Ramblings</title>
+<title>Tools – VB’s Notes and Ramblings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,6 +34,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./images/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -70,26 +72,55 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <meta name="robots" content="index, follow">
 <meta name="googlebot" content="index, follow">
 <meta name="bingbot" content="index, follow">
 <meta name="yandex" content="index, follow">
 <link rel="alternate" type="application/rss+xml" title="VB’s Notes and Ramblings" href="https://vaibhavs10.github.io/index.xml">
-<meta name="description" content="Current focuses, research, travel, and personal updates from Vaibhav Srivastav aka VB.">
+<meta name="description" content="Browser-native utilities and demos that run locally.">
 <meta name="author" content="Vaibhav (VB) Srivastav">
 <meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes">
-<meta property="og:title" content="Now – VB’s Notes and Ramblings">
-<meta property="og:description" content="Current focuses, research, travel, and personal updates from Vaibhav Srivastav aka VB.">
+<meta property="og:title" content="Tools – VB’s Notes and Ramblings">
+<meta property="og:description" content="Browser-native utilities and demos that run locally.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://vaibhavs10.github.io/now/">
+<meta property="og:url" content="https://vaibhavs10.github.io/tools/">
 <meta property="og:site_name" content="VB’s Notes and Ramblings">
 <meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta property="og:image:alt" content="VB’s website social card">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@reach_vb">
 <meta name="twitter:creator" content="@reach_vb">
-<meta name="twitter:title" content="Now – VB’s Notes and Ramblings">
-<meta name="twitter:description" content="Current focuses, research, travel, and personal updates from Vaibhav Srivastav aka VB.">
+<meta name="twitter:title" content="Tools – VB’s Notes and Ramblings">
+<meta name="twitter:description" content="Browser-native utilities and demos that run locally.">
 <meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <link rel="me" href="https://twitter.com/reach_vb">
 <link rel="me" href="https://www.linkedin.com/in/vaibhavs10">
@@ -117,11 +148,11 @@ ul.task-list li input[type="checkbox"] {
       "sameAs": ["https://twitter.com/reach_vb", "https://www.linkedin.com/in/vaibhavs10"]
     },
     {
-      "@type": "WebPage",
-      "@id": "https://vaibhavs10.github.io/now/",
-      "url": "https://vaibhavs10.github.io/now/",
-      "name": "Now – VB’s Notes and Ramblings",
-      "description": "Current focuses, research, travel, and personal updates from Vaibhav Srivastav aka VB.",
+      "@type": "CollectionPage",
+      "@id": "https://vaibhavs10.github.io/tools/",
+      "url": "https://vaibhavs10.github.io/tools/",
+      "name": "Tools – VB’s Notes and Ramblings",
+      "description": "Browser-native utilities and demos that run locally.",
       "inLanguage": "en",
       "author": {
         "@id": "https://vaibhavs10.github.io/#person"
@@ -132,21 +163,64 @@ ul.task-list li input[type="checkbox"] {
 }
 </script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Now – VB's Notes and Ramblings">
-<meta property="og:description" content="Current focuses, research, travel, and personal updates from Vaibhav Srivastav aka VB.">
+<meta property="og:title" content="Tools – VB's Notes and Ramblings">
+<meta property="og:description" content="Browser-native utilities and demos that run locally.">
 <meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta property="og:site_name" content="VB's Notes and Ramblings">
 <meta property="og:image:alt" content="VB's website social card">
-<meta name="twitter:title" content="Now – VB's Notes and Ramblings">
-<meta name="twitter:description" content="Current focuses, research, travel, and personal updates from Vaibhav Srivastav aka VB.">
+<meta name="twitter:title" content="Tools – VB's Notes and Ramblings">
+<meta name="twitter:description" content="Browser-native utilities and demos that run locally.">
 <meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta name="twitter:creator" content="@reach_vb">
 <meta name="twitter:site" content="@reach_vb">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image:alt" content="VB's website social card">
-<link rel="canonical" href="https://vaibhavs10.github.io/now.html">
+<link rel="canonical" href="https://vaibhavs10.github.io/tools.html">
 </head>
 
 <body class="nav-fixed">
@@ -167,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./tools.html"> 
+    <a class="nav-link active" href="./tools.html" aria-current="page"> 
 <span class="menu-text">Tools</span></a>
   </li>  
   <li class="nav-item">
@@ -175,7 +249,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./now.html" aria-current="page"> 
+    <a class="nav-link" href="./now.html"> 
 <span class="menu-text">Now</span></a>
   </li>  
   <li class="nav-item compact">
@@ -191,38 +265,28 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#research-work" id="toc-research-work" class="nav-link active" data-scroll-target="#research-work">📚 Research &amp; Work</a></li>
-  <li><a href="#volunteering" id="toc-volunteering" class="nav-link" data-scroll-target="#volunteering">🙌 Volunteering</a></li>
-  <li><a href="#mental-health" id="toc-mental-health" class="nav-link" data-scroll-target="#mental-health">🧠 Mental health</a></li>
-  <li><a href="#home" id="toc-home" class="nav-link" data-scroll-target="#home">🏡 “Home”</a></li>
-  <li><a href="#travel-public-speaking" id="toc-travel-public-speaking" class="nav-link" data-scroll-target="#travel-public-speaking">✈️ Travel &amp; Public speaking</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Now</h1>
+<h1 class="title">Tools</h1>
 </div>
 
 <div>
   <div class="description">
-    Current focuses, research, travel, and personal updates from Vaibhav Srivastav aka VB.
+    Browser-native utilities and demos that run locally.
   </div>
 </div>
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -246,45 +310,68 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>What am I focused on at this point in life?</p>
-<p>Updated 13th April 2025, from Paris, FR.</p>
-<section id="research-work" class="level1">
-<h1>📚 Research &amp; Work</h1>
-<hr>
-<p>Life has been in hyper-drive since the last time I wrote one of these. My role at work (Hugging Face) has changed quite drastically, lot more high stakes and hell of a lot more fun. Be it collaborating with some of the top labs, researching Audio LMs, Text-to-Speech or about helping the team excute new product ideas/ directions - it has been a hoot and a half.</p>
-<p>It’s also good realisation to take it easy every now and then, all gas and no pitstop is not as fun. That said, this job has pretty much made me an adrenaline junkie with so much cool stuff happening all around.</p>
-<p>I’m also quite lucky to have people who have my best interests around me at work too, looking at you Julien, Lys, and Pedro - priviliged to be working with these lads!</p>
-<p>Fun tid-bit: I’ve understood that I’m good for nothing in the mornings and usually my brain kicks-in around mid-day.</p>
-<p>Lesson from last couple months - you/ your team is as good as the incentives they are provided with, change the incentives, you can change the outcomes!</p>
-</section>
-<section id="volunteering" class="level1">
-<h1>🙌 Volunteering</h1>
-<hr>
-<p>Still haven’t found the calm or the energy to get back to volunteering. More than the volunteering I do miss the friends I made along the way. I’m hoping I get a chance to meet some of these lovelies soon.</p>
-<p>On the brightside, I’m moving on nicely from last years dramatic EuroPython :)</p>
-</section>
-<section id="mental-health" class="level1">
-<h1>🧠 Mental health</h1>
-<hr>
-<p>Basically, endurance sports is all you need to get the good old man up in the head to stop playing tricks with you! Been running and biking off-late and it has been keeping me sane whilst everything around me is in hyperdrive.</p>
-<p>This also means I have a huge dependence on running/ biking to take the edge off - spend Feb/ March battling with a crazy case of spint splints &amp; plantar fasciitis and the mind did take a good toll.</p>
-<p>Still, overall it’s been mostly positive and I’m happy thet there’s a consistent way to channelise energy now!</p>
-</section>
-<section id="home" class="level1">
-<h1>🏡 “Home”</h1>
-<hr>
-<p>Oof, loads of thinking about this one, whilst I really love where I live currently - it comes with it’s own side effects. Mostly comes down to how deeply integrated one is in their surroundings. I love the nature around but it still doesn’t feel like home, with friends scattered around different countries, I feel a little lost sometimes. It’s a chicken and egg problem, you need to put in the time to feel at home but at the same time because you don’t feel at home you put in time in mindless pursuits.</p>
-<p>Hoping to figure out long term plans soon and put them in motion ^^’</p>
-</section>
-<section id="travel-public-speaking" class="level1">
-<h1>✈️ Travel &amp; Public speaking</h1>
-<hr>
-<p>After two years of hiatus from public speaking, I’m getting back into action this year with a few guest lectures/ workshops and talks lined up already. Going to be fun rest of the year and I’m here for it!</p>
+<p>Utility pages that you can use directly in your browser. Everything runs client-side so you can keep building without leaving the site.</p>
 
 
-</section>
 
-</main> <!-- /main -->
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="dG9vbHMlMkNhdWRpbw==" data-listing-date-sort="1764095400000" data-listing-file-modified-sort="1764432761112" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2553">
+<div class="thumbnail">
+<p><a href="./tools/whispering/index.html" class="no-external"></a></p><a href="./tools/whispering/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./tools/whispering/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./tools/whispering/index.html" class="no-external">Whispering</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./tools/whispering/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./tools/whispering/index.html" class="no-external">Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./tools/whispering/index.html" class="no-external">
+<div class="listing-date">
+Nov 26, 2025
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="dG9vbHM=" data-listing-date-sort="1760121000000" data-listing-file-modified-sort="1764432753921" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1478">
+<div class="thumbnail">
+<p><a href="./tools/mermaid-scratchpad/index.html" class="no-external"></a></p><a href="./tools/mermaid-scratchpad/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./tools/mermaid-scratchpad/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./tools/mermaid-scratchpad/index.html" class="no-external">Mermaid Scratchpad</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./tools/mermaid-scratchpad/index.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./tools/mermaid-scratchpad/index.html" class="no-external">Paste Mermaid syntax, render instantly, copy the SVG.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./tools/mermaid-scratchpad/index.html" class="no-external">
+<div class="listing-date">
+Oct 11, 2025
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

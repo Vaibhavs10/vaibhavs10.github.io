@@ -1,0 +1,15 @@
+---
+title: "Tools"
+description: "Browser-native utilities and demos that run locally."
+page-layout: full
+listing:
+  contents: tools
+  sort: "date desc"
+  type: default
+  categories: false
+  sort-ui: false
+  filter-ui: false
+  feed: false
+---
+
+Utility pages that you can use directly in your browser. Everything runs client-side so you can keep building without leaving the site.

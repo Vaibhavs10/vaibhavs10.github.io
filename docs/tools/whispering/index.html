@@ -6,12 +6,12 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="VB">
-<meta name="dcterms.date" content="2025-08-13">
-<meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, mcp, openai, gpt-oss, tiny-agents, playwright, huggingface, huggingface-mcp, browser-automation">
-<meta name="description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
+<meta name="author" content="Vaibhav (VB) Srivastav">
+<meta name="dcterms.date" content="2025-11-26">
+<meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, tools, audio">
+<meta name="description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
 
-<title>Building Smart Agents with MCP and OpenAI gpt-oss – VB’s Notes and Ramblings</title>
+<title>Whispering – VB’s Notes and Ramblings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,40 +23,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -110,21 +76,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="bingbot" content="index, follow">
 <meta name="yandex" content="index, follow">
 <link rel="alternate" type="application/rss+xml" title="VB’s Notes and Ramblings" href="https://vaibhavs10.github.io/index.xml">
-<meta name="description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
-<meta name="author" content="VB">
-<meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, mcp, openai, gpt-oss, tiny-agents, playwright, huggingface, huggingface-mcp, browser-automation">
-<meta property="og:title" content="Building Smart Agents with MCP and OpenAI gpt-oss – VB’s Notes and Ramblings">
-<meta property="og:description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
+<meta name="description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
+<meta name="author" content="Vaibhav (VB) Srivastav">
+<meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, tools, audio">
+<meta property="og:title" content="Whispering – VB’s Notes and Ramblings">
+<meta property="og:description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/">
+<meta property="og:url" content="https://vaibhavs10.github.io/tools/whispering/">
 <meta property="og:site_name" content="VB’s Notes and Ramblings">
 <meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta property="og:image:alt" content="VB’s website social card">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@reach_vb">
 <meta name="twitter:creator" content="@reach_vb">
-<meta name="twitter:title" content="Building Smart Agents with MCP and OpenAI gpt-oss – VB’s Notes and Ramblings">
-<meta name="twitter:description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
+<meta name="twitter:title" content="Whispering – VB’s Notes and Ramblings">
+<meta name="twitter:description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
 <meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <link rel="me" href="https://twitter.com/reach_vb">
 <link rel="me" href="https://www.linkedin.com/in/vaibhavs10">
@@ -153,10 +119,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     },
     {
       "@type": "BlogPosting",
-      "@id": "https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/",
-      "url": "https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/",
-      "name": "Building Smart Agents with MCP and OpenAI gpt-oss – VB’s Notes and Ramblings",
-      "description": "Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.",
+      "@id": "https://vaibhavs10.github.io/tools/whispering/",
+      "url": "https://vaibhavs10.github.io/tools/whispering/",
+      "name": "Whispering – VB’s Notes and Ramblings",
+      "description": "Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.",
       "inLanguage": "en",
       "author": {
         "@id": "https://vaibhavs10.github.io/#person"
@@ -169,25 +135,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../styles.css">
-<meta property="og:title" content="Building Smart Agents with MCP and OpenAI gpt-oss – VB's Notes and Ramblings">
-<meta property="og:description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
+<meta property="og:title" content="Whispering – VB's Notes and Ramblings">
+<meta property="og:description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
 <meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta property="og:site_name" content="VB's Notes and Ramblings">
 <meta property="og:image:alt" content="VB's website social card">
-<meta name="twitter:title" content="Building Smart Agents with MCP and OpenAI gpt-oss – VB's Notes and Ramblings">
-<meta name="twitter:description" content="Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.">
+<meta name="twitter:title" content="Whispering – VB's Notes and Ramblings">
+<meta name="twitter:description" content="Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.">
 <meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
 <meta name="twitter:creator" content="@reach_vb">
 <meta name="twitter:site" content="@reach_vb">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image:alt" content="VB's website social card">
-<link rel="canonical" href="https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/">
+<link rel="canonical" href="https://vaibhavs10.github.io/tools/whispering/">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg border-bottom" data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -226,216 +192,538 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Building Smart Agents with MCP and OpenAI gpt-oss</h1>
-                  <div>
-        <div class="description">
-          Build browser-automating AI agents with MCP and gpt-oss. From web scraping to Hugging Face Spaces integration.
-        </div>
-      </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">mcp</div>
-                <div class="quarto-category">openai</div>
-                <div class="quarto-category">gpt-oss</div>
-                <div class="quarto-category">tiny-agents</div>
-                <div class="quarto-category">playwright</div>
-                <div class="quarto-category">huggingface</div>
-                <div class="quarto-category">huggingface-mcp</div>
-                <div class="quarto-category">browser-automation</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>VB </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">August 13, 2025</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-
-  <div>
-    <div class="keywords">
-      <div class="block-title">Keywords</div>
-      <p>Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, mcp, openai, gpt-oss, tiny-agents, playwright, huggingface, huggingface-mcp, browser-automation</p>
-    </div>
-  </div>
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#example-local-browser-agent" id="toc-example-local-browser-agent" class="nav-link active" data-scroll-target="#example-local-browser-agent"><strong>Example</strong>: Local Browser Agent</a>
-  <ul class="collapse">
-  <li><a href="#step-0-log-in-to-hugging-face" id="toc-step-0-log-in-to-hugging-face" class="nav-link" data-scroll-target="#step-0-log-in-to-hugging-face">Step 0: Log in to Hugging Face</a></li>
-  <li><a href="#step-1-define-the-agent" id="toc-step-1-define-the-agent" class="nav-link" data-scroll-target="#step-1-define-the-agent">Step 1: Define the Agent</a></li>
-  </ul></li>
-  <li><a href="#example-accessing-hugging-face-mcp-servers" id="toc-example-accessing-hugging-face-mcp-servers" class="nav-link" data-scroll-target="#example-accessing-hugging-face-mcp-servers"><strong>Example</strong>: Accessing Hugging Face MCP Servers</a></li>
-  <li><a href="#step-1-find-an-mcp-server" id="toc-step-1-find-an-mcp-server" class="nav-link" data-scroll-target="#step-1-find-an-mcp-server">Step 1: Find an MCP Server</a>
-  <ul class="collapse">
-  <li><a href="#step-2-run-it" id="toc-step-2-run-it" class="nav-link" data-scroll-target="#step-2-run-it">Step 2: Run it!</a></li>
-  </ul></li>
-  </ul>
-</nav>
-    </div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Whispering</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">tools</div>
+    <div class="quarto-category">audio</div>
+  </div>
+  </div>
 
-
-
-
-<blockquote class="blockquote">
-<p>[!NOTE] This post is to be accompanied by it’s GitHub repository <a href="https://github.com/Vaibhavs10/mcp-with-openai-gpt-oss">here</a></p>
-</blockquote>
-<p>In this guide, we’ll explore using MCP and demonstrate how to build AI agents using <code>gpt-oss</code> as the LLM backbone. We’ll use Hugging Face’s lightweight MCP clients:</p>
-<ol type="1">
-<li><code>@huggingface/tiny-agents</code> (TypeScript)</li>
-<li><code>huggingface_hub[mcp]</code> (Python)</li>
-</ol>
-<p>The key to building effective AI agents lies in their tools. MCP provides a standardized interface for tool interaction, making it simple to create powerful agents.</p>
-<p>Let’s dive in by creating a web-savvy agent that can browse and search the internet for you.</p>
-<section id="example-local-browser-agent" class="level2">
-<h2 class="anchored" data-anchor-id="example-local-browser-agent"><strong>Example</strong>: Local Browser Agent</h2>
-<p>Let’s build a browser agent that can browse and search the internet for you. We’ve already implemented this in <code>/browser-agent</code> directory in case you want to skip ahead.</p>
-<section id="step-0-log-in-to-hugging-face" class="level3">
-<h3 class="anchored" data-anchor-id="step-0-log-in-to-hugging-face">Step 0: Log in to Hugging Face</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">huggingface-cli</span> login</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This will ask you for your HF API token. You can get it from <a href="https://huggingface.co/settings/tokens">here</a>.</p>
-</section>
-<section id="step-1-define-the-agent" class="level3">
-<h3 class="anchored" data-anchor-id="step-1-define-the-agent">Step 1: Define the Agent</h3>
-<p>Both the JS and Python Tiny agent clients are meant to be quite easy to play and experiment with. They expect a transparent <code>agent.json</code> which includes the details of which LLM should be used and what tools it should have access to.</p>
-<p>Let’s define our agent using OpenAI’s latest <code>gpt-oss</code> 120B as the LLM and connect it to <a href="https://github.com/microsoft/playwright-mcp">this Playwright MCP server</a> that provides browser automation capabilities to your agent. We’ve added this in <code>/browser-agent/agent.json</code> for you to use.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"openai/gpt-oss-120b"</span><span class="fu">,</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"fireworks-ai"</span><span class="fu">,</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"servers"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"stdio"</span><span class="fu">,</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"npx"</span><span class="fu">,</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"args"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"@playwright/mcp@latest"</span><span class="ot">]</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Optionally, we can define a System Prompt that helps steer the LLM. This is defined in <code>/browser-agent/PROMPT.md</code> for you to use.</p>
-<blockquote class="blockquote">
-<p>You are an agent - please keep going until the user’s query is completely resolved, before ending your turn and yielding back to the user. Only terminate your turn when you are sure that the problem is solved, or if you need more info from the user to solve the problem.</p>
-<p>If you are not sure about anything pertaining to the user’s request, use your tools to read files and gather the relevant information: do NOT guess or make up an answer.</p>
-<p>You MUST plan extensively before each function call, and reflect extensively on the outcomes of the previous function calls. DO NOT do this entire process by making function calls only, as this can impair your ability to solve the problem and think insightfully.</p>
-<p>Help the User with their task.</p>
-</blockquote>
-<pre><code>
-That's it, let's take it out for a spin.
-
-### Step 2: Run the agent
-
-To run the agent in Python, we simply install the `tiny-agents` package, which is part of the `huggingface_hub` library.
-
-```bash
-pip install -U "huggingface_hub[mcp]&gt;=0.32.0"</code></pre>
-<p>Followed by running our agent:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tiny-agents</span> run ./browser-agent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://huggingface.co/datasets/reach-vb/random-images/resolve/main/init-browser.png" class="img-fluid figure-img"></p>
-<figcaption>CLI Init Browser</figcaption>
-</figure>
+<div>
+  <div class="description">
+    Record a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.
+  </div>
 </div>
-<p>When the agent starts, you can chat with it to ask him to solve tasks. For example, try to ask it to find the top 10 Hugging Face models, and see if it’s able to connect to the website using the Playwright MCP tool we configured!</p>
-<blockquote class="blockquote">
-<p>[!NOTE] You can do exactly the same thing with our JavaScript client as well.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> @huggingface/tiny-agents run ./browser-agent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</blockquote>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://youtu.be/zxlKwOd4VOk"><img src="https://img.youtube.com/vi/zxlKwOd4VOk/0.jpg" class="img-fluid figure-img" alt="Browser Agent Demo"></a></p>
-<figcaption>Browser Agent Demo</figcaption>
-</figure>
-</div>
-<p>Voila, you now have a capable browser agent with you!</p>
-</section>
-</section>
-<section id="example-accessing-hugging-face-mcp-servers" class="level2">
-<h2 class="anchored" data-anchor-id="example-accessing-hugging-face-mcp-servers"><strong>Example</strong>: Accessing Hugging Face MCP Servers</h2>
-<p>Let’s take it up a notch and give more creative freedom to our AI Agent, cue, <a href="https://hf.co/mcp">Hugging Face MCP Server</a>. The HF MCP server allows you to not only interact with the HF Hub but also with 1000s of AI spaces on <a href="https://hf.co/spaces">hf.co/spaces</a>.</p>
-<p>Let’s get it set up!</p>
-</section>
-<section id="step-1-find-an-mcp-server" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-find-an-mcp-server">Step 1: Find an MCP Server</h2>
-<p>Head over to <a href="https://hf.co/mcp">hf.co/mcp</a> and add the spaces/ demo that you want to be able to play with</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://huggingface.co/datasets/reach-vb/random-images/resolve/main/hf-mcp.png" class="img-fluid figure-img"></p>
-<figcaption>Hugging Face MCP Settings page</figcaption>
-</figure>
-</div>
-<p>For example, I’ve added the following space</p>
-<ol type="1">
-<li><a href="https://huggingface.co/spaces/evalstate/FLUX.1-Krea-dev">evalstate/FLUX.1-Krea-dev</a> - a popular aesthetic text to image model by Black Forest Labs</li>
-<li><a href="https://huggingface.co/spaces/evalstate/ltx-video-distilled">evalstate/ltx-video-distilled</a> - a popular image/ text to video by Lightricks</li>
-</ol>
-<p>Next, let’s update our <code>agent.json</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"model"</span><span class="fu">:</span> <span class="st">"openai/gpt-oss-120b"</span><span class="fu">,</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"provider"</span><span class="fu">:</span> <span class="st">"fireworks-ai"</span><span class="fu">,</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"inputs"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"promptString"</span><span class="fu">,</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"id"</span><span class="fu">:</span> <span class="st">"hf-token"</span><span class="fu">,</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Your Hugging Face Token"</span><span class="fu">,</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"password"</span><span class="fu">:</span> <span class="kw">true</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"servers"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"http"</span><span class="fu">,</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"url"</span><span class="fu">:</span> <span class="st">"https://huggingface.co/mcp"</span><span class="fu">,</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"headers"</span><span class="fu">:</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            <span class="fu">{</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                <span class="dt">"Authorization"</span><span class="fu">:</span> <span class="st">"Bearer ${input:hf-token}"</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span>   </span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="step-2-run-it" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-run-it">Step 2: Run it!</h3>
-<p>Let’s run it with Tiny agents just like we did with the local browser agent.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tiny-agents</span> run ./hf-mcp-server</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<blockquote class="blockquote">
-<p>[!NOTE] Again, you can do exactly the same thing with our JavaScript client as well.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> @huggingface/tiny-agents run ./hf-mcp-server</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</blockquote>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://youtu.be/OEaPk3FoK7M"><img src="https://img.youtube.com/vi/OEaPk3FoK7M/0.jpg" class="img-fluid figure-img" alt="Watch the demo video"></a></p>
-<figcaption>Watch the demo video</figcaption>
-</figure>
-</div>
-<p>That’s it! What would you build next with it?</p>
 
 
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://vaibhavs10.github.io">Vaibhav (VB) Srivastav</a> </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 26, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+<div>
+  <div class="keywords">
+    <div class="block-title">Keywords</div>
+    <p>Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, tools, audio</p>
+  </div>
+</div>
+
+</header>
+
+
+<p>Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page.</p>
+<section class="whisper-pad" aria-live="polite">
+  <div class="whisper-card">
+    <header class="whisper-pad__header">
+      <div class="stack">
+        <p class="whisper-pad__kicker">Backend</p>
+        <select id="backend-select" aria-label="Choose backend">
+          <option value="webgpu">WebGPU (fastest, if supported)</option>
+          <option value="wasm">WASM fallback</option>
+        </select>
+      </div>
+      <div class="stack">
+        <p class="whisper-pad__kicker">Model</p>
+        <select id="model-select" aria-label="Choose model">
+          <option value="onnx-community/whisper-tiny.en">whisper-tiny.en (fastest)</option>
+          <option value="onnx-community/whisper-base.en">whisper-base.en (better)</option>
+          <option value="onnx-community/whisper-small.en">whisper-small.en (best, slowest)</option>
+          <option value="onnx-community/whisper-large-v3">whisper-large-v3 (very high quality, heavy)</option>
+        </select>
+      </div>
+      <button id="load-model" type="button" class="ghost-btn">Load</button>
+    </header>
+
+    <div class="whisper-pad__status">
+      <div class="whisper-pad__status-dot" aria-hidden="true"></div>
+      <p id="status-text">Pick a backend and model, then load.</p>
+    </div>
+
+    <div class="whisper-pad__controls">
+      <button id="record-btn" type="button" disabled="">Record</button>
+      <p class="whisper-pad__hint">We’ll ask for microphone access. Audio stays local.</p>
+      <p class="whisper-pad__hint" id="support-note"></p>
+      <p class="whisper-pad__hint">Tip: tiny ≈ fastest; small is higher quality; large-v3 is best but may be slow and need WebGPU.</p>
+    </div>
+  </div>
+
+  <div class="whisper-card">
+    <div class="whisper-pad__toolbar">
+      <div class="pill-row">
+        <span id="backend-pill" class="pill">Backend: –</span>
+        <span id="model-pill" class="pill">Model: –</span>
+      </div>
+      <span id="timer" class="timer">00:00</span>
+      <div class="whisper-pad__actions">
+        <button id="copy-btn" type="button" disabled="">Copy transcript</button>
+        <button id="clear-btn" type="button" disabled="">Clear</button>
+      </div>
+    </div>
+    <textarea id="transcript" rows="14" spellcheck="true" placeholder="Hit Record, speak, and the transcript will appear here." readonly=""></textarea>
+  </div>
 </section>
-</section>
+<script type="module">
+  const backendSelect = document.getElementById('backend-select');
+  const loadButton = document.getElementById('load-model');
+  const modelSelect = document.getElementById('model-select');
+  const recordButton = document.getElementById('record-btn');
+  const copyButton = document.getElementById('copy-btn');
+  const clearButton = document.getElementById('clear-btn');
+  const statusText = document.getElementById('status-text');
+  const supportNote = document.getElementById('support-note');
+  const transcriptField = document.getElementById('transcript');
+  const backendPill = document.getElementById('backend-pill');
+  const modelPill = document.getElementById('model-pill');
+  const timerEl = document.getElementById('timer');
+
+  const supportsWebGPU = typeof navigator !== 'undefined' && 'gpu' in navigator;
+  let transcriber = null;
+  let transformersModule = null;
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let timerId = null;
+  let recordingStartedAt = null;
+
+  initSupportNote();
+
+  loadButton?.addEventListener('click', loadModel);
+  recordButton?.addEventListener('click', toggleRecording);
+  copyButton?.addEventListener('click', copyTranscript);
+  clearButton?.addEventListener('click', () => {
+    transcriptField.value = '';
+    copyButton.disabled = true;
+    clearButton.disabled = true;
+  });
+
+  function initSupportNote() {
+    if (!supportsWebGPU) {
+      backendSelect.value = 'wasm';
+      backendSelect.querySelector('option[value="webgpu"]').textContent = 'WebGPU (not detected)';
+      backendSelect.querySelector('option[value="webgpu"]').disabled = true;
+      supportNote.textContent = 'WebGPU not detected; using WASM. Try Chrome/Edge on desktop for GPU speed.';
+    } else {
+      supportNote.textContent = 'WebGPU detected. Leave backend on WebGPU unless it fails to load.';
+    }
+  }
+
+  async function ensureTransformers() {
+    if (transformersModule) return transformersModule;
+    setStatus('Loading transformers.js…');
+    const mod = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.0/dist/transformers.min.js');
+    // CDN build sometimes ships UMD under default; unwrap as needed.
+    transformersModule = mod?.pipeline ? mod : (mod?.default ?? mod);
+    // expose globally for debugging parity with docs
+    window.transformers = transformersModule;
+    return transformersModule;
+  }
+
+  async function loadModel() {
+    const { pipeline } = await ensureTransformers();
+    const backend = backendSelect.value === 'webgpu' && supportsWebGPU ? 'webgpu' : 'wasm';
+    const modelId = modelSelect.value;
+    setStatus(`${backend === 'webgpu' ? 'Loading on WebGPU…' : 'Loading (WASM)…'} (${modelId.split('/').pop()})`);
+    toggleBusy(true);
+    backendPill.textContent = `Backend: ${backend.toUpperCase()}`;
+    modelPill.textContent = `Model: ${modelId.split('/').pop()}`;
+
+    try {
+      transcriber = await pipeline('automatic-speech-recognition', modelId, {
+        device: backend,
+        // WebGPU + q8 decoders are unstable, so only quantize on WASM.
+        dtype: backend === 'webgpu' ? undefined : 'q8',
+      });
+      setStatus(`Ready (${modelId.split('/').pop()}). Hit Record and start speaking.`);
+      recordButton.disabled = false;
+    } catch (error) {
+      console.error(error);
+      setStatus(`Model load failed: ${error.message}`);
+    } finally {
+      toggleBusy(false);
+    }
+  }
+
+  async function toggleRecording() {
+    if (recordButton.classList.contains('is-recording')) {
+      stopRecording();
+      return;
+    }
+
+    if (!transcriber) {
+      await loadModel();
+      if (!transcriber) return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      recordedChunks = [];
+      mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      mediaRecorder.ondataavailable = (e) => recordedChunks.push(e.data);
+      mediaRecorder.onstop = async () => {
+        stream.getTracks().forEach((t) => t.stop());
+        await transcribeAudio(new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'audio/webm' }));
+      };
+
+      mediaRecorder.start();
+      setStatus('Recording…');
+      recordButton.textContent = 'Stop & transcribe';
+      recordButton.classList.add('is-recording');
+      startTimer();
+    } catch (error) {
+      console.error(error);
+      setStatus(`Microphone error: ${error.message}`);
+    }
+  }
+
+  function stopRecording() {
+    if (!mediaRecorder) return;
+    setStatus('Stopping and transcribing…');
+    recordButton.disabled = true;
+    mediaRecorder.stop();
+    stopTimer();
+  }
+
+  async function transcribeAudio(blob) {
+    try {
+      toggleBusy(true);
+      const floatPCM = await decodeToPCM(blob, 16000);
+      const result = await transcriber(floatPCM, { return_timestamps: false });
+      transcriptField.value = (result?.text || '').trim();
+      copyButton.disabled = !transcriptField.value;
+      clearButton.disabled = !transcriptField.value;
+      setStatus('Transcription finished.');
+    } catch (error) {
+      console.error(error);
+      setStatus(`Transcription failed: ${error.message}`);
+    } finally {
+      recordButton.disabled = false;
+      recordButton.textContent = 'Record again';
+      recordButton.classList.remove('is-recording');
+      toggleBusy(false);
+    }
+  }
+
+  async function decodeToPCM(blob, targetSampleRate = 16000) {
+    const arrayBuf = await blob.arrayBuffer();
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const decoded = await audioCtx.decodeAudioData(arrayBuf.slice(0));
+
+    // If sample rate matches, return mono channel data directly.
+    if (decoded.sampleRate === targetSampleRate) {
+      return decoded.numberOfChannels > 1
+        ? mergeToMono(decoded)
+        : decoded.getChannelData(0);
+    }
+
+    // Resample via OfflineAudioContext.
+    const offline = new OfflineAudioContext(1, Math.ceil(decoded.duration * targetSampleRate), targetSampleRate);
+    const source = offline.createBufferSource();
+    source.buffer = decoded;
+    source.connect(offline.destination);
+    source.start(0);
+    const rendered = await offline.startRendering();
+    return rendered.getChannelData(0);
+  }
+
+  function mergeToMono(buffer) {
+    const ch0 = buffer.getChannelData(0);
+    if (buffer.numberOfChannels === 1) return ch0;
+    const ch1 = buffer.getChannelData(1);
+    const out = new Float32Array(ch0.length);
+    for (let i = 0; i < ch0.length; i++) {
+      out[i] = (ch0[i] + ch1[i]) * 0.5;
+    }
+    return out;
+  }
+
+  async function copyTranscript() {
+    try {
+      await navigator.clipboard.writeText(transcriptField.value);
+      copyButton.textContent = 'Copied!';
+      setTimeout(() => (copyButton.textContent = 'Copy transcript'), 1000);
+    } catch (error) {
+      setStatus('Clipboard blocked. Select text manually to copy.');
+    }
+  }
+
+  function setStatus(message) {
+    statusText.textContent = message;
+  }
+
+  function toggleBusy(isBusy) {
+    loadButton.disabled = isBusy;
+    recordButton.disabled = isBusy || !transcriber;
+    backendSelect.disabled = isBusy;
+  }
+
+  function startTimer() {
+    recordingStartedAt = Date.now();
+    updateTimer();
+    timerId = setInterval(updateTimer, 200);
+  }
+
+  function stopTimer() {
+    clearInterval(timerId);
+    timerId = null;
+    timerEl.textContent = '00:00';
+    recordingStartedAt = null;
+  }
+
+  function updateTimer() {
+    if (!recordingStartedAt) return;
+    const elapsedMs = Date.now() - recordingStartedAt;
+    const seconds = Math.floor(elapsedMs / 1000) % 60;
+    const minutes = Math.floor(elapsedMs / 60000);
+    timerEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }
+</script>
+<style>
+  .whisper-pad {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+    width: min(100%, 72rem);
+    margin-inline: auto;
+    padding: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .whisper-pad {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .whisper-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: var(--bs-body-bg, #fff);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  }
+
+  .whisper-pad__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .whisper-pad__kicker {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--bs-secondary-color, #555);
+    margin: 0;
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 14rem;
+  }
+
+  select#backend-select {
+    margin-top: 0.35rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.65rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #111);
+    min-width: 16rem;
+  }
+
+  select#model-select {
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.65rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #111);
+    min-width: 16rem;
+  }
+
+  .ghost-btn {
+    padding: 0.65rem 1.3rem;
+    border-radius: 0.9rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: linear-gradient(120deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02));
+    cursor: pointer;
+  }
+
+  .ghost-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  .whisper-pad__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.9rem;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px dashed var(--bs-border-color, #c5c5c5);
+  }
+
+  .whisper-pad__status-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 999px;
+    background: radial-gradient(circle at 50% 50%, #2ecc71, #16a085);
+    box-shadow: 0 0 0.4rem rgba(46, 204, 113, 0.6);
+  }
+
+  .whisper-pad__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  #record-btn {
+    padding: 0.8rem 1.4rem;
+    font-size: 1rem;
+    border-radius: 0.9rem;
+    border: none;
+    color: #fff;
+    background: linear-gradient(120deg, #111, #333);
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+  }
+
+  #record-btn.is-recording {
+    background: linear-gradient(120deg, #b20024, #ff4d4d);
+    box-shadow: 0 0.7rem 1.5rem rgba(255, 77, 77, 0.25);
+  }
+
+  #record-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .whisper-pad__hint {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--bs-secondary-color, #555);
+  }
+
+  .whisper-pad__output {
+    gap: 0.75rem;
+  }
+
+  .whisper-pad__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .pill-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .whisper-pad__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    font-size: 0.9rem;
+  }
+
+  .timer {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+
+  #transcript {
+    width: 100%;
+    min-height: 16rem;
+    padding: 0.85rem 1rem;
+    border-radius: 0.9rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #111);
+    font-family: "Courier New", monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    resize: vertical;
+  }
+
+  .whisper-pad__actions button,
+  #copy-btn,
+  #clear-btn {
+    padding: 0.45rem 0.9rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--bs-border-color, #c5c5c5);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .whisper-pad__actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 600px) {
+    .whisper-pad {
+      grid-template-columns: 1fr;
+    }
+
+    #transcript {
+      min-height: 14rem;
+    }
+  }
+</style>
+
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

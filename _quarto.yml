@@ -25,6 +25,7 @@ website:
   navbar:
     background: none
     right:
+      - tools.qmd
       - about.qmd
       - now.qmd
       - icon: twitter

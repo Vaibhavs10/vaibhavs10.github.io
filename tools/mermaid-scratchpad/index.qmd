@@ -6,6 +6,7 @@ categories: [tools]
 page-layout: full
 toc: false
 freeze: false
+aliases: ["/posts/mermaid-scratchpad/"]
 ---
 
 Drop a Mermaid diagram definition into the editor and see the rendered output on the right. Works offline once the page loads, so it’s handy when sketching architecture or flows.
