@@ -145,8 +145,8 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
     try {
       transcriber = await pipeline('automatic-speech-recognition', modelId, {
         device: backend,
-        // WebGPU + q8 decoders are unstable, so only quantize on WASM.
-        dtype: backend === 'webgpu' ? undefined : 'q8',
+        // fp16 on WebGPU to avoid ORT dtype warnings; q8 on WASM for speed.
+        dtype: backend === 'webgpu' ? 'fp16' : 'q8',
       });
       setStatus(`Ready (${modelId.split('/').pop()}). Hit Record and start speaking.`);
       recordButton.disabled = false;
@@ -307,9 +307,27 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
     try {
       const { pipeline } = await ensureTransformers();
       const device = supportsWebGPU ? 'webgpu' : 'wasm';
+      const qwenConfig = {
+        model_type: 'qwen2',
+        bos_token_id: 151643,
+        pad_token_id: 151643,
+        eos_token_id: [151645, 151643],
+      };
+      const qwenGeneration = {
+        bos_token_id: 151643,
+        pad_token_id: 151643,
+        eos_token_id: [151645, 151643],
+        temperature: 0.6,
+        top_k: 20,
+        top_p: 0.95,
+        do_sample: true,
+      };
       llm = await pipeline('text-generation', 'onnx-community/Qwen3-0.6B-DQ-ONNX', {
         device,
         dtype: supportsWebGPU ? 'q4f16' : 'q8',
+        // Inline configs to avoid missing generation_config.json in the ONNX repo.
+        config: qwenConfig,
+        generation_config: qwenGeneration,
       });
       llmStatus && (llmStatus.textContent = `LLM: ready (${device.toUpperCase()})`);
     } catch (error) {
