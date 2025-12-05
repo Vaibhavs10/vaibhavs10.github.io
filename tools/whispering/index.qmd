@@ -25,10 +25,10 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
       <div class="stack">
         <p class="whisper-pad__kicker">Model</p>
         <select id="model-select" aria-label="Choose model">
-          <option value="onnx-community/whisper-tiny.en">whisper-tiny.en (fastest)</option>
-          <option value="onnx-community/whisper-base.en">whisper-base.en (better)</option>
-          <option value="onnx-community/whisper-small.en">whisper-small.en (best, slowest)</option>
-          <option value="onnx-community/whisper-large-v3">whisper-large-v3 (very high quality, heavy)</option>
+          <option value="Xenova/whisper-tiny.en">whisper-tiny.en (fastest)</option>
+          <option value="Xenova/whisper-base.en">whisper-base.en (better)</option>
+          <option value="Xenova/whisper-small.en">whisper-small.en (best, slowest)</option>
+          <option value="Xenova/whisper-large-v3">whisper-large-v3 (very high quality, heavy)</option>
         </select>
       </div>
       <button id="load-model" type="button" class="ghost-btn">Load</button>
@@ -62,7 +62,7 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
     <div class="llm-row">
       <label class="toggle">
         <input type="checkbox" id="llm-toggle" checked />
-        <span>Auto-fix punctuation (Qwen3 0.6B)</span>
+        <span>Auto-fix punctuation (Llama 3.2 1B)</span>
       </label>
       <span id="llm-status" class="pill pill--muted">LLM: loading…</span>
     </div>
@@ -87,6 +87,8 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
   const timerEl = document.getElementById('timer');
   const llmToggle = document.getElementById('llm-toggle');
   const llmStatus = document.getElementById('llm-status');
+  // Known-good ONNX chat model confirmed to load with transformers.js v3: ~1B params.
+  const LLM_MODEL_ID = 'onnx-community/Llama-3.2-1B-Instruct-q4f16';
 
   const supportsWebGPU = typeof navigator !== 'undefined' && 'gpu' in navigator;
   let transcriber = null;
@@ -302,32 +304,20 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
 
   async function loadLLM() {
     if (llmLoading || llm) return;
+    if (!supportsWebGPU) {
+      llmStatus && (llmStatus.textContent = 'LLM: needs WebGPU; disabled');
+      llmToggle && (llmToggle.checked = false, llmToggle.disabled = true);
+      return;
+    }
     llmLoading = true;
     llmStatus && (llmStatus.textContent = 'LLM: loading…');
     try {
       const { pipeline } = await ensureTransformers();
       const device = supportsWebGPU ? 'webgpu' : 'wasm';
-      const qwenConfig = {
-        model_type: 'qwen2',
-        bos_token_id: 151643,
-        pad_token_id: 151643,
-        eos_token_id: [151645, 151643],
-      };
-      const qwenGeneration = {
-        bos_token_id: 151643,
-        pad_token_id: 151643,
-        eos_token_id: [151645, 151643],
-        temperature: 0.6,
-        top_k: 20,
-        top_p: 0.95,
-        do_sample: true,
-      };
-      llm = await pipeline('text-generation', 'onnx-community/Qwen3-0.6B-DQ-ONNX', {
+      llm = await pipeline('text-generation', LLM_MODEL_ID, {
         device,
-        dtype: supportsWebGPU ? 'q4f16' : 'q8',
-        // Inline configs to avoid missing generation_config.json in the ONNX repo.
-        config: qwenConfig,
-        generation_config: qwenGeneration,
+        // q4f16 weights; keep explicit to avoid fp32 fallback.
+        dtype: 'q4f16',
       });
       llmStatus && (llmStatus.textContent = `LLM: ready (${device.toUpperCase()})`);
     } catch (error) {
@@ -369,7 +359,8 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
   function autoLoadOnVisit() {
     // Load both models on first paint so the first interaction is fast.
     loadModel();
-    loadLLM();
+    // Only pre-load LLM if WebGPU is present; otherwise keep it off.
+    if (supportsWebGPU) loadLLM();
   }
 </script>
 ```
