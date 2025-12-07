@@ -326,6 +326,7 @@ ul.task-list li input[type="checkbox"] {
   let transformersModule = null;
   let llm = null;
   let llmLoading = false;
+  let llmLoadPromise = null;
   let mediaRecorder = null;
   let recordedChunks = [];
   let timerId = null;
@@ -534,29 +535,37 @@ ul.task-list li input[type="checkbox"] {
   }
 
   async function loadLLM() {
-    if (llmLoading || llm) return;
+    if (llm) return llm;
+    if (llmLoadPromise) return llmLoadPromise;
     if (!supportsWebGPU) {
       llmStatus && (llmStatus.textContent = 'LLM: needs WebGPU; disabled');
       llmToggle && (llmToggle.checked = false, llmToggle.disabled = true);
-      return;
+      return null;
     }
     llmLoading = true;
     llmStatus && (llmStatus.textContent = 'LLM: loading…');
-    try {
-      const { pipeline } = await ensureTransformers();
-      const device = supportsWebGPU ? 'webgpu' : 'wasm';
-      llm = await pipeline('text-generation', LLM_MODEL_ID, {
-        device,
-        // q4f16 weights; keep explicit to avoid fp32 fallback.
-        dtype: 'q4f16',
-      });
-      llmStatus && (llmStatus.textContent = `LLM: ready (${device.toUpperCase()})`);
-    } catch (error) {
-      console.error(error);
-      llmStatus && (llmStatus.textContent = 'LLM: failed to load');
-    } finally {
-      llmLoading = false;
-    }
+    llmLoadPromise = (async () => {
+      try {
+        const { pipeline } = await ensureTransformers();
+        const device = supportsWebGPU ? 'webgpu' : 'wasm';
+        llm = await pipeline('text-generation', LLM_MODEL_ID, {
+          device,
+          // q4f16 weights; keep explicit to avoid fp32 fallback.
+          dtype: 'q4f16',
+        });
+        llmStatus && (llmStatus.textContent = `LLM: ready (${device.toUpperCase()})`);
+        return llm;
+      } catch (error) {
+        console.error(error);
+        llmStatus && (llmStatus.textContent = 'LLM: failed to load');
+        return null;
+      } finally {
+        llmLoading = false;
+        llmLoadPromise = null;
+      }
+    })();
+
+    return llmLoadPromise;
   }
 
   async function maybeRefineTranscript(text) {
