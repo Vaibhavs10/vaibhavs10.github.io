@@ -14,8 +14,8 @@
 <title>VB&#39;s Notes and Ramblings</title>
 <link>https://vaibhavs10.github.io/</link>
 </image>
-<generator>quarto-1.6.39</generator>
-<lastBuildDate>Sun, 09 Nov 2025 18:30:00 GMT</lastBuildDate>
+<generator>quarto-1.8.26</generator>
+<lastBuildDate>Sun, 09 Nov 2025 23:00:00 GMT</lastBuildDate>
 <item>
   <title>30</title>
   <dc:creator>VB </dc:creator>
@@ -48,7 +48,7 @@
   <category>life</category>
   <category>reflections</category>
   <guid>https://vaibhavs10.github.io/posts/30/</guid>
-  <pubDate>Sun, 09 Nov 2025 18:30:00 GMT</pubDate>
+  <pubDate>Sun, 09 Nov 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Everything you need to know about PewDiePie’s AI setup</title>
@@ -155,11 +155,11 @@
 <h2 class="anchored" data-anchor-id="llama.cpp-everywhere-cli-webui">1. llama.cpp everywhere (CLI + WebUI)</h2>
 <ol type="1">
 <li><p>Install the runtime. Homebrew now ships both CLI and WebUI binaries; Windows/Linux users can download prebuilt archives or <code>make</code> from source:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">brew</span> install llama.cpp</span></code></pre></div></li>
+font-style: inherit;">brew</span> install llama.cpp</span></code></pre></div></div></li>
 <li><p>Launch the WebUI with GPT-OSS-20B (fast enough for CPU + GPU hybrids). The WebUI streams weights once and caches them under <code>~/.cache/llama.cpp</code>. Jump into the <code>Interface</code> pane and enable the collapsible sidebar + preset buttons to match Felix’s setup:</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">llama-server</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -177,10 +177,10 @@ font-style: inherit;">--port</span> 8080 <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--ctx-size</span> 4096 <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">--threads</span> 10</span></code></pre></div>
+font-style: inherit;">--threads</span> 10</span></code></pre></div></div>
 <p>Open <code>http://localhost:8080/?chat</code> for a clean chat UI, provide a system prompt, and pin your favorite sampling presets. <code>--no-browser</code> keeps it silent if you’re running headless.</p></li>
 <li><p>Add a second route for Qwen2.5-7B so you can flip between “council” members. Each <code>llama-server</code> instance can host multiple models—add a second <code>--model</code> block or run another process on a new port. Pair each endpoint with a different <code>--system-prompt</code> or saved preset to recreate his council voting approach:</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">llama-server</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -203,9 +203,9 @@ background-color: null;
 font-style: inherit;">\</span></span>
 <span id="cb3-4">  <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">--chat-template</span> chatml</span></code></pre></div></li>
+font-style: inherit;">--chat-template</span> chatml</span></code></pre></div></div></li>
 <li><p>Prefer terminals? The CLI flows stay the same—keep <code>--batch-size 1</code> for interactive chats, then scale toward 64+ only when you’re benchmarking or streaming to multiple clients. Match <code>--ctx-size</code> to the longest prompt you actually need:</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">llama-cli</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -226,8 +226,8 @@ background-color: null;
 font-style: inherit;">\</span></span>
 <span id="cb4-4">  <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">--ctx-size</span> 4096</span></code></pre></div>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
+font-style: inherit;">--ctx-size</span> 4096</span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">llama-cli</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -250,10 +250,10 @@ background-color: null;
 font-style: inherit;">\</span></span>
 <span id="cb5-4">  <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">--ctx-size</span> 6144</span></code></pre></div>
+font-style: inherit;">--ctx-size</span> 6144</span></code></pre></div></div>
 <p>Need more throughput? Raise <code>--batch-size</code> gradually (4 → 16 → 64) while watching latency and GPU memory. Interactive chats usually feel best between batch sizes 1 and 4.</p></li>
 <li><p>Dual GPUs? Split tensors so each card shares the load—Felix’s “council” runs this way, then a supervisor script scores responses and “kills” the losers. Start with even splits and add a simple vote tally in Python to replicate this:</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">llama-cli</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -271,7 +271,7 @@ font-style: inherit;">--tensor-split</span> 50,50 <span class="at" style="color:
 background-color: null;
 font-style: inherit;">--ctx-size</span> 4096 <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">--chat</span></span></code></pre></div></li>
+font-style: inherit;">--chat</span></span></code></pre></div></div></li>
 </ol>
 <p>The layout below mirrors Felix’s WebUI: pinned sidebar, quick preset buttons, and two council members ready to vote.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -285,13 +285,13 @@ font-style: inherit;">--chat</span></span></code></pre></div></li>
 <h2 class="anchored" data-anchor-id="apple-silicon-path-mlx">2. Apple Silicon path: MLX</h2>
 <ol type="1">
 <li><p>Install Apple’s MLX tooling with <code>uv</code> (fast, no venv juggling):</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">uv</span> pip install <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">--upgrade</span> mlx-lm</span></code></pre></div></li>
+font-style: inherit;">--upgrade</span> mlx-lm</span></code></pre></div></div></li>
 <li><p>Point MLX straight at the Hugging Face repo IDs—the runtime will stream and cache the weights automatically. Swap the <code>--model</code> flag for any entry in the table above:</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">mlx_lm.chat</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -314,7 +314,7 @@ font-style: inherit;">\</span></span>
 background-color: null;
 font-style: inherit;">--prompt</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"List three privacy-first features Felix added to his setup."</span></span></code></pre></div>
+font-style: inherit;">"List three privacy-first features Felix added to his setup."</span></span></code></pre></div></div>
 <p>First run pulls the weights into your Hugging Face cache (usually <code>~/.cache/huggingface/hub</code>). Swap in larger packs like <code>mlx-community/Meta-Llama-3.1-70B-Instruct-4bit-mlx</code> when you have the VRAM.</p></li>
 </ol>
 <p>Felix emphasizes that “smaller models are amazing” once you bolt search or RAG on top. On Apple Silicon that means using MLX for the core weights, then piping results through Spotlight, <code>mdfind</code>, or a local embeddings DB before handing the snippets back to the model.</p>
@@ -327,7 +327,7 @@ font-style: inherit;">"List three privacy-first features Felix added to his setu
 <section id="multi-gpu-servers-vllm" class="level2">
 <h2 class="anchored" data-anchor-id="multi-gpu-servers-vllm">4. Multi-GPU servers: vLLM</h2>
 <p>If you have a workstation or cloud box with multiple GPUs, vLLM gives you the same rapid token throughput Felix uses.</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">pip</span> install <span class="at" style="color: #657422;
 background-color: null;
@@ -355,9 +355,9 @@ background-color: null;
 font-style: inherit;">\</span></span>
 <span id="cb9-7">  <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">--dtype</span> auto</span></code></pre></div>
+font-style: inherit;">--dtype</span> auto</span></code></pre></div></div>
 <p>For Qwen3-235B on eight GPUs:</p>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">vllm</span> serve Qwen/Qwen3-235B-A22B-Instruct-2507 <span class="dt" style="color: #AD0000;
 background-color: null;
@@ -379,7 +379,7 @@ background-color: null;
 font-style: inherit;">\</span></span>
 <span id="cb10-5">  <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">--enforce-eager</span></span></code></pre></div>
+font-style: inherit;">--enforce-eager</span></span></code></pre></div></div>
 <p>Add <code>--served-model-name chad-os</code> to keep your OpenAI-compatible clients pointed at custom endpoints. Pair with your own FastAPI or Next.js front-end to recreate his custom UI.</p>
 <p>He admits that the first time 235B came alive, “I wish I never ran this model. Too much power.” If you go this big, set conservative batch sizes (<code>--max-num-batches-in-flight 1</code>), add GPU memory monitors, and keep a smaller model on standby for day-to-day prompts so your workstation doesn’t melt.</p>
 <section id="common-snags-and-quick-fixes" class="level3">
@@ -411,7 +411,7 @@ font-style: inherit;">--enforce-eager</span></span></code></pre></div>
   <category>mac</category>
   <category>metal</category>
   <guid>https://vaibhavs10.github.io/posts/everything-you-need-to-know-about-pewdiepie-s-ai-setup/</guid>
-  <pubDate>Tue, 04 Nov 2025 18:30:00 GMT</pubDate>
+  <pubDate>Tue, 04 Nov 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Brag Sheet</title>
@@ -471,7 +471,7 @@ font-style: inherit;">--enforce-eager</span></span></code></pre></div>
   <category>Research</category>
   <category>Career</category>
   <guid>https://vaibhavs10.github.io/posts/bragsheet/</guid>
-  <pubDate>Fri, 29 Aug 2025 18:30:00 GMT</pubDate>
+  <pubDate>Fri, 29 Aug 2025 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Building Smart Agents with MCP and OpenAI gpt-oss</title>
@@ -498,16 +498,16 @@ font-style: inherit;">--enforce-eager</span></span></code></pre></div>
 <p>Let’s build a browser agent that can browse and search the internet for you. We’ve already implemented this in <code>/browser-agent</code> directory in case you want to skip ahead.</p>
 <section id="step-0-log-in-to-hugging-face" class="level3">
 <h3 class="anchored" data-anchor-id="step-0-log-in-to-hugging-face">Step 0: Log in to Hugging Face</h3>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">huggingface-cli</span> login</span></code></pre></div>
+font-style: inherit;">huggingface-cli</span> login</span></code></pre></div></div>
 <p>This will ask you for your HF API token. You can get it from <a href="https://huggingface.co/settings/tokens">here</a>.</p>
 </section>
 <section id="step-1-define-the-agent" class="level3">
 <h3 class="anchored" data-anchor-id="step-1-define-the-agent">Step 1: Define the Agent</h3>
 <p>Both the JS and Python Tiny agent clients are meant to be quite easy to play and experiment with. They expect a transparent <code>agent.json</code> which includes the details of which LLM should be used and what tools it should have access to.</p>
 <p>Let’s define our agent using OpenAI’s latest <code>gpt-oss</code> 120B as the LLM and connect it to <a href="https://github.com/microsoft/playwright-mcp">this Playwright MCP server</a> that provides browser automation capabilities to your agent. We’ve added this in <code>/browser-agent/agent.json</code> for you to use.</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb2-2">    <span class="dt" style="color: #AD0000;
@@ -575,7 +575,7 @@ background-color: null;
 font-style: inherit;">]</span></span>
 <span id="cb2-11"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">}</span></span></code></pre></div>
+font-style: inherit;">}</span></span></code></pre></div></div>
 <p>Optionally, we can define a System Prompt that helps steer the LLM. This is defined in <code>/browser-agent/PROMPT.md</code> for you to use.</p>
 <blockquote class="blockquote">
 <p>You are an agent - please keep going until the user’s query is completely resolved, before ending your turn and yielding back to the user. Only terminate your turn when you are sure that the problem is solved, or if you need more info from the user to solve the problem.</p>
@@ -593,9 +593,9 @@ To run the agent in Python, we simply install the `tiny-agents` package, which i
 ```bash
 pip install -U "huggingface_hub[mcp]&gt;=0.32.0"</code></pre>
 <p>Followed by running our agent:</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">tiny-agents</span> run ./browser-agent</span></code></pre></div>
+font-style: inherit;">tiny-agents</span> run ./browser-agent</span></code></pre></div></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://huggingface.co/datasets/reach-vb/random-images/resolve/main/init-browser.png" class="img-fluid figure-img"></p>
@@ -605,13 +605,13 @@ font-style: inherit;">tiny-agents</span> run ./browser-agent</span></code></pre>
 <p>When the agent starts, you can chat with it to ask him to solve tasks. For example, try to ask it to find the top 10 Hugging Face models, and see if it’s able to connect to the website using the Playwright MCP tool we configured!</p>
 <blockquote class="blockquote">
 <p>[!NOTE] You can do exactly the same thing with our JavaScript client as well.</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">npx</span> @huggingface/tiny-agents run ./browser-agent</span></code></pre></div>
+font-style: inherit;">npx</span> @huggingface/tiny-agents run ./browser-agent</span></code></pre></div></div>
 </blockquote>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://youtu.be/zxlKwOd4VOk"><img src="https://img.youtube.com/vi/zxlKwOd4VOk/0.jpg" class="img-fluid figure-img" alt="Browser Agent Demo"></a></p>
+<p><a href="https://youtu.be/zxlKwOd4VOk"><img src="https://img.youtube.com/vi/zxlKwOd4VOk/0.jpg" class="img-fluid figure-img"></a></p>
 <figcaption>Browser Agent Demo</figcaption>
 </figure>
 </div>
@@ -638,7 +638,7 @@ font-style: inherit;">npx</span> @huggingface/tiny-agents run ./browser-agent</s
 <li><a href="https://huggingface.co/spaces/evalstate/ltx-video-distilled">evalstate/ltx-video-distilled</a> - a popular image/ text to video by Lightricks</li>
 </ol>
 <p>Next, let’s update our <code>agent.json</code>:</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">{</span></span>
 <span id="cb6-2">    <span class="dt" style="color: #AD0000;
@@ -766,22 +766,22 @@ background-color: null;
 font-style: inherit;">]</span>   </span>
 <span id="cb6-22"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">}</span></span></code></pre></div>
+font-style: inherit;">}</span></span></code></pre></div></div>
 <section id="step-2-run-it" class="level3">
 <h3 class="anchored" data-anchor-id="step-2-run-it">Step 2: Run it!</h3>
 <p>Let’s run it with Tiny agents just like we did with the local browser agent.</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">tiny-agents</span> run ./hf-mcp-server</span></code></pre></div>
+font-style: inherit;">tiny-agents</span> run ./hf-mcp-server</span></code></pre></div></div>
 <blockquote class="blockquote">
 <p>[!NOTE] Again, you can do exactly the same thing with our JavaScript client as well.</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">npx</span> @huggingface/tiny-agents run ./hf-mcp-server</span></code></pre></div>
+font-style: inherit;">npx</span> @huggingface/tiny-agents run ./hf-mcp-server</span></code></pre></div></div>
 </blockquote>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="https://youtu.be/OEaPk3FoK7M"><img src="https://img.youtube.com/vi/OEaPk3FoK7M/0.jpg" class="img-fluid figure-img" alt="Watch the demo video"></a></p>
+<p><a href="https://youtu.be/OEaPk3FoK7M"><img src="https://img.youtube.com/vi/OEaPk3FoK7M/0.jpg" class="img-fluid figure-img"></a></p>
 <figcaption>Watch the demo video</figcaption>
 </figure>
 </div>
@@ -801,7 +801,7 @@ font-style: inherit;">npx</span> @huggingface/tiny-agents run ./hf-mcp-server</s
   <category>huggingface-mcp</category>
   <category>browser-automation</category>
   <guid>https://vaibhavs10.github.io/posts/mcp-with-openai-gpt-oss/</guid>
-  <pubDate>Tue, 12 Aug 2025 18:30:00 GMT</pubDate>
+  <pubDate>Tue, 12 Aug 2025 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Export and play with your Strava data on Hugging Face</title>
@@ -848,7 +848,7 @@ font-style: inherit;">npx</span> @huggingface/tiny-agents run ./hf-mcp-server</s
 <figcaption>Data Studio AI Query</figcaption>
 </figure>
 </div>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">WITH</span> run_stats <span class="kw" style="color: #003B4F;
@@ -1040,7 +1040,7 @@ font-weight: bold;
 font-style: inherit;">BY</span></span>
 <span id="cb1-26">    <span class="dt" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">year</span>;</span></code></pre></div>
+font-style: inherit;">year</span>;</span></code></pre></div></div>
 <p>Result:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1106,7 +1106,7 @@ font-style: inherit;">year</span>;</span></code></pre></div>
 </table>
 <p>I was at my fastest self in 2022 (though with much less kms). 2023 was the least I’ve ran across the years and 2025 (so far) has been the most I’ve ran (albeit with a much slower pace owing too Zone 2 training).</p>
 <p>Next, let’s look more deeply into the year so far and how the runs have been shaping up.</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><span class="kw" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">SELECT</span></span>
@@ -1313,7 +1313,7 @@ font-weight: bold;
 font-style: inherit;">BY</span> </span>
 <span id="cb2-23">    <span class="dt" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">month</span>;</span></code></pre></div>
+font-style: inherit;">month</span>;</span></code></pre></div></div>
 <p>Result:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1404,7 +1404,7 @@ font-style: inherit;">month</span>;</span></code></pre></div>
 </table>
 <p>June was the month with the most kms so far. It’s nice to see Zone 2 progression a bit from May -&gt; July (7:59 to 7:19 min/ km). As someone with the aerobic base of a potato it’s quite nice to see some progress.</p>
 <p>Alright, let’s delve a bit more deeper into how my Zone 2 running transformation is going</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">SELECT</span></span>
@@ -1587,7 +1587,7 @@ background-color: null;
 font-weight: bold;
 font-style: inherit;">ASC</span>  <span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">-- Order from oldest to latest</span></span></code></pre></div>
+font-style: inherit;">-- Order from oldest to latest</span></span></code></pre></div></div>
 <p>Results:</p>
 <table class="caption-top table">
 <colgroup>
@@ -1779,7 +1779,7 @@ font-style: inherit;">-- Order from oldest to latest</span></span></code></pre><
   <category>hugging face</category>
   <category>Data Studio</category>
   <guid>https://vaibhavs10.github.io/posts/play-with-strava-data-on-hugging-face/</guid>
-  <pubDate>Sat, 05 Jul 2025 18:30:00 GMT</pubDate>
+  <pubDate>Sat, 05 Jul 2025 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Run Phi-4 with ollama and Hugging Face</title>
@@ -1795,23 +1795,23 @@ font-style: inherit;">-- Order from oldest to latest</span></span></code></pre><
 <section id="step-1-setup-ollama" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-setup-ollama">Step 1: Setup ollama</h2>
 <p>On a mac, you can install ollama using homebrew:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">brew</span> install ollama</span></code></pre></div>
+font-style: inherit;">brew</span> install ollama</span></code></pre></div></div>
 <p>On a Windows/ Linux device, you can follow the instructions on the <a href="https://ollama.com/download">Ollama Docs</a>)</p>
 </section>
 <section id="step-2-kickstart-ollama" class="level2">
 <h2 class="anchored" data-anchor-id="step-2-kickstart-ollama">Step 2: Kickstart ollama</h2>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">ollama</span> serve</span></code></pre></div>
+font-style: inherit;">ollama</span> serve</span></code></pre></div></div>
 </section>
 <section id="step-3-run-inference-with-phi-4" class="level2">
 <h2 class="anchored" data-anchor-id="step-3-run-inference-with-phi-4">Step 3: Run inference with Phi-4</h2>
 <p>After some research I found that the Phi-4 GGUFs from Unsloth are the most accurate. They ran bunch of evals and also converted the model to LLaMa format. You can find it here: <a href="https://huggingface.co/unsloth/phi-4-GGUF">unsloth/phi-4-GGUF</a>.</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></pre></div>
+font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></pre></div></div>
 <p>I’d also recommend reading the blogpost about the fixes for the Phi-4 model <a href="https://unsloth.ai/blog/phi4">here</a>.</p>
 </section>
 <section id="step-4-use-it-for-your-own-tasks" class="level2">
@@ -1840,7 +1840,7 @@ font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></
   <category>phi4</category>
   <category>phi</category>
   <guid>https://vaibhavs10.github.io/posts/run-phi-on-device-ollama/</guid>
-  <pubDate>Wed, 15 Jan 2025 18:30:00 GMT</pubDate>
+  <pubDate>Wed, 15 Jan 2025 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>All things running 🏃‍♂️</title>
@@ -1948,7 +1948,7 @@ font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></
   <category>recovery</category>
   <category>marathon</category>
   <guid>https://vaibhavs10.github.io/posts/all-things-running/</guid>
-  <pubDate>Thu, 26 Dec 2024 18:30:00 GMT</pubDate>
+  <pubDate>Thu, 26 Dec 2024 23:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Run Phi-3.5 with llama.cpp</title>
@@ -1999,12 +1999,12 @@ font-style: inherit;">ollama</span> run hf.co/unsloth/phi-4-GGUF</span></code></
 <section id="step-1-setup-llama.cpp" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-setup-llama.cpp">Step 1: Setup llama.cpp</h2>
 <p>On a mac, you can install llama.cpp using homebrew:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">brew</span> install llama.cpp</span></code></pre></div>
+font-style: inherit;">brew</span> install llama.cpp</span></code></pre></div></div>
 <p>On a Windows/ Linux device, you can follow the instructions on the <a href="https://github.com/ggerganov/llama.cpp/blob/master/docs/build.md">llama.cpp Docs</a>)</p>
 <p>For example, a typical build command for CUDA enabled device looks like this:</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">git</span> clone https://github.com/ggerganov/llama.cpp <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -2022,13 +2022,13 @@ background-color: null;
 font-style: inherit;">\</span></span>
 <span id="cb2-3"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">make</span> GGML_CUDA=1 LLAMA_CURL=1</span></code></pre></div>
+font-style: inherit;">make</span> GGML_CUDA=1 LLAMA_CURL=1</span></code></pre></div></div>
 <p>There are plenty other permutations and combinations so feel free to look at those on the linked docs above.</p>
 </section>
 <section id="step-2-run-inference-with-phi3.5" class="level2">
 <h2 class="anchored" data-anchor-id="step-2-run-inference-with-phi3.5">Step 2: Run inference with Phi3.5</h2>
 <p>To be able to run a LLM on-device all you need is to find the model on the hub and simply point the llama.cpp’s built binaries to it. There are over <a href="https://huggingface.co/models?library=gguf">30,000 quantized llama.cpp models</a> on the Hub. For our use-case we’ll use the <a href="https://huggingface.co/lmstudio-community/Phi-3.5-mini-instruct-GGUF">lmstudio-community/Phi-3.5-mini-instruct-GGUF</a> repo by the good folks at lm-studio.</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">llama-cli</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -2042,14 +2042,14 @@ font-style: inherit;">\</span></span>
 background-color: null;
 font-style: inherit;">"The meaning to life and the universe is"</span> <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">-c</span> 8192</span></code></pre></div>
+font-style: inherit;">-c</span> 8192</span></code></pre></div></div>
 </section>
 <section id="step-3-use-it-for-your-own-tasks" class="level2">
 <h2 class="anchored" data-anchor-id="step-3-use-it-for-your-own-tasks">Step 3: Use it for your own tasks</h2>
 <p>That’s the fun bit, once the model is loaded, you can do whatever you want, at the touch of your terminal.</p>
 <p>Go on and try out some of your own prompts, and see how it works. There’s myriads of options you can use whilst playing with the model, check out the <a href="https://github.com/ggerganov/llama.cpp/tree/master/examples/main">llama.cpp docs</a> for more details.</p>
 <p>Here’s some of the options I use quite a bit:</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">llama-cli</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -2067,7 +2067,7 @@ font-style: inherit;">-c</span> 8192 <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-cnv</span> <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">--color</span></span></code></pre></div>
+font-style: inherit;">--color</span></span></code></pre></div></div>
 <p><code>-c</code> is the context window size, <code>-cnv</code> is to use the conversation/ chat mode and <code>--color</code> is to colorize the output.</p>
 <p>Bonus: Now go try other <a href="https://huggingface.co/models?library=gguf">GGUF models on the Hub</a> and compare their performance with Phi 3.5.</p>
 <p>and.. that’s it!</p>
@@ -2084,7 +2084,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
   <category>phi3.5</category>
   <category>phi</category>
   <guid>https://vaibhavs10.github.io/posts/run-phi-on-device-llama-cpp/</guid>
-  <pubDate>Wed, 21 Aug 2024 18:30:00 GMT</pubDate>
+  <pubDate>Wed, 21 Aug 2024 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>List of random things I keep forgetting</title>
@@ -2113,7 +2113,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
  ]]></description>
   <category>things</category>
   <guid>https://vaibhavs10.github.io/posts/things-i-keep-forgetting/</guid>
-  <pubDate>Sun, 28 Jul 2024 18:30:00 GMT</pubDate>
+  <pubDate>Sun, 28 Jul 2024 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Live async, live happy</title>
@@ -2144,7 +2144,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
  ]]></description>
   <category>async</category>
   <guid>https://vaibhavs10.github.io/posts/live-async/</guid>
-  <pubDate>Sun, 28 Jul 2024 18:30:00 GMT</pubDate>
+  <pubDate>Sun, 28 Jul 2024 22:00:00 GMT</pubDate>
 </item>
 <item>
   <title>What is home?</title>
@@ -2196,7 +2196,7 @@ font-style: inherit;">--color</span></span></code></pre></div>
  ]]></description>
   <category>home</category>
   <guid>https://vaibhavs10.github.io/posts/what-is-home/</guid>
-  <pubDate>Mon, 25 Dec 2023 18:30:00 GMT</pubDate>
+  <pubDate>Mon, 25 Dec 2023 23:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

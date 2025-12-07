@@ -25,10 +25,10 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
       <div class="stack">
         <p class="whisper-pad__kicker">Model</p>
         <select id="model-select" aria-label="Choose model">
-          <option value="onnx-community/whisper-tiny.en">whisper-tiny.en (fastest)</option>
-          <option value="onnx-community/whisper-base.en">whisper-base.en (better)</option>
-          <option value="onnx-community/whisper-small.en">whisper-small.en (best, slowest)</option>
-          <option value="onnx-community/whisper-large-v3">whisper-large-v3 (very high quality, heavy)</option>
+          <option value="Xenova/whisper-tiny.en">whisper-tiny.en (fastest)</option>
+          <option value="Xenova/whisper-base.en">whisper-base.en (better)</option>
+          <option value="Xenova/whisper-small.en">whisper-small.en (best, slowest)</option>
+          <option value="Xenova/whisper-large-v3">whisper-large-v3 (very high quality, heavy)</option>
         </select>
       </div>
       <button id="load-model" type="button" class="ghost-btn">Load</button>
@@ -59,6 +59,13 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
         <button id="clear-btn" type="button" disabled>Clear</button>
       </div>
     </div>
+    <div class="llm-row">
+      <label class="toggle">
+        <input type="checkbox" id="llm-toggle" checked />
+        <span>Auto-fix punctuation (Llama 3.2 1B)</span>
+      </label>
+      <span id="llm-status" class="pill pill--muted">LLM: loading…</span>
+    </div>
     <textarea id="transcript" rows="14" spellcheck="true" placeholder="Hit Record, speak, and the transcript will appear here." readonly></textarea>
   </div>
 </section>
@@ -78,10 +85,17 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
   const backendPill = document.getElementById('backend-pill');
   const modelPill = document.getElementById('model-pill');
   const timerEl = document.getElementById('timer');
+  const llmToggle = document.getElementById('llm-toggle');
+  const llmStatus = document.getElementById('llm-status');
+  // Known-good ONNX chat model confirmed to load with transformers.js v3: ~1B params.
+  const LLM_MODEL_ID = 'onnx-community/Llama-3.2-1B-Instruct-q4f16';
 
   const supportsWebGPU = typeof navigator !== 'undefined' && 'gpu' in navigator;
   let transcriber = null;
   let transformersModule = null;
+  let llm = null;
+  let llmLoading = false;
+  let llmLoadPromise = null;
   let mediaRecorder = null;
   let recordedChunks = [];
   let timerId = null;
@@ -97,6 +111,8 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
     copyButton.disabled = true;
     clearButton.disabled = true;
   });
+
+  autoLoadOnVisit();
 
   function initSupportNote() {
     if (!supportsWebGPU) {
@@ -132,8 +148,8 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
     try {
       transcriber = await pipeline('automatic-speech-recognition', modelId, {
         device: backend,
-        // WebGPU + q8 decoders are unstable, so only quantize on WASM.
-        dtype: backend === 'webgpu' ? undefined : 'q8',
+        // fp16 on WebGPU to avoid ORT dtype warnings; q8 on WASM for speed.
+        dtype: backend === 'webgpu' ? 'fp16' : 'q8',
       });
       setStatus(`Ready (${modelId.split('/').pop()}). Hit Record and start speaking.`);
       recordButton.disabled = false;
@@ -190,7 +206,15 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
       toggleBusy(true);
       const floatPCM = await decodeToPCM(blob, 16000);
       const result = await transcriber(floatPCM, { return_timestamps: false });
-      transcriptField.value = (result?.text || '').trim();
+      const rawText = (result?.text || '').trim();
+      transcriptField.value = rawText;
+
+      if (llmToggle?.checked) {
+        setStatus('Transcribed. Polishing with Qwen3 0.6B…');
+        const polished = await maybeRefineTranscript(rawText);
+        if (polished) transcriptField.value = polished;
+      }
+
       copyButton.disabled = !transcriptField.value;
       clearButton.disabled = !transcriptField.value;
       setStatus('Transcription finished.');
@@ -277,6 +301,75 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
     const seconds = Math.floor(elapsedMs / 1000) % 60;
     const minutes = Math.floor(elapsedMs / 60000);
     timerEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }
+
+  async function loadLLM() {
+    if (llm) return llm;
+    if (llmLoadPromise) return llmLoadPromise;
+    if (!supportsWebGPU) {
+      llmStatus && (llmStatus.textContent = 'LLM: needs WebGPU; disabled');
+      llmToggle && (llmToggle.checked = false, llmToggle.disabled = true);
+      return null;
+    }
+    llmLoading = true;
+    llmStatus && (llmStatus.textContent = 'LLM: loading…');
+    llmLoadPromise = (async () => {
+      try {
+        const { pipeline } = await ensureTransformers();
+        const device = supportsWebGPU ? 'webgpu' : 'wasm';
+        llm = await pipeline('text-generation', LLM_MODEL_ID, {
+          device,
+          // q4f16 weights; keep explicit to avoid fp32 fallback.
+          dtype: 'q4f16',
+        });
+        llmStatus && (llmStatus.textContent = `LLM: ready (${device.toUpperCase()})`);
+        return llm;
+      } catch (error) {
+        console.error(error);
+        llmStatus && (llmStatus.textContent = 'LLM: failed to load');
+        return null;
+      } finally {
+        llmLoading = false;
+        llmLoadPromise = null;
+      }
+    })();
+
+    return llmLoadPromise;
+  }
+
+  async function maybeRefineTranscript(text) {
+    if (!llm) {
+      await loadLLM();
+      if (!llm) return text;
+    }
+
+    const messages = [
+      {
+        role: 'system',
+        content: 'You fix punctuation, casing, and typos in short transcripts. Keep wording and meaning; return only the corrected text.',
+      },
+      { role: 'user', content: text },
+    ];
+
+    try {
+      const output = await llm(messages, {
+        max_new_tokens: 96,
+        do_sample: false,
+      });
+      const cleaned = output?.[0]?.generated_text?.at(-1)?.content?.trim();
+      return cleaned || text;
+    } catch (error) {
+      console.error(error);
+      llmStatus && (llmStatus.textContent = 'LLM: error while generating');
+      return text;
+    }
+  }
+
+  function autoLoadOnVisit() {
+    // Load both models on first paint so the first interaction is fast.
+    loadModel();
+    // Only pre-load LLM if WebGPU is present; otherwise keep it off.
+    if (supportsWebGPU) loadLLM();
   }
 </script>
 ```
@@ -448,6 +541,35 @@ Speak, transcribe, copy. Everything happens in-browser; no audio leaves the page
     background: rgba(0, 0, 0, 0.05);
     border: 1px solid var(--bs-border-color, #c5c5c5);
     font-size: 0.9rem;
+  }
+
+  .pill--muted {
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--bs-secondary-color, #555);
+  }
+
+  .llm-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+  }
+
+  .toggle input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    accent-color: #111;
+    cursor: pointer;
   }
 
   .timer {
