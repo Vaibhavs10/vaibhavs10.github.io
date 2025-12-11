@@ -18,6 +18,7 @@
   {
     "listing": "/tools.html",
     "items": [
+      "/tools/drive/index.html",
       "/tools/whispering/index.html",
       "/tools/mermaid-scratchpad/index.html"
     ]

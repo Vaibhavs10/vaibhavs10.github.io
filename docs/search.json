@@ -263,7 +263,7 @@
     "href": "tools.html",
     "title": "Tools",
     "section": "",
-    "text": "Utility pages that you can use directly in your browser. Everything runs client-side so you can keep building without leaving the site.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhispering\n\n\nRecord a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.\n\n\n\n\n\nNov 26, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nMermaid Scratchpad\n\n\nPaste Mermaid syntax, render instantly, copy the SVG.\n\n\n\n\n\nOct 11, 2025\n\n\n\n\n\nNo matching items"
+    "text": "Utility pages that you can use directly in your browser. Everything runs client-side so you can keep building without leaving the site.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDrive\n\n\nA tiny drivable neon playground to cruise around.\n\n\n\n\n\nDec 11, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nWhispering\n\n\nRecord a quick note, run Whisper in your browser with transformers.js + WebGPU, and copy the transcript.\n\n\n\n\n\nNov 26, 2025\n\n\n\n\n\n\n\n\n\n\n\n\nMermaid Scratchpad\n\n\nPaste Mermaid syntax, render instantly, copy the SVG.\n\n\n\n\n\nOct 11, 2025\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -320,5 +320,19 @@
     "title": "Now",
     "section": "# ✈️ Travel & Public speaking",
     "text": "# ✈️ Travel & Public speaking\nAfter two years of hiatus from public speaking, I’m getting back into action this year with a few guest lectures/ workshops and talks lined up already. Going to be fun rest of the year and I’m here for it!"
+  },
+  {
+    "objectID": "drive.html",
+    "href": "drive.html",
+    "title": "Drive the Deck",
+    "section": "",
+    "text": "&lt;div class=\"pill\"&gt;Prototype&lt;/div&gt;\n&lt;h1&gt;Drive the Deck&lt;/h1&gt;\n&lt;p&gt;W/A/S/D or arrows to move · Shift to boost · Space to brake · R to reset · Enter to open a card · O toggles free camera.&lt;/p&gt;\n&lt;p class=\"microcopy\"&gt;Built as a compact nod to &lt;a href=\"https://bruno-simon.com\" target=\"_blank\" rel=\"noreferrer\"&gt;Bruno Simon's playful portfolio&lt;/a&gt;. Stay on the neon pad to charge boost faster.&lt;/p&gt;\n\n\n&lt;div class=\"hud-block\"&gt;\n  &lt;div class=\"label\"&gt;Speed&lt;/div&gt;\n  &lt;div class=\"value\" data-speed&gt;0 km/h&lt;/div&gt;\n&lt;/div&gt;\n&lt;div class=\"hud-block\"&gt;\n  &lt;div class=\"label\"&gt;Boost&lt;/div&gt;\n  &lt;div class=\"value\"&gt;&lt;span data-boost&gt;100%&lt;/span&gt;&lt;/div&gt;\n  &lt;div class=\"boost-bar\" aria-hidden=\"true\"&gt;\n    &lt;div class=\"boost-fill\" data-boost-fill&gt;&lt;/div&gt;\n  &lt;/div&gt;\n&lt;/div&gt;\n&lt;div class=\"hud-block\"&gt;\n  &lt;div class=\"label\"&gt;Nearby&lt;/div&gt;\n  &lt;div class=\"value\" data-card-hint&gt;Explore the glowing cards.&lt;/div&gt;\n&lt;/div&gt;\n\n\nNo sound. Runs in-browser. Give it a whirl."
+  },
+  {
+    "objectID": "tools/drive/index.html",
+    "href": "tools/drive/index.html",
+    "title": "Drive",
+    "section": "",
+    "text": "Prototype\n    Drive\n    W/A/S/D or arrows to move · Shift to boost · Space to brake · R to reset · O toggles free camera.\n    A neon micro‑world to cruise around. Stay on the glowing pad to recharge boost faster.\n  \n  \n    \n      Speed\n      0 km/h\n    \n    \n      Boost\n      100%\n      \n        \n      \n    \n  \n  No sound. Runs in-browser. Give it a whirl."
   }
 ]
