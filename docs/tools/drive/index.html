@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vaibhav (VB) Srivastav">
+<meta name="dcterms.date" content="2025-12-11">
+<meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, tools">
+<meta name="description" content="A tiny drivable neon playground to cruise around.">
+
+<title>Drive – VB’s Notes and Ramblings</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-e4afd336727f2e3ba8c934cad6c36515.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
+<meta name="bingbot" content="index, follow">
+<meta name="yandex" content="index, follow">
+<link rel="alternate" type="application/rss+xml" title="VB’s Notes and Ramblings" href="https://vaibhavs10.github.io/index.xml">
+<meta name="description" content="A tiny drivable neon playground to cruise around.">
+<meta name="author" content="Vaibhav (VB) Srivastav">
+<meta name="keywords" content="Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, tools">
+<meta property="og:title" content="Drive – VB’s Notes and Ramblings">
+<meta property="og:description" content="A tiny drivable neon playground to cruise around.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://vaibhavs10.github.io/tools/drive/">
+<meta property="og:site_name" content="VB’s Notes and Ramblings">
+<meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<meta property="og:image:alt" content="VB’s website social card">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@reach_vb">
+<meta name="twitter:creator" content="@reach_vb">
+<meta name="twitter:title" content="Drive – VB’s Notes and Ramblings">
+<meta name="twitter:description" content="A tiny drivable neon playground to cruise around.">
+<meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<link rel="me" href="https://twitter.com/reach_vb">
+<link rel="me" href="https://www.linkedin.com/in/vaibhavs10">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://vaibhavs10.github.io/#website",
+      "url": "https://vaibhavs10.github.io",
+      "name": "VB’s Notes and Ramblings",
+      "description": "AI and ML field notes, talks, and learnings from Vaibhav/ VB",
+      "publisher": {
+        "@id": "https://vaibhavs10.github.io/#person"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://vaibhavs10.github.io/#person",
+      "name": "Vaibhav (VB) Srivastav",
+      "url": "https://vaibhavs10.github.io",
+      "description": "AI and ML field notes, talks, and learnings from Vaibhav/ VB",
+      "image": "https://vaibhavs10.github.io/images/social-card.jpg",
+      "sameAs": ["https://twitter.com/reach_vb", "https://www.linkedin.com/in/vaibhavs10"]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://vaibhavs10.github.io/tools/drive/",
+      "url": "https://vaibhavs10.github.io/tools/drive/",
+      "name": "Drive – VB’s Notes and Ramblings",
+      "description": "A tiny drivable neon playground to cruise around.",
+      "inLanguage": "en",
+      "author": {
+        "@id": "https://vaibhavs10.github.io/#person"
+      },
+      "image": "https://vaibhavs10.github.io/images/social-card.jpg"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Drive – VB's Notes and Ramblings">
+<meta property="og:description" content="A tiny drivable neon playground to cruise around.">
+<meta property="og:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<meta property="og:site_name" content="VB's Notes and Ramblings">
+<meta property="og:image:alt" content="VB's website social card">
+<meta name="twitter:title" content="Drive – VB's Notes and Ramblings">
+<meta name="twitter:description" content="A tiny drivable neon playground to cruise around.">
+<meta name="twitter:image" content="https://vaibhavs10.github.io/images/social-card.jpg">
+<meta name="twitter:creator" content="@reach_vb">
+<meta name="twitter:site" content="@reach_vb">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image:alt" content="VB's website social card">
+<link rel="canonical" href="https://vaibhavs10.github.io/tools/drive/">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg border-bottom" data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">VB’s Notes and Ramblings</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../tools.html"> 
+<span class="menu-text">Tools</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../now.html"> 
+<span class="menu-text">Now</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/reach_vb"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Drive</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">tools</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A tiny drivable neon playground to cruise around.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://vaibhavs10.github.io">Vaibhav (VB) Srivastav</a> </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 11, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+<div>
+  <div class="keywords">
+    <div class="block-title">Keywords</div>
+    <p>Artificial Intelligence, Machine Learning, Data Science, Personal Blog, Research Notes, tools</p>
+  </div>
+</div>
+
+</header>
+
+
+<div class="drive-shell">
+  <canvas id="drive-canvas" aria-label="Driveable playground"></canvas>
+  <div class="drive-ui">
+    <div class="pill">Prototype</div>
+    <h1>Drive</h1>
+    <p>W/A/S/D or arrows to move · Shift to boost · Space to brake · R to reset · O toggles free camera.</p>
+    <p class="microcopy">A neon micro‑world to cruise around. Stay on the glowing pad to recharge boost faster.</p>
+  </div>
+  <div class="drive-hud">
+    <div class="hud-block">
+      <div class="label">Speed</div>
+      <div class="value" data-speed="">0 km/h</div>
+    </div>
+    <div class="hud-block">
+      <div class="label">Boost</div>
+      <div class="value"><span data-boost="">100%</span></div>
+      <div class="boost-bar" aria-hidden="true">
+        <div class="boost-fill" data-boost-fill=""></div>
+      </div>
+    </div>
+  </div>
+  <div class="drive-credit">No sound. Runs in-browser. Give it a whirl.</div>
+</div>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+
+body.drive-page {
+  max-width: none;
+  padding: 0;
+  background: radial-gradient(circle at 30% 20%, #1f2a42 0%, #0a0c16 38%, #05060d 100%);
+  font-family: 'Space Grotesk', 'Courier New', monospace;
+}
+
+.drive-shell {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  color: #e9edf7;
+}
+
+.drive-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.6) 100%);
+}
+
+#drive-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.drive-ui {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: min(420px, 90vw);
+  padding: 16px 18px;
+  background: rgba(6, 8, 16, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.drive-ui h1 {
+  margin: 4px 0 6px;
+  font-size: 26px;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+}
+
+.drive-ui p {
+  margin: 8px 0;
+  line-height: 1.4;
+  color: #cfd8ea;
+}
+
+.microcopy {
+  font-size: 14px;
+  color: #9baccc;
+}
+
+.drive-ui a {
+  color: #7fe7d1;
+  text-decoration: none;
+}
+
+.drive-ui a:hover {
+  text-decoration: underline;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  background: linear-gradient(120deg, rgba(68, 176, 255, 0.22), rgba(107, 255, 214, 0.18));
+  color: #d5e8ff;
+}
+
+.drive-hud {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.hud-block {
+  padding: 12px 14px;
+  background: rgba(6, 8, 16, 0.65);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.hud-block .label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #92a1c6;
+  margin-bottom: 4px;
+}
+
+.hud-block .value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f4f7ff;
+}
+
+.boost-bar {
+  margin-top: 8px;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.boost-fill {
+  height: 100%;
+  width: 100%;
+  transform-origin: left;
+  transform: scaleX(1);
+  background: linear-gradient(90deg, #2cf0c8, #6bf0ff);
+  box-shadow: 0 0 12px rgba(44, 240, 200, 0.9);
+  transition: transform 0.08s linear, filter 0.08s linear;
+}
+
+.drive-credit {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8ea0c3;
+  background: rgba(5, 6, 13, 0.6);
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 640px) {
+  .drive-ui {
+    top: 16px;
+    left: 16px;
+    width: calc(100vw - 32px);
+  }
+  .drive-hud {
+    right: 16px;
+    bottom: 16px;
+  }
+  .drive-credit {
+    left: 16px;
+    bottom: 16px;
+  }
+}
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.164.1/build/three.module.js"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'https://unpkg.com/three@0.164.1/build/three.module.js';
+import { OrbitControls } from 'https://unpkg.com/three@0.164.1/examples/jsm/controls/OrbitControls.js';
+import { EffectComposer } from 'https://unpkg.com/three@0.164.1/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'https://unpkg.com/three@0.164.1/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'https://unpkg.com/three@0.164.1/examples/jsm/postprocessing/UnrealBloomPass.js';
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.body.classList.add('drive-page');
+
+  const canvas = document.getElementById('drive-canvas');
+  const speedEl = document.querySelector('[data-speed]');
+  const boostEl = document.querySelector('[data-boost]');
+  const boostFill = document.querySelector('[data-boost-fill]');
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x06070f);
+  scene.fog = new THREE.FogExp2(0x06070f, 0.03);
+
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
+  camera.position.set(0, 6, 10);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.enabled = false;
+  controls.minDistance = 4;
+  controls.maxDistance = 40;
+  controls.maxPolarAngle = Math.PI / 2.1;
+
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.8, 0.9, 0.75);
+  composer.addPass(bloom);
+
+  const hemi = new THREE.HemisphereLight(0x8fbaff, 0x07070c, 1.05);
+  hemi.position.set(0, 30, 0);
+  scene.add(hemi);
+
+  const sun = new THREE.DirectionalLight(0xffffff, 1.35);
+  sun.position.set(12, 18, 8);
+  sun.castShadow = true;
+  sun.shadow.mapSize.set(1024, 1024);
+  sun.shadow.camera.near = 1;
+  sun.shadow.camera.far = 50;
+  scene.add(sun);
+
+  const accentCyan = new THREE.PointLight(0x53e7ff, 2.2, 70, 2);
+  accentCyan.position.set(18, 6, -18);
+  scene.add(accentCyan);
+
+  const accentPink = new THREE.PointLight(0xff6b9a, 1.8, 70, 2);
+  accentPink.position.set(-18, 5, 16);
+  scene.add(accentPink);
+
+  const sky = new THREE.Mesh(
+    new THREE.SphereGeometry(120, 32, 32),
+    new THREE.MeshBasicMaterial({ map: makeSkyTexture(), side: THREE.BackSide })
+  );
+  scene.add(sky);
+
+  const gridTexture = makeGridTexture();
+  gridTexture.wrapS = gridTexture.wrapT = THREE.RepeatWrapping;
+  gridTexture.repeat.set(12, 12);
+
+  const groundMat = new THREE.MeshStandardMaterial({
+    color: 0x0a0c18,
+    roughness: 0.92,
+    metalness: 0.04,
+    emissive: new THREE.Color('#0a1230'),
+    emissiveIntensity: 0.25,
+    map: gridTexture,
+  });
+
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(80, 80),
+    groundMat
+  );
+  ground.receiveShadow = true;
+  ground.rotation.x = -Math.PI / 2;
+  scene.add(ground);
+
+  const neonPadMat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color('#2cf0c8'),
+    emissive: new THREE.Color('#2cf0c8'),
+    emissiveIntensity: 0.9,
+    roughness: 0.25,
+    metalness: 0.55,
+  });
+
+  const neonPad = new THREE.Mesh(
+    new THREE.BoxGeometry(4, 0.05, 16),
+    neonPadMat
+  );
+  neonPad.position.set(0, 0.03, -2);
+  neonPad.receiveShadow = true;
+  scene.add(neonPad);
+
+  const rimGeo = new THREE.TorusGeometry(4.3, 0.07, 20, 100);
+  const rim = new THREE.Mesh(
+    rimGeo,
+    new THREE.MeshBasicMaterial({ color: 0x5dd6ff, transparent: true, opacity: 0.32 })
+  );
+  rim.rotation.x = Math.PI / 2;
+  rim.position.y = 0.1;
+  scene.add(rim);
+
+  const beam = new THREE.Mesh(
+    new THREE.CylinderGeometry(1.8, 3.2, 8, 24, 1, true),
+    new THREE.MeshBasicMaterial({
+      color: 0x2cf0c8,
+      transparent: true,
+      opacity: 0.12,
+      blending: THREE.AdditiveBlending,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    })
+  );
+  beam.position.set(0, 4, -2);
+  scene.add(beam);
+
+  const walls = new THREE.Group();
+  const wallMat = new THREE.MeshStandardMaterial({
+    color: 0x14182a,
+    roughness: 0.35,
+    metalness: 0.25,
+    emissive: 0x05070f,
+    emissiveIntensity: 0.12,
+  });
+  const wallGeo = new THREE.BoxGeometry(80, 1.6, 0.4);
+  const wall1 = new THREE.Mesh(wallGeo, wallMat);
+  wall1.position.set(0, 0.8, -40);
+  const wall2 = wall1.clone();
+  wall2.position.set(0, 0.8, 40);
+  const wallSideGeo = new THREE.BoxGeometry(0.4, 1.6, 80);
+  const wall3 = new THREE.Mesh(wallSideGeo, wallMat);
+  wall3.position.set(-40, 0.8, 0);
+  const wall4 = wall3.clone();
+  wall4.position.set(40, 0.8, 0);
+  [wall1, wall2, wall3, wall4].forEach(w => {
+    w.castShadow = true;
+    w.receiveShadow = true;
+    walls.add(w);
+  });
+  scene.add(walls);
+
+  const car = buildCar();
+  scene.add(car);
+
+  const decoGroup = new THREE.Group();
+  scene.add(decoGroup);
+
+  sprinkleDeco(decoGroup);
+
+  const particles = makeDust();
+  scene.add(particles);
+
+  const clock = new THREE.Clock();
+  let speed = 0;
+  let heading = 0;
+  let boost = 1;
+  let boosting = false;
+  const bounds = 38;
+
+  const input = {
+    forward: false,
+    back: false,
+    left: false,
+    right: false,
+    brake: false,
+    boost: false,
+  };
+
+  function onKey(e, down) {
+    const key = e.code;
+    if (['KeyW', 'ArrowUp', 'KeyS', 'ArrowDown', 'KeyA', 'ArrowLeft', 'KeyD', 'ArrowRight', 'Space', 'ShiftLeft', 'ShiftRight', 'KeyR', 'KeyO'].includes(key)) {
+      e.preventDefault();
+    }
+    if (key === 'KeyW' || key === 'ArrowUp') input.forward = down;
+    if (key === 'KeyS' || key === 'ArrowDown') input.back = down;
+    if (key === 'KeyA' || key === 'ArrowLeft') input.left = down;
+    if (key === 'KeyD' || key === 'ArrowRight') input.right = down;
+    if (key === 'Space') input.brake = down;
+    if (key === 'ShiftLeft' || key === 'ShiftRight') input.boost = down;
+    if (key === 'KeyR' && down) resetCar();
+    if (key === 'KeyO' && down) controls.enabled = !controls.enabled;
+  }
+
+  window.addEventListener('keydown', e => onKey(e, true));
+  window.addEventListener('keyup', e => onKey(e, false));
+  window.addEventListener('blur', () => {
+    Object.keys(input).forEach(k => (input[k] = false));
+  });
+
+  function resetCar() {
+    car.position.set(0, 0.7, 2);
+    speed = 0;
+    heading = Math.PI;
+  }
+
+  function updatePhysics(dt) {
+    const onPad = Math.abs(car.position.x) < 2 && Math.abs(car.position.z + 2) < 8;
+    boosting = input.boost && boost > 0.02;
+    const accel = boosting ? 22 : 16;
+    const maxSpeed = boosting ? 18 : 12;
+
+    speed += (input.forward ? 1 : 0) * accel * dt;
+    speed -= (input.back ? 1 : 0) * accel * dt;
+    speed = THREE.MathUtils.clamp(speed, -maxSpeed * 0.5, maxSpeed);
+    speed *= input.brake ? 0.88 : 0.96;
+
+    const steerFactor = (Math.abs(speed) / maxSpeed) * 0.6 + 0.25;
+    heading += (input.left ? 1 : 0) * steerFactor * dt * 3.2;
+    heading -= (input.right ? 1 : 0) * steerFactor * dt * 3.2;
+
+    const forward = new THREE.Vector3(Math.sin(heading), 0, Math.cos(heading));
+    car.position.addScaledVector(forward, speed * dt);
+    car.rotation.y = heading + Math.PI;
+
+    // Boundary bounce
+    if (car.position.x > bounds || car.position.x < -bounds) {
+      car.position.x = THREE.MathUtils.clamp(car.position.x, -bounds, bounds);
+      speed *= -0.35;
+    }
+    if (car.position.z > bounds || car.position.z < -bounds) {
+      car.position.z = THREE.MathUtils.clamp(car.position.z, -bounds, bounds);
+      speed *= -0.35;
+    }
+
+    // Slight auto-level
+    car.position.y = THREE.MathUtils.lerp(car.position.y, 0.7, 0.1);
+    car.rotation.z = THREE.MathUtils.lerp(car.rotation.z, -Math.sin(heading) * 0.05 * (speed / maxSpeed), 0.08);
+
+    // Boost energy (charges faster on neon pad)
+    if (boosting) {
+      boost = Math.max(0, boost - dt * 0.42);
+    } else {
+      const recharge = onPad ? 0.85 : 0.22;
+      boost = Math.min(1, boost + dt * recharge);
+    }
+
+    // Visual feedback for boost
+    if (car.userData.bodyMat) {
+      car.userData.bodyMat.emissiveIntensity = THREE.MathUtils.lerp(
+        car.userData.bodyMat.emissiveIntensity,
+        boosting ? 0.25 : 0.08,
+        0.12
+      );
+    }
+    if (car.userData.underGlow) {
+      const glowMat = car.userData.underGlow.material;
+      glowMat.opacity = THREE.MathUtils.lerp(glowMat.opacity, boosting ? 0.55 : 0.25, 0.12);
+    }
+  }
+
+  function updateCamera(dt) {
+    const offset = new THREE.Vector3(0, 4.5, 8);
+    offset.applyAxisAngle(new THREE.Vector3(0, 1, 0), heading);
+    const desired = car.position.clone().add(offset);
+    camera.position.lerp(desired, 1 - Math.pow(0.92, dt * 60));
+    const lookTarget = car.position.clone().add(new THREE.Vector3(0, 0.9, 0));
+    if (!controls.enabled) {
+      camera.lookAt(lookTarget);
+    } else {
+      controls.target.lerp(lookTarget, 1 - Math.pow(0.9, dt * 60));
+      controls.update();
+    }
+  }
+
+  function updateHUD() {
+    const kmh = Math.abs(speed) * 12;
+    speedEl.textContent = `${kmh.toFixed(0)} km/h`;
+    const pct = Math.round(boost * 100);
+    boostEl.textContent = `${pct}%`;
+    boostFill.style.transform = `scaleX(${boost.toFixed(3)})`;
+    boostFill.style.filter = boosting ? 'saturate(1.4)' : 'saturate(1)';
+  }
+
+  function animate() {
+    const dt = Math.min(0.05, clock.getDelta());
+    const t = performance.now() * 0.001;
+    updatePhysics(dt);
+    updateCamera(dt);
+    updateDeco(dt);
+    particles.rotation.y += dt * 0.08;
+
+    // Grid flow and pad pulse
+    const flow = speed * dt * 0.01;
+    gridTexture.offset.x = THREE.MathUtils.euclideanModulo(gridTexture.offset.x + flow, 1);
+    gridTexture.offset.y = THREE.MathUtils.euclideanModulo(gridTexture.offset.y + flow * 0.7, 1);
+
+    neonPadMat.emissiveIntensity = 0.75 + Math.sin(t * 2.2) * 0.2 + (boosting ? 0.18 : 0);
+    rim.rotation.z += dt * 0.5;
+    rim.material.opacity = 0.24 + Math.sin(t * 1.6) * 0.08;
+    beam.rotation.y += dt * 0.15;
+    beam.material.opacity = 0.08 + Math.sin(t * 1.3) * 0.04;
+
+    updateHUD();
+    composer.render();
+    requestAnimationFrame(animate);
+  }
+
+  function onResize() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+    composer.setSize(w, h);
+    bloom.setSize(w, h);
+  }
+
+  window.addEventListener('resize', onResize);
+
+  resetCar();
+  animate();
+
+  // Helper factories
+  function makeGridTexture() {
+    const size = 512;
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 1.4);
+    gradient.addColorStop(0, '#11182a');
+    gradient.addColorStop(1, '#05060c');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, size, size);
+
+    // subtle grain
+    for (let i = 0; i < 2600; i++) {
+      const x = Math.random() * size;
+      const y = Math.random() * size;
+      const a = Math.random() * 0.06;
+      ctx.fillStyle = `rgba(255,255,255,${a})`;
+      ctx.fillRect(x, y, 1, 1);
+    }
+
+    const step = size / 16;
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(255,255,255,0.035)';
+    for (let i = 0; i <= size; i += step) {
+      ctx.beginPath();
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, size);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, i);
+      ctx.lineTo(size, i);
+      ctx.stroke();
+    }
+
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = 'rgba(44,240,200,0.09)';
+    const major = step * 4;
+    for (let i = 0; i <= size; i += major) {
+      ctx.beginPath();
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, size);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, i);
+      ctx.lineTo(size, i);
+      ctx.stroke();
+    }
+
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return tex;
+  }
+
+      function makeSkyTexture() {
+        const h = 512;
+        const canvas = document.createElement('canvas');
+        canvas.width = 512;
+        canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    const grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, '#14143a');
+    grad.addColorStop(0.5, '#070a1d');
+    grad.addColorStop(1, '#020308');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, h);
+
+    // stars
+    for (let i = 0; i < 220; i++) {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * h;
+      const r = Math.random() * 1.2 + 0.2;
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(180,220,255,${Math.random() * 0.8})`;
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.wrapS = THREE.RepeatWrapping;
+        tex.wrapT = THREE.ClampToEdgeWrapping;
+        return tex;
+      }
+
+  function buildCar() {
+    const car = new THREE.Group();
+
+    const bodyMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color('#7fe7d1'),
+      metalness: 0.85,
+      roughness: 0.25,
+      clearcoat: 0.8,
+      clearcoatRoughness: 0.15,
+      emissive: new THREE.Color('#0b2a25'),
+      emissiveIntensity: 0.12,
+    });
+    const shell = new THREE.Mesh(new THREE.BoxGeometry(1.55, 0.55, 3.05), bodyMat);
+    shell.castShadow = true;
+    shell.receiveShadow = true;
+    shell.position.y = 0.55;
+    car.add(shell);
+
+    const cabin = new THREE.Mesh(
+      new THREE.BoxGeometry(1.1, 0.45, 1.2),
+      new THREE.MeshPhysicalMaterial({
+        color: 0x121526,
+        metalness: 0.4,
+        roughness: 0.08,
+        transmission: 0.1,
+        emissive: 0x1c90ff,
+        emissiveIntensity: 0.45,
+      })
+    );
+    cabin.position.set(0, 0.9, -0.2);
+    cabin.castShadow = true;
+    car.add(cabin);
+
+    const wheelGeo = new THREE.CylinderGeometry(0.32, 0.32, 0.24, 18);
+    wheelGeo.rotateZ(Math.PI / 2);
+    const wheelMat = new THREE.MeshStandardMaterial({ color: 0x07070a, roughness: 0.9, metalness: 0.05 });
+    const positions = [
+      [0.65, 0.25, 1.2],
+      [-0.65, 0.25, 1.2],
+      [0.65, 0.25, -1.2],
+      [-0.65, 0.25, -1.2],
+    ];
+    positions.forEach(p => {
+      const w = new THREE.Mesh(wheelGeo, wheelMat);
+      w.position.set(p[0], p[1], p[2]);
+      w.castShadow = true;
+      car.add(w);
+    });
+
+    const glowBar = new THREE.Mesh(
+      new THREE.BoxGeometry(1.4, 0.12, 0.18),
+      new THREE.MeshStandardMaterial({
+        color: 0x2cf0c8,
+        emissive: 0x2cf0c8,
+        emissiveIntensity: 1.0,
+        roughness: 0.15,
+      })
+    );
+    glowBar.position.set(0, 0.42, 1.55);
+    car.add(glowBar);
+
+    const tail = glowBar.clone();
+    tail.position.set(0, 0.42, -1.55);
+    tail.material = glowBar.material.clone();
+    tail.material.color.set(0xff6b9a);
+    tail.material.emissive.set(0xff6b9a);
+    car.add(tail);
+
+    car.userData.bodyMat = bodyMat;
+
+    const underGlow = new THREE.Mesh(
+      new THREE.CircleGeometry(1.5, 40),
+      new THREE.MeshBasicMaterial({
+        color: 0x2cf0c8,
+        transparent: true,
+        opacity: 0.3,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      })
+    );
+    underGlow.rotation.x = -Math.PI / 2;
+    underGlow.position.y = 0.05;
+    car.add(underGlow);
+    car.userData.underGlow = underGlow;
+
+    const headLightMat = new THREE.MeshBasicMaterial({ color: 0x9be7ff });
+    const headGeo = new THREE.BoxGeometry(0.18, 0.08, 0.05);
+    const hl1 = new THREE.Mesh(headGeo, headLightMat);
+    hl1.position.set(0.45, 0.55, 1.55);
+    const hl2 = hl1.clone();
+    hl2.position.x = -0.45;
+    car.add(hl1, hl2);
+
+    car.position.set(0, 0.7, 2);
+    return car;
+  }
+
+  function sprinkleDeco(group) {
+    const geom = new THREE.IcosahedronGeometry(0.5, 0);
+    const mat = new THREE.MeshStandardMaterial({
+      color: 0x4fb7ff,
+      emissive: 0x4fb7ff,
+      emissiveIntensity: 0.5,
+      metalness: 0.4,
+      roughness: 0.25,
+    });
+    for (let i = 0; i < 26; i++) {
+      const m = new THREE.Mesh(geom, mat.clone());
+      m.position.set(
+        THREE.MathUtils.randFloatSpread(60),
+        THREE.MathUtils.randFloat(0.2, 1.8),
+        THREE.MathUtils.randFloatSpread(60)
+      );
+      m.scale.setScalar(THREE.MathUtils.randFloat(0.5, 1.6));
+      m.userData.floatPhase = Math.random() * Math.PI * 2;
+      m.userData.floatAmp = THREE.MathUtils.randFloat(0.02, 0.06);
+      m.userData.baseY = m.position.y;
+      m.userData.pulseBase = 0.35;
+      m.userData.pulseAmp = 0.15;
+      m.userData.pulseSpeed = THREE.MathUtils.randFloat(1.2, 2.1);
+      m.castShadow = true;
+      group.add(m);
+    }
+    const ringMat = new THREE.MeshStandardMaterial({
+      color: 0x6bf0ff,
+      emissive: 0x6bf0ff,
+      emissiveIntensity: 0.4,
+      roughness: 0.2,
+      metalness: 0.6,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.7,
+    });
+    for (let i = 0; i < 14; i++) {
+      const torus = new THREE.Mesh(
+        new THREE.TorusGeometry(THREE.MathUtils.randFloat(0.6, 1.2), 0.04, 12, 50),
+        ringMat.clone()
+      );
+      torus.position.set(
+        THREE.MathUtils.randFloatSpread(60),
+        THREE.MathUtils.randFloat(0.6, 1.4),
+        THREE.MathUtils.randFloatSpread(60)
+      );
+      torus.rotation.x = Math.random() * Math.PI;
+      torus.rotation.y = Math.random() * Math.PI;
+      torus.userData.pulseBase = 0.25;
+      torus.userData.pulseAmp = 0.12;
+      torus.userData.pulseSpeed = THREE.MathUtils.randFloat(0.8, 1.6);
+      group.add(torus);
+    }
+  }
+
+  function updateDeco(dt) {
+    const t = performance.now() * 0.001;
+    decoGroup.children.forEach((c, idx) => {
+      c.rotation.x += 0.2 * dt;
+      c.rotation.y += 0.35 * dt;
+      if (c.userData.floatPhase !== undefined) {
+        c.position.y = c.userData.baseY + Math.sin(t + c.userData.floatPhase) * c.userData.floatAmp;
+      }
+      if (c.userData.pulseBase !== undefined && c.material?.emissive) {
+        const speed = c.userData.pulseSpeed ?? 1.4;
+        c.material.emissiveIntensity =
+          c.userData.pulseBase + Math.sin(t * speed + idx) * c.userData.pulseAmp;
+      }
+    });
+  }
+
+  function makeDust() {
+    const geo = new THREE.BufferGeometry();
+    const count = 1800;
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      positions[i * 3] = THREE.MathUtils.randFloatSpread(80);
+      positions[i * 3 + 1] = Math.random() * 6 + 0.2;
+      positions[i * 3 + 2] = THREE.MathUtils.randFloatSpread(80);
+    }
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const mat = new THREE.PointsMaterial({
+      size: 0.05,
+      color: 0x7fffd4,
+      transparent: true,
+      opacity: 0.7,
+      depthWrite: false,
+    });
+    return new THREE.Points(geo, mat);
+  }
+});
+</script>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/vaibhavs10\.github\.io");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 Vaibhav (VB) Srivastav</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
