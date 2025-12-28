@@ -25,6 +25,7 @@ website:
   navbar:
     background: none
     right:
+      - til.qmd
       - tools.qmd
       - about.qmd
       - now.qmd

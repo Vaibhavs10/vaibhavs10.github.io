@@ -1,0 +1,9 @@
+---
+title: "TIL: Quarto listing pages can be category-filtered"
+author: "VB"
+date: "2025-02-14"
+description: "Use Quarto listings with a category filter to build a TIL index."
+categories: [til, quarto]
+---
+
+Quarto listings can be filtered by category (e.g., `filter: "til"`) to create a dedicated TIL index while keeping everything in a single `posts/` collection.
