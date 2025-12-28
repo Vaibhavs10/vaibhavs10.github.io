@@ -1,0 +1,9 @@
+---
+title: "TIL: Quarto listing pages can target a subfolder"
+author: "VB"
+date: "2024-08-15"
+description: "Point a Quarto listing at a subfolder to build a focused TIL index."
+categories: [til, quarto, publishing]
+---
+
+Quarto listings can target a subfolder (like `posts/til`) to build a dedicated TIL index while keeping everything under the main `posts/` collection.
