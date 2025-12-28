@@ -2,10 +2,9 @@
 title: "TIL"
 description: "Short notes and things I learned."
 listing:
-  contents: posts
+  contents: posts/til
   sort: "date desc"
   categories: true
-  filter: "til"
   sort-ui: false
   filter-ui: false
   feed: true
